@@ -10,7 +10,7 @@ def analyze_resume(resume_text, target_role="Software Developer", **kwargs):
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
     
-    genai.configure(api_key=api_key)
+    genai.configure(api_key=api_key, transport="rest")
 
     prompt = f"""
 You are an expert ATS (Applicant Tracking System) evaluator and senior technical recruiter.
