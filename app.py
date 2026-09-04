@@ -155,6 +155,27 @@ def history():
 def logout():
     session.pop("user", None)
     return redirect("/login")
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        new_password = request.form.get('new_password')
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            # Agar aapke app mein password hash hota hai
+            try:
+                from werkzeug.security import generate_password_hash
+                user.password = generate_password_hash(new_password)
+            except Exception:
+                user.password = new_password
+            
+            db.session.commit()
+            return redirect(url_for('login'))
+        else:
+            return "Email not found in our database! Please check and try again.", 404
+
+    return render_template('forgot_password.html')
 
 
 if __name__ == "__main__":
