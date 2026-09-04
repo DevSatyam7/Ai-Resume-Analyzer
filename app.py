@@ -157,26 +157,36 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
+    from flask import request, render_template, redirect, url_for
+    try:
+        from models import User, db
+    except Exception:
+        from models import User
+        from app import db
+
     if request.method == 'POST':
-        email = request.form.get('email')
-        new_password = request.form.get('new_password')
+        email = request.form.get('email', '').strip()
+        new_password = request.form.get('new_password', '').strip()
 
         user = User.query.filter_by(email=email).first()
         if user:
-            # Agar aapke app mein password hash hota hai
             try:
                 from werkzeug.security import generate_password_hash
-                user.password = generate_password_hash(new_password)
+                if hasattr(user, 'set_password'):
+                    user.set_password(new_password)
+                elif hasattr(user, 'password_hash'):
+                    user.password_hash = generate_password_hash(new_password)
+                else:
+                    user.password = generate_password_hash(new_password)
             except Exception:
                 user.password = new_password
-            
+
             db.session.commit()
             return redirect(url_for('login'))
         else:
-            return "Email not found in our database! Please check and try again.", 404
+            return "Email database mein nahi mila! Kripya sahi email daalein.", 404
 
     return render_template('forgot_password.html')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
