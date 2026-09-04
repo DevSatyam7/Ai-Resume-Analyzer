@@ -158,11 +158,7 @@ def logout():
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
     from flask import request, render_template, redirect, url_for
-    try:
-        from models import User, db
-    except Exception:
-        from models import User
-        from app import db
+    from models import User
 
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
