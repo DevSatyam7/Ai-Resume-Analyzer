@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="welcome-text">Analysis History</h2>
+
+{% if reports %}
+    {% for r in reports %}
+        <div class="card result-card">
+            <h3 class="card-title">Analyzed Resume</h3>
+            <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 1.2rem; white-space: pre-line; max-height: 100px; overflow-y: auto; background: #f8fafc; padding: 0.8rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                {{ r.resume }}
+            </p>
+
+            {% if r.result.get("skills") %}
+                <h3>Skills</h3>
+                <ul>
+                    {% for s in r.result.get("skills", []) %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if r.result.get("missing_skills") %}
+                <h3>Missing Skills</h3>
+                <ul>
+                    {% for s in r.result.get("missing_skills", []) %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if r.result.get("Roadmap") %}
+                <h3>Roadmap</h3>
+                <ul>
+                    {% for s in r.result.get("Roadmap", []) %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if r.result.get("Interview_questions") %}
+                <h3>Interview Questions</h3>
+                <ul>
+                    {% for s in r.result.get("Interview_questions", []) %}
+                        <li>{{ s }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="card" style="text-align: center; color: #64748b; padding: 3rem 1rem;">
+        <p>No history found yet. Go to <a href="/dashboard" style="color: #2563eb; font-weight: 600;">Dashboard</a> and analyze a resume first!</p>
+    </div>
+{% endif %}
+
+{% endblock %}

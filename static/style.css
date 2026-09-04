@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    min-height: 100vh;
+}
+
+/* Header Navbar */
+.navbar {
+    background-color: #0b1120;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+/* Page Layout */
+.content-container {
+    max-width: 750px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Auth Pages (Login & Signup Cards) */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.auth-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.auth-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #0f172a;
+}
+
+.sub-text {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Inputs */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1e293b;
+    background-color: #ffffff;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #2563eb;
+}
+
+textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.file-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+input[type="file"] {
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+button,
+.btn-analyze {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover,
+.btn-analyze:hover {
+    background-color: #1f2937;
+}
+
+.auth-card button {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.auth-links,
+.switch-auth {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.auth-links a,
+.switch-auth a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover,
+.switch-auth a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Styling */
+.welcome-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1.25rem;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.25rem;
+}
+
+.result-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #000000;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.result-card h3:first-child {
+    margin-top: 0;
+}
+
+.result-card ul {
+    list-style-type: disc;
+    padding-left: 1.3rem;
+}
+
+.result-card li {
+    font-size: 0.9rem;
+    color: #334155;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+}
