@@ -3,25 +3,20 @@ import json
 import re
 import google.generativeai as genai
 
-# Server ke environment variable se API key lega
-api_key = os.environ.get("GEMINI_API_KEY")
-if api_key:
+def analyze_resume(resume_text, target_role="Software Developer", **kwargs):
+    role = kwargs.get("role", target_role) or "Software Developer"
+    
+    api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        raise ValueError("GEMINI_API_KEY is not set in Render environment.")
+    
     genai.configure(api_key=api_key)
 
-
-def analyze_resume(resume_text, user_goal):
-    # API key check
-    current_key = os.environ.get("GEMINI_API_KEY")
-    if not current_key:
-        return {"error": "GEMINI_API_KEY environment variable set nahi hai."}
-
-    genai.configure(api_key=current_key)
-
     prompt = f"""
-You are an expert ATS and technical hiring manager.
-Target Role: "{user_goal}"
+You are an expert ATS (Applicant Tracking System) evaluator and senior technical recruiter.
+Target Career Role: {role}
 
-Evaluate the resume and return strictly valid JSON matching this schema:
+Analyze the resume and return a valid JSON object matching exactly this schema:
 {{
   "ats_score": 75,
   "profile_summary": "Short 2-3 sentence executive assessment of fit",
@@ -40,9 +35,12 @@ Resume:
 {resume_text}
 """
 
-  models_to_try = ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-flash-latest"]
-  last_error = None
-  
+    models_to_try = [
+        "gemini-2.5-flash",
+        "gemini-2.5-pro",
+        "gemini-flash-latest"
+    ]
+    last_error = None
 
     for m_name in models_to_try:
         try:
@@ -63,14 +61,14 @@ Resume:
             raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
 
             start = raw_text.find("{")
-            end = raw_text.rfind("}") + 1
+            end = raw_text.rfind("}")
+            if start != -1 and end != -1:
+                raw_text = raw_text[start : end + 1]
 
-            if start != -1 and end != 0:
-                return json.loads(raw_text[start:end])
             return json.loads(raw_text)
 
         except Exception as e:
             last_error = e
             continue
 
-    return {"error": f"AI Response Parse Error: {str(last_error)}"}
+    raise Exception(f"All models failed. Last error: {last_error}")
