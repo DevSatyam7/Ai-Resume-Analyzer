@@ -1,116 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script src="https://cdn.tailwindcss.com"></script>
-
-<div class="max-w-5xl mx-auto px-4 py-8">
-    <div class="mb-8 text-center">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-white text-center mb-2">
-    AI Resume & Career Analyzer
-</h1>
-<p class="text-slate-400 text-center text-sm md:text-base mb-8">
-    Analyze skill gaps, ATS fit, and generate a personalized preparation roadmap.
-</p>
+<div class="max-w-4xl mx-auto px-6 py-12">
+    <!-- Title -->
+    <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">
+            AI Resume & Career Analyzer
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base">
+            Analyze skill gaps, ATS fit, and generate a personalized preparation roadmap.
+        </p>
     </div>
 
-    <!-- Form Section -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+    <!-- Form Card -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl">
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <!-- Target Career Role -->
             <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">Target Career Role</label>
-                <input type="text" name="goal" placeholder="e.g. Backend Developer, Civil Site Engineer, Data Analyst" required
-                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <label class="block text-sm font-semibold text-slate-200 mb-2">
+                    Target Career Role
+                </label>
+                <input type="text" name="role" required
+                    placeholder="e.g. Backend Developer, Civil Site Engineer, Data Analyst"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
 
+            <!-- Resume Text -->
             <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">Resume Text (Optional if uploading file)</label>
-                <textarea name="resume" rows="4" placeholder="Paste resume text directly..."
-                          class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                <label class="block text-sm font-semibold text-slate-200 mb-2">
+                    Resume Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file)</span>
+                </label>
+                <textarea name="resume_text" rows="6"
+                    placeholder="Paste your resume text directly here..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-                <input type="file" name="file" accept=".pdf"
-                       class="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow transition">
+            <!-- File Upload & Action Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
+                <div class="w-full sm:w-auto">
+                    <input type="file" name="resume_file" accept=".pdf,.docx,.txt"
+                        class="text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
+                </div>
+
+                <button type="submit"
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 transition">
                     Run Analysis
                 </button>
             </div>
+
         </form>
     </div>
-
-    <!-- Results Section -->
-    {% if result and not result.error %}
-    <div class="space-y-6">
-        <!-- Score & Summary -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center text-center">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">ATS Match Score</span>
-                <span class="text-5xl font-black text-indigo-600 my-2">{{ result.ats_score }}%</span>
-                <span class="text-xs px-3 py-1 rounded-full font-semibold {% if result.ats_score >= 70 %}bg-emerald-100 text-emerald-800{% else %}bg-amber-100 text-amber-800{% endif %}">
-                    {% if result.ats_score >= 70 %}Good Match{% else %}Needs Improvement{% endif %}
-                </span>
-            </div>
-            <div class="md:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Hiring Manager Feedback</h3>
-                <p class="text-slate-700 leading-relaxed text-sm">{{ result.profile_summary }}</p>
-            </div>
-        </div>
-
-        <!-- Skills Gap -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 mb-3">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Current Strengths
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                    {% for skill in result.matched_skills %}
-                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-lg text-xs font-medium">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 mb-3">
-                    <span class="h-2 w-2 rounded-full bg-rose-500"></span> Missing Skills
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                    {% for skill in result.missing_skills %}
-                        <span class="bg-rose-50 text-rose-700 border border-rose-200 px-3 py-1 rounded-lg text-xs font-medium">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Roadmap -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 class="font-bold text-slate-800 mb-4">Targeted Learning Roadmap</h3>
-            <div class="space-y-4 border-l-2 border-indigo-200 pl-4">
-                {% for step in result.roadmap %}
-                <div>
-                    <h4 class="text-sm font-semibold text-indigo-900">{{ step.phase }}</h4>
-                    <p class="text-xs text-slate-600 mt-0.5">{{ step.tasks }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <!-- Interview Prep -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 class="font-bold text-slate-800 mb-4">Role-Specific Interview Questions</h3>
-            <div class="space-y-3">
-                {% for q in result.interview_questions %}
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <p class="font-medium text-slate-800 text-sm">Q: {{ q.question }}</p>
-                    <p class="text-xs text-indigo-600 mt-1 font-medium">Tip: {{ q.tip }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% elif result.error %}
-        <div class="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium">
-            {{ result.error }}
-        </div>
-    {% endif %}
 </div>
 {% endblock %}
