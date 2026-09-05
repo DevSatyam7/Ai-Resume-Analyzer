@@ -3,43 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareersAnalysis - Dashboard</title>
+    <title>CareersAnalysis - AI Resume & Career Fit Analyzer</title>
     
-    <!-- Favicon (Browser Tab Icon) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
-
-    <!-- Styling -->
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Navbar with Brand Logo -->
-    <header class="w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="/" class="flex items-center gap-3">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-9 h-9 rounded-lg object-cover border border-slate-800 shadow-md">
-                <span class="text-xl font-bold text-white tracking-tight">Careers<span class="text-blue-500">Analysis</span></span>
-            </a>
+    <!-- Responsive Navbar -->
+    <header class="w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
             
-            <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="/history" class="text-slate-400 hover:text-white transition">History</a>
-                <a href="/dashboard" class="text-blue-400 font-semibold transition">Dashboard</a>
-                <a href="/logout" class="bg-red-600/10 text-red-400 hover:bg-red-600 hover:text-white border border-red-500/30 px-3.5 py-1.5 rounded-lg transition text-xs font-semibold">
-                    Logout
-                </a>
+            <!-- Brand Logo -->
+            <a href="/" class="flex items-center gap-2 flex-shrink-0">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-lg object-cover border border-slate-800">
+                <span class="text-base sm:text-lg font-bold text-white tracking-tight">
+                    Careers<span class="text-blue-500">Analysis</span>
+                </span>
+            </a>
+
+            <!-- Nav Links / Actions -->
+            <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+                {% if session.get('user') or logged_in %}
+                    <a href="/history" class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-slate-900 transition">
+                        History
+                    </a>
+                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 px-2.5 sm:px-3 py-1.5 rounded-lg border border-blue-500/20 transition">
+                        Dashboard
+                    </a>
+                    <a href="/logout" class="text-xs sm:text-sm font-medium text-red-400 hover:text-red-300 px-2 sm:px-2.5 py-1.5 rounded-lg hover:bg-red-500/10 transition">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="/login" class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-slate-900 transition">
+                        Log In
+                    </a>
+                    <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-4 py-1.5 rounded-lg transition shadow-md shadow-blue-600/20 whitespace-nowrap">
+                        Get Started
+                    </a>
+                {% endif %}
             </div>
+
         </div>
     </header>
 
-    <!-- Page Content (Dashboard / History Forms) -->
-    <main class="flex-1">
+    <!-- Main Dynamic Content -->
+    <main class="flex-1 w-full">
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+        © 2026 CareersAnalysis. All rights reserved.
+    </footer>
 
 </body>
 </html>
