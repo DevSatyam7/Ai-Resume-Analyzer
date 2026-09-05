@@ -157,67 +157,50 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    
+    # 1. GET Request: Page turant open hoga bina kisi database import ke
     if request.method == 'GET':
         return render_template('forgot_password.html')
 
-  
+    # 2. POST Request: Form submit hone par chalega
     email = request.form.get('email', '').strip()
     new_password = request.form.get('new_password', '').strip()
 
     if not email or not new_password:
-        return "Email aur Password dono required hain.", 400
+        return "Email aur Password dono bharne zaroori hain.", 400
 
-    # User aur db ko safely access karein
-    target_user = None
-    target_db = globals().get('db')
-
-    # User model find karein
-    user_cls = globals().get('User')
-    if not user_cls:
-        try:
-            from models import User as user_cls
-        except Exception:
-            pass
-
-    # Database query
+    # Models aur DB safe access
     try:
-        if target_db:
-            target_user = target_db.session.query(user_cls).filter_by(email=email).first()
-        else:
-            target_user = user_cls.query.filter_by(email=email).first()
+        from models import User
     except Exception:
-        try:
-            target_user = user_cls.query.filter_by(email=email).first()
-        except Exception as err:
-            return f"<h3>Database Query Error:</h3><p>{err}</p>", 500
+        pass
 
-    if not target_user:
-        return f"<h3 style='color:red;'>Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
+    target_db = globals().get('db')
+    if not target_db:
+        from app import db as target_db
 
-    # Password hash aur update
+    # User lookup
+    user = None
+    try:
+        user = target_db.session.query(User).filter_by(email=email).first()
+    except Exception:
+        user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
+
+    # Password hash & update
     from werkzeug.security import generate_password_hash
     hashed = generate_password_hash(new_password)
 
-    if hasattr(target_user, 'set_password'):
-        target_user.set_password(new_password)
-    elif hasattr(target_user, 'password_hash'):
-        target_user.password_hash = hashed
+    if hasattr(user, 'set_password'):
+        user.set_password(new_password)
+    elif hasattr(user, 'password_hash'):
+        user.password_hash = hashed
     else:
-        target_user.password = hashed
+        user.password = hashed
 
-    if target_db:
-        target_db.session.commit()
-    else:
-        from app import db
-        db.session.commit()
-
+    target_db.session.commit()
     return redirect(url_for('login'))
 
-        db.session.commit()
-        return redirect(url_for('login'))
-
-    return render_template('forgot_password.html')
-    
 if __name__ == "__main__":
     app.run(debug=True)
