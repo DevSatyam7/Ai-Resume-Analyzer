@@ -185,6 +185,7 @@ def forgot_password():
         return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
     finally:
         db_session.close()
-if __name__ == "__main__":
-    app.run(debug=True)
+        
+        if __name__ == "__main__":
+             app.run(debug=True)
 
