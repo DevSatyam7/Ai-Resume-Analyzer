@@ -2,55 +2,108 @@
 
 {% block content %}
 <div class="max-w-5xl mx-auto px-6 py-12">
-    <div class="mb-8">
+    <div class="mb-10">
         <h1 class="text-3xl font-extrabold text-white">Analysis History</h1>
         <p class="text-slate-400 text-sm mt-1">Review your past resume audits, ATS scores, and roadmaps.</p>
     </div>
 
-    {% if history %}
+    {% if reports %}
         <div class="space-y-8">
-            {% for item in history %}
+            {% for item in reports %}
+            {% set res = item.result %}
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
                 
-                <!-- Card Header: Target Role & ATS Score -->
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <!-- Header: Role & ATS Match Score -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
                     <div>
                         <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Target Career Role</span>
-                        <h2 class="text-xl font-bold text-white">
-                            {{ item.role or item.target_role or "Tech Career Role" }}
+                        <h2 class="text-xl font-bold text-white mt-0.5">
+                            {{ res.role or res.target_role or "Software & Tech Role" }}
                         </h2>
                     </div>
-                    {% if item.ats_score %}
-                    <div class="bg-blue-950/80 border border-blue-800 px-4 py-2 rounded-xl text-center">
+                    {% if res.ats_score is defined %}
+                    <div class="bg-blue-950/80 border border-blue-800 px-5 py-2.5 rounded-2xl text-center shadow-md">
                         <span class="text-xs text-blue-300 block font-medium">ATS Score</span>
-                        <span class="text-2xl font-black text-blue-400">{{ item.ats_score }}%</span>
+                        <span class="text-2xl font-black text-blue-400">{{ res.ats_score }}%</span>
                     </div>
                     {% endif %}
                 </div>
 
-                <!-- Skills Found -->
+                <!-- 1. Identified Skills -->
+                {% set skills_list = res.skills or res.skills_found or res.matched_skills or res.extracted_skills or res.strengths %}
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Identified Skills</h3>
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 whitespace-pre-line leading-relaxed">
-                        {{ item.skills or "No specific skills parsed" }}
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths & Skills</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% if skills_list and skills_list is iterable and skills_list is not string %}
+                            {% for skill in skills_list %}
+                                <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                                    <span class="text-blue-400">✓</span> {{ skill }}
+                                </span>
+                            {% endfor %}
+                        {% elif skills_list and skills_list is string %}
+                            {% for skill in skills_list.split(',') %}
+                                <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                                    <span class="text-blue-400">✓</span> {{ skill.strip() }}
+                                </span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-slate-500 text-xs">Skills evaluated during audit.</span>
+                        {% endif %}
                     </div>
                 </div>
 
-                <!-- Missing Skills -->
+                <!-- 2. Missing Skills (Gaps) -->
+                {% set missing_list = res.missing_skills or res.skill_gaps or res.gaps %}
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-2">Missing Skills (Gaps)</h3>
-                    <div class="bg-amber-950/20 border border-amber-800/40 rounded-xl p-4 text-sm text-amber-200 whitespace-pre-line leading-relaxed">
-                        {{ item.missing_skills or "No missing skills flagged" }}
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Missing Critical Skills (Gaps)</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% if missing_list and missing_list is iterable and missing_list is not string %}
+                            {% for m_skill in missing_list %}
+                                <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                                    <span class="text-amber-400">⚠</span> {{ m_skill }}
+                                </span>
+                            {% endfor %}
+                        {% elif missing_list and missing_list is string %}
+                            {% for m_skill in missing_list.split(',') %}
+                                <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                                    <span class="text-amber-400">⚠</span> {{ m_skill.strip() }}
+                                </span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-slate-500 text-xs">No missing skills flagged.</span>
+                        {% endif %}
                     </div>
                 </div>
 
-                <!-- Roadmap Section -->
-                {% if item.roadmap %}
+                <!-- 3. Targeted Roadmap -->
+                {% if res.roadmap %}
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Preparation Roadmap</h3>
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-300 whitespace-pre-line leading-relaxed">
-                        {{ item.roadmap }}
-                    </div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3">Preparation Roadmap</h3>
+                    {% if res.roadmap is iterable and res.roadmap is not string %}
+                        <div class="space-y-3">
+                            {% for step in res.roadmap %}
+                                <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-4">
+                                    {% if step is mapping %}
+                                        <div class="flex items-center gap-2 mb-1.5">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                            <h4 class="text-sm font-bold text-emerald-400">
+                                                {{ step.phase or step.week or step.title or "Milestone Phase" }}
+                                            </h4>
+                                        </div>
+                                        <p class="text-sm text-slate-300 pl-4 border-l border-slate-800 leading-relaxed">
+                                            {{ step.tasks or step.description or step }}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-sm text-slate-300 leading-relaxed">{{ step }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="bg-slate-950 border border-slate-800/80 rounded-xl p-5 text-sm text-slate-300 whitespace-pre-line leading-relaxed">
+                            {{ res.roadmap }}
+                        </div>
+                    {% endif %}
                 </div>
                 {% endif %}
 
@@ -58,10 +111,14 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="text-center py-20 bg-slate-900 border border-slate-800 rounded-2xl">
-            <p class="text-slate-400">No past analysis found yet.</p>
-            <a href="/dashboard" class="inline-block mt-4 text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl transition">
-                Analyze a Resume Now
+        <div class="text-center py-20 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl">
+            <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mx-auto mb-3">
+                📋
+            </div>
+            <h3 class="text-white font-semibold text-lg">No Past Analysis Found</h3>
+            <p class="text-slate-400 text-sm mt-1 mb-6">Analyze a resume to generate ATS scores and roadmaps.</p>
+            <a href="/dashboard" class="inline-block text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/30">
+                Analyze Resume Now
             </a>
         </div>
     {% endif %}
