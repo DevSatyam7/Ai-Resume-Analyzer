@@ -187,3 +187,4 @@ def forgot_password():
         db_session.close()
 if __name__ == "__main__":
     app.run(debug=True)
+
