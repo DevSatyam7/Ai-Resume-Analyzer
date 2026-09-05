@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- html2pdf Library for Instant PDF Download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <div class="max-w-4xl mx-auto px-6 py-12">
     <!-- Title -->
     <div class="text-center mb-10">
@@ -21,7 +24,9 @@
 
     <!-- Input Form -->
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-12">
-        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <!-- Target Career Role -->
             <div>
                 <label class="block text-sm font-semibold text-slate-200 mb-2">Target Career Role</label>
                 <input type="text" name="role" required
@@ -29,6 +34,7 @@
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
 
+            <!-- Resume Text -->
             <div>
                 <label class="block text-sm font-semibold text-slate-200 mb-2">
                     Resume Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file)</span>
@@ -38,24 +44,36 @@
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
+            <!-- File Upload & Action Button -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
                         class="text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
                 </div>
-                <button type="submit"
+
+                <!-- Normal Button -->
+                <button type="submit" id="submitBtn"
                     class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 transition">
                     Run Analysis
                 </button>
+
+                <!-- Loading Spinner State (Hidden by default) -->
+                <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg cursor-not-allowed">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Auditing with Gemini AI...</span>
+                </div>
             </div>
         </form>
     </div>
 
-    <!-- Complete Analysis Output -->
+    <!-- Complete Analysis Output (Report Container for PDF) -->
     {% if result and not result.error %}
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-8">
         
-        <!-- Score Header -->
+        <!-- Score Header & Download PDF Button -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
                 <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
@@ -64,15 +82,27 @@
                 </span>
                 <h2 class="text-2xl font-bold text-white mt-2">Resume Fit & Gap Analysis</h2>
             </div>
-            {% if result.ats_score is defined %}
-            <div class="bg-blue-950/80 border border-blue-800/80 px-6 py-3 rounded-2xl text-center shadow-lg shadow-blue-900/20">
-                <span class="text-xs text-blue-300 block font-medium">ATS Match Score</span>
-                <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
+            
+            <div class="flex items-center gap-4">
+                {% if result.ats_score is defined %}
+                <div class="bg-blue-950/80 border border-blue-800/80 px-6 py-2.5 rounded-2xl text-center shadow-lg">
+                    <span class="text-xs text-blue-300 block font-medium">ATS Match</span>
+                    <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
+                </div>
+                {% endif %}
+
+                <!-- Download PDF Button -->
+                <button onclick="downloadReportPDF()" 
+                    class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-xl text-sm font-semibold transition shadow-md">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"></path>
+                    </svg>
+                    <span>Download PDF</span>
+                </button>
             </div>
-            {% endif %}
         </div>
 
-        <!-- 1. Profile Summary / Executive Assessment -->
+        <!-- 1. Profile Summary -->
         {% if result.profile_summary %}
         <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">Executive Profile Summary</h3>
@@ -119,7 +149,7 @@
             <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
             <div class="space-y-3">
                 {% for step in result.roadmap %}
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         <h4 class="text-sm font-bold text-emerald-400">{{ step.phase or "Milestone Phase" }}</h4>
@@ -158,4 +188,30 @@
     </div>
     {% endif %}
 </div>
+
+<!-- JavaScript for Loading State & PDF Generation -->
+<script>
+    // Form submit listener for loading spinner
+    const form = document.getElementById('analyzeForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingState = document.getElementById('loadingState');
+
+    form.addEventListener('submit', function() {
+        submitBtn.classList.add('hidden');
+        loadingState.classList.remove('hidden');
+    });
+
+    // PDF Download function using html2pdf
+    function downloadReportPDF() {
+        const report = document.getElementById('reportContainer');
+        const opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'Resume_Analysis_Report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(report).save();
+    }
+</script>
 {% endblock %}
