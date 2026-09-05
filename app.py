@@ -146,7 +146,22 @@ def history():
     db.close()  # <-- Ab ye safe jagah par close hoga
 
     return render_template("history.html", reports=parsed_reports)
-
+@app.route("/delete-report/<int:report_id>", methods=["POST"])
+def delete_report(report_id):
+    if "user" not in session:
+        return redirect("/login")
+    
+    db = SessionLocal()
+    user = db.query(models.User).filter_by(email=session["user"]).first()
+    
+    if user:
+        report = db.query(models.Report).filter_by(id=report_id, user_id=user.id).first()
+        if report:
+            db.delete(report)
+            db.commit()
+            
+    db.close()
+    return redirect("/history")
 
 # logout
 @app.route("/logout")
