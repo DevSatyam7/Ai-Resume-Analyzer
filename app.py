@@ -166,16 +166,14 @@ def forgot_password():
     if not email or not new_password:
         return "Email aur Password dono required hain.", 400
 
-    # Line 2 aur Line 29 ke hisab se exact database session
     db_session = SessionLocal()
     try:
         user = db_session.query(models.User).filter_by(email=email).first()
 
         if not user:
-            return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
+            return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Pehle Sign Up karein.</h3>", 404
 
-        # Password update
-       user.password = new_password
+        user.password = new_password
         db_session.commit()
         return redirect('/login')
 
@@ -185,7 +183,7 @@ def forgot_password():
         return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
     finally:
         db_session.close()
-        
-        if __name__ == "__main__":
-             app.run(debug=True)
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
