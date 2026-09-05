@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for, Response
 from db import Base, engine, SessionLocal
 import models
 import PyPDF2
@@ -180,7 +180,21 @@ def forgot_password():
         return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
     finally:
         db_session.close()
+@app.route('/robots.txt')
+def robots():
+    content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup"
+    return Response(content, mimetype="text/plain")
 
+@app.route('/sitemap.xml')
+def sitemap():
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+       <url>
+          <loc>https://ai-resume-analyzer-2jxj.onrender.com/</loc>
+          <priority>1.0</priority>
+       </url>
+    </urlset>"""
+    return Response(xml, mimetype="application/xml")
 
 if __name__ == "__main__":
     app.run(debug=True)
