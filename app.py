@@ -174,16 +174,7 @@ def forgot_password():
     except Exception:
         pass
 
-    target_db = globals().get('db')
-    if not target_db:
-        from app import db as target_db
-
-    # User lookup
-    user = None
-    try:
-        user = target_db.session.query(User).filter_by(email=email).first()
-    except Exception:
-        user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first()
 
     if not user:
         return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
@@ -199,7 +190,7 @@ def forgot_password():
     else:
         user.password = hashed
 
-    target_db.session.commit()
+    db.session.commit()
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
