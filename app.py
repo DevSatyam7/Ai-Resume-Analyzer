@@ -138,6 +138,7 @@ def history():
             parsed_data = r.result
 
         parsed_reports.append({
+            "id": r:id,
             "resume": r.resume_text,
             "result": parsed_data
         })
