@@ -157,6 +157,10 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
+    from flask import request, render_template, redirect, url_for
+    from werkzeug.security import generate_password_hash
+
+    # GET request par seedha page khulega
     if request.method == 'GET':
         return render_template('forgot_password.html')
 
@@ -167,20 +171,19 @@ def forgot_password():
         if not email or not new_password:
             return "Email aur Password dono required hain.", 400
 
-        # User check
-        user = None
+        # User model import
         try:
-            user = User.query.filter_by(email=email).first()
+            from models import User
         except Exception:
-            user = db.session.query(User).filter_by(email=email).first()
+            from model import User
+
+        user = User.query.filter_by(email=email).first()
 
         if not user:
-            return f"<h3 style='color:red;'>Email '{email}' database mein nahi mila! Pehle Sign Up karein.</h3>", 404
+            return f"<h3 style='color:red; font-family:sans-serif;'>Error: Email '{email}' database mein nahi mila! Pehle Sign Up karein.</h3>", 404
 
         # Password update
-        from werkzeug.security import generate_password_hash
         hashed = generate_password_hash(new_password)
-
         if hasattr(user, 'set_password'):
             user.set_password(new_password)
         elif hasattr(user, 'password_hash'):
@@ -188,12 +191,13 @@ def forgot_password():
         else:
             user.password = hashed
 
-        db.session.commit()
+        # Direct Model Session Commit (db import ki zaroorat nahi)
+        User.query.session.commit()
         return redirect(url_for('login'))
 
     except Exception as e:
         import traceback
-        return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
+        return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500    
 
 if __name__ == "__main__":
     app.run(debug=True)
