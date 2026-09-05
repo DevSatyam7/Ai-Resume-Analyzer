@@ -14,10 +14,7 @@ Base.metadata.create_all(bind=engine)
 # home
 @app.route("/")
 def home():
-    if "user" in session:
-        return redirect("/dashboard")
-    return redirect("/login")
-
+    return render_template("home.html", logged_in=("user" in session))
 
 # -----signup
 @app.route("/signup", methods=["GET", "POST"])
