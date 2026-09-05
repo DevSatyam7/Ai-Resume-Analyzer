@@ -155,34 +155,52 @@ def history():
 def logout():
     session.pop("user", None)
     return redirect("/login")
-@app.route('/forgot-password', methods=['GET', 'POST'])
+    @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    from flask import request, render_template, redirect, url_for
-    from models import User
-
     if request.method == 'POST':
-        email = request.form.get('email', '').strip()
-        new_password = request.form.get('new_password', '').strip()
+        try:
+            email = request.form.get('email', '').strip()
+            new_password = request.form.get('new_password', '').strip()
 
-        user = User.query.filter_by(email=email).first()
-        if user:
+            if not email or not new_password:
+                return "Email aur Password dono bharna zaroori hai.", 400
+
+            # Database import fallback
             try:
-                from werkzeug.security import generate_password_hash
-                if hasattr(user, 'set_password'):
-                    user.set_password(new_password)
-                elif hasattr(user, 'password_hash'):
-                    user.password_hash = generate_password_hash(new_password)
-                else:
-                    user.password = generate_password_hash(new_password)
+                from models import User, db
             except Exception:
-                user.password = new_password
+                from app import db, User
+
+            from werkzeug.security import generate_password_hash
+
+            # User dhundhein
+            user = None
+            try:
+                user = User.query.filter_by(email=email).first()
+            except Exception:
+                user = db.session.query(User).filter_by(email=email).first()
+
+            if not user:
+                return f"<h3 style='color:red;'>Email '{email}' database mein nahi mila! Pehle Sign Up karein ya sahi email dalein.</h3>", 404
+
+            # Password update format
+            hashed = generate_password_hash(new_password)
+            if hasattr(user, 'set_password'):
+                user.set_password(new_password)
+            elif hasattr(user, 'password_hash'):
+                user.password_hash = hashed
+            else:
+                user.password = hashed
 
             db.session.commit()
             return redirect(url_for('login'))
-        else:
-            return "Email database mein nahi mila! Kripya sahi email daalein.", 404
+
+        except Exception as e:
+            import traceback
+            return f"<h3>Database Error Traceback:</h3><pre>{traceback.format_exc()}</pre>", 500
 
     return render_template('forgot_password.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
