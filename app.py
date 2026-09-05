@@ -157,41 +157,43 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    # 1. GET Request: Page turant open hoga bina kisi database import ke
     if request.method == 'GET':
         return render_template('forgot_password.html')
 
-    # 2. POST Request: Form submit hone par chalega
-    email = request.form.get('email', '').strip()
-    new_password = request.form.get('new_password', '').strip()
-
-    if not email or not new_password:
-        return "Email aur Password dono bharne zaroori hain.", 400
-
-    # Models aur DB safe access
     try:
-        from models import User
-    except Exception:
-        pass
+        email = request.form.get('email', '').strip()
+        new_password = request.form.get('new_password', '').strip()
 
-    user = User.query.filter_by(email=email).first()
+        if not email or not new_password:
+            return "Email aur Password dono required hain.", 400
 
-    if not user:
-        return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
+        # User check
+        user = None
+        try:
+            user = User.query.filter_by(email=email).first()
+        except Exception:
+            user = db.session.query(User).filter_by(email=email).first()
 
-    # Password hash & update
-    from werkzeug.security import generate_password_hash
-    hashed = generate_password_hash(new_password)
+        if not user:
+            return f"<h3 style='color:red;'>Email '{email}' database mein nahi mila! Pehle Sign Up karein.</h3>", 404
 
-    if hasattr(user, 'set_password'):
-        user.set_password(new_password)
-    elif hasattr(user, 'password_hash'):
-        user.password_hash = hashed
-    else:
-        user.password = hashed
+        # Password update
+        from werkzeug.security import generate_password_hash
+        hashed = generate_password_hash(new_password)
 
-    db.session.commit()
-    return redirect(url_for('login'))
+        if hasattr(user, 'set_password'):
+            user.set_password(new_password)
+        elif hasattr(user, 'password_hash'):
+            user.password_hash = hashed
+        else:
+            user.password = hashed
+
+        db.session.commit()
+        return redirect(url_for('login'))
+
+    except Exception as e:
+        import traceback
+        return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
