@@ -12,14 +12,14 @@
         </p>
     </div>
 
-    <!-- Error Alert (Agar file read ya API me error aaye) -->
+    <!-- Error Alert -->
     {% if result and result.error %}
     <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-6 py-4 rounded-2xl text-sm">
         <strong>Error:</strong> {{ result.error }}
     </div>
     {% endif %}
 
-    <!-- Form Card -->
+    <!-- Input Form -->
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-12">
         <form method="POST" enctype="multipart/form-data" class="space-y-6">
             
@@ -33,7 +33,7 @@
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
 
-            <!-- Resume Text (Exact name="resume") -->
+            <!-- Resume Text -->
             <div>
                 <label class="block text-sm font-semibold text-slate-200 mb-2">
                     Resume Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file)</span>
@@ -43,7 +43,7 @@
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
-            <!-- File Upload (Exact name="file") & Action Button -->
+            <!-- File Upload & Action Button -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
@@ -62,43 +62,105 @@
     {% if result and not result.error %}
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-8">
         
-        <!-- Score & Status Header -->
+        <!-- Score Header -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
-                <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Analysis Complete</span>
-                <h2 class="text-2xl font-bold text-white mt-1">Audit Evaluation & Match</h2>
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Audit Evaluation Complete
+                </span>
+                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit & Gap Analysis</h2>
             </div>
             {% if result.ats_score is defined %}
-            <div class="bg-blue-950/80 border border-blue-800 px-6 py-3 rounded-2xl text-center">
+            <div class="bg-blue-950/80 border border-blue-800/80 px-6 py-3 rounded-2xl text-center shadow-lg shadow-blue-900/20">
                 <span class="text-xs text-blue-300 block font-medium">ATS Match Score</span>
                 <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
             </div>
             {% endif %}
         </div>
 
-        <!-- Matched Skills -->
+        <!-- 1. Identified Skills Found -->
+        {% set skills_list = result.skills or result.skills_found or result.matched_skills or result.present_skills or result.current_skills or result.identified_skills or result.strengths or result.extracted_skills %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths & Skills</h3>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-200 whitespace-pre-line leading-relaxed">
-                {{ result.skills or result.extracted_skills or "Skills recorded successfully." }}
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+                <span>Identified Strengths & Skills</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+                {% if skills_list and skills_list is iterable and skills_list is not string %}
+                    {% for skill in skills_list %}
+                        <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                            <span class="text-blue-400">✓</span> {{ skill }}
+                        </span>
+                    {% endfor %}
+                {% elif skills_list and skills_list is string %}
+                    {% for skill in skills_list.split(',') %}
+                        <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                            <span class="text-blue-400">✓</span> {{ skill.strip() }}
+                        </span>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-slate-500 text-xs">Skills recorded and factored into ATS score.</span>
+                {% endif %}
             </div>
         </div>
 
-        <!-- Skill Gaps / Missing Skills -->
+        <!-- 2. Missing Skills (Gaps) -->
+        {% set missing_list = result.missing_skills or result.skill_gaps or result.gaps %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Missing Critical Skills (Gaps)</h3>
-            <div class="bg-amber-950/20 border border-amber-800/40 rounded-xl p-5 text-sm text-amber-200 whitespace-pre-line leading-relaxed">
-                {{ result.missing_skills or "No critical skill gaps identified." }}
+            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
+                <span>Missing Critical Skills (Gaps)</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+                {% if missing_list and missing_list is iterable and missing_list is not string %}
+                    {% for m_skill in missing_list %}
+                        <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                            <span class="text-amber-400">⚠</span> {{ m_skill }}
+                        </span>
+                    {% endfor %}
+                {% elif missing_list and missing_list is string %}
+                    {% for m_skill in missing_list.split(',') %}
+                        <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
+                            <span class="text-amber-400">⚠</span> {{ m_skill.strip() }}
+                        </span>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-slate-500 text-xs">No major skill gaps identified.</span>
+                {% endif %}
             </div>
         </div>
 
-        <!-- Roadmap -->
+        <!-- 3. Targeted Career Roadmap Cards -->
         {% if result.roadmap %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3">Targeted Career Roadmap</h3>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 text-sm text-slate-300 whitespace-pre-line leading-relaxed">
-                {{ result.roadmap }}
-            </div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4 flex items-center gap-2">
+                <span>Targeted Career Roadmap</span>
+            </h3>
+
+            {% if result.roadmap is iterable and result.roadmap is not string %}
+                <div class="space-y-4">
+                    {% for step in result.roadmap %}
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+                            {% if step is mapping %}
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    <h4 class="text-sm font-bold text-emerald-400">
+                                        {{ step.phase or step.week or step.title or "Milestone Phase" }}
+                                    </h4>
+                                </div>
+                                <p class="text-sm text-slate-300 leading-relaxed pl-4 border-l border-slate-800">
+                                    {{ step.tasks or step.description or step }}
+                                </p>
+                            {% else %}
+                                <p class="text-sm text-slate-300 leading-relaxed">{{ step }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-300 whitespace-pre-line leading-relaxed">
+                    {{ result.roadmap }}
+                </div>
+            {% endif %}
         </div>
         {% endif %}
 
