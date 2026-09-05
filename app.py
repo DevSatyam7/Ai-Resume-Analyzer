@@ -157,47 +157,40 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    from flask import request, render_template, redirect, url_for
-    from werkzeug.security import generate_password_hash
-
-    # GET request par seedha page khulega
     if request.method == 'GET':
         return render_template('forgot_password.html')
 
+    email = request.form.get('email', '').strip()
+    new_password = request.form.get('new_password', '').strip()
+
+    if not email or not new_password:
+        return "Email aur Password dono required hain.", 400
+
+    # Line 2 aur Line 29 ke hisab se exact database session
+    db_session = SessionLocal()
     try:
-        email = request.form.get('email', '').strip()
-        new_password = request.form.get('new_password', '').strip()
-
-        if not email or not new_password:
-            return "Email aur Password dono required hain.", 400
-
-        # User model import
-        try:
-            from models import User
-        except Exception:
-            from model import User
-
-        user = User.query.filter_by(email=email).first()
+        user = db_session.query(models.User).filter_by(email=email).first()
 
         if not user:
-            return f"<h3 style='color:red; font-family:sans-serif;'>Error: Email '{email}' database mein nahi mila! Pehle Sign Up karein.</h3>", 404
+            return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
 
         # Password update
+        from werkzeug.security import generate_password_hash
         hashed = generate_password_hash(new_password)
-        if hasattr(user, 'set_password'):
-            user.set_password(new_password)
-        elif hasattr(user, 'password_hash'):
+
+        if hasattr(user, 'password_hash'):
             user.password_hash = hashed
         else:
             user.password = hashed
 
-        # Direct Model Session Commit (db import ki zaroorat nahi)
-        User.query.session.commit()
-        return redirect(url_for('login'))
+        db_session.commit()
+        return redirect('/login')
 
     except Exception as e:
+        db_session.rollback()
         import traceback
-        return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500    
-
+        return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
+    finally:
+        db_session.close()
 if __name__ == "__main__":
     app.run(debug=True)
