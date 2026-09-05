@@ -175,14 +175,7 @@ def forgot_password():
             return f"<h3 style='color:red;'>Error: Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
 
         # Password update
-        from werkzeug.security import generate_password_hash
-        hashed = generate_password_hash(new_password)
-
-        if hasattr(user, 'password_hash'):
-            user.password_hash = hashed
-        else:
-            user.password = hashed
-
+       user.password = new_password
         db_session.commit()
         return redirect('/login')
 
