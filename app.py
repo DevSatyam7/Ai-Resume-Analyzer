@@ -157,36 +157,62 @@ def logout():
     return redirect("/login")
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    from flask import request, render_template, redirect, url_for
-    from werkzeug.security import generate_password_hash
-    from models import db, User
-    import sqlalchemy as sa
+    
+    if request.method == 'GET':
+        return render_template('forgot_password.html')
 
-    if request.method == 'POST':
-        email = request.form.get('email', '').strip()
-        new_password = request.form.get('new_password', '').strip()
+  
+    email = request.form.get('email', '').strip()
+    new_password = request.form.get('new_password', '').strip()
 
-        if not email or not new_password:
-            return "Email aur New Password dono required hain.", 400
+    if not email or not new_password:
+        return "Email aur Password dono required hain.", 400
 
-        # Line 167 ka safe fix (Modern SQLAlchemy syntax)
-        user = None
+    # User aur db ko safely access karein
+    target_user = None
+    target_db = globals().get('db')
+
+    # User model find karein
+    user_cls = globals().get('User')
+    if not user_cls:
         try:
-            user = db.session.execute(sa.select(User).filter_by(email=email)).scalar_one_or_none()
+            from models import User as user_cls
         except Exception:
-            user = db.session.query(User).filter_by(email=email).first()
+            pass
 
-        if not user:
-            return f"<h3 style='color:red; font-family:sans-serif;'>Error: Email '{email}' database mein register nahi hai!</h3>", 404
-
-        # Password update
-        hashed_password = generate_password_hash(new_password)
-        if hasattr(user, 'set_password'):
-            user.set_password(new_password)
-        elif hasattr(user, 'password_hash'):
-            user.password_hash = hashed_password
+    # Database query
+    try:
+        if target_db:
+            target_user = target_db.session.query(user_cls).filter_by(email=email).first()
         else:
-            user.password = hashed_password
+            target_user = user_cls.query.filter_by(email=email).first()
+    except Exception:
+        try:
+            target_user = user_cls.query.filter_by(email=email).first()
+        except Exception as err:
+            return f"<h3>Database Query Error:</h3><p>{err}</p>", 500
+
+    if not target_user:
+        return f"<h3 style='color:red;'>Email '{email}' database mein nahi mila! Sahi registered email dalein.</h3>", 404
+
+    # Password hash aur update
+    from werkzeug.security import generate_password_hash
+    hashed = generate_password_hash(new_password)
+
+    if hasattr(target_user, 'set_password'):
+        target_user.set_password(new_password)
+    elif hasattr(target_user, 'password_hash'):
+        target_user.password_hash = hashed
+    else:
+        target_user.password = hashed
+
+    if target_db:
+        target_db.session.commit()
+    else:
+        from app import db
+        db.session.commit()
+
+    return redirect(url_for('login'))
 
         db.session.commit()
         return redirect(url_for('login'))
