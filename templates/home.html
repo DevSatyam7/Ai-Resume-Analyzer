@@ -10,10 +10,7 @@
     <meta name="keywords" content="AI Resume Analyzer, CareersAnalysis, ATS resume checker, career roadmap, resume audit, tech resume">
     <meta name="robots" content="index, follow">
 
-    <!-- Google Search Console Verification (Google se mila code yahan paste karein) -->
-    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> -->
-
-    <!-- Favicon (Browser Tab & Google Search Logo) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
 
@@ -27,17 +24,19 @@
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Sticky Navigation Bar -->
+    <!-- Sticky Navigation Bar (Mobile Responsive Fix) -->
     <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3 group">
-                <!-- Brand Logo -->
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-blue-500/25 group-hover:scale-105 transition duration-300 border border-slate-800">
-                <span class="text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
+            
+            <!-- Brand Logo -->
+            <a href="/" class="flex items-center gap-2 sm:gap-3 group shrink-0">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/25 group-hover:scale-105 transition duration-300 border border-slate-800">
+                <span class="text-base sm:text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
                     Careers<span class="text-blue-500">Analysis</span>
                 </span>
             </a>
 
+            <!-- Desktop Nav Links -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
                 <a href="#features" class="hover:text-white transition">Features</a>
                 <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
@@ -45,17 +44,18 @@
                 <a href="#faq" class="hover:text-white transition">FAQ</a>
             </nav>
 
-            <div class="flex items-center gap-4">
+            <!-- Buttons (Auto-fit on Mobile) -->
+            <div class="flex items-center gap-1.5 sm:gap-4 shrink-0">
                 {% if logged_in %}
-                    <a href="/dashboard" class="text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition">
+                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition">
                         Dashboard
                     </a>
                 {% else %}
-                    <a href="/login" class="text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">
+                    <a href="/login" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-2 sm:px-3 py-1.5 sm:py-2">
                         Log In
                     </a>
-                    <a href="/signup" class="text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition">
-                        Get Started Free
+                    <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition whitespace-nowrap">
+                        Get Started<span class="hidden sm:inline"> Free</span>
                     </a>
                 {% endif %}
             </div>
@@ -64,52 +64,52 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="relative pt-20 pb-24 overflow-hidden">
+        <section class="relative pt-16 sm:pt-20 pb-20 sm:pb-24 overflow-hidden">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950 -z-10"></div>
             
-            <div class="max-w-5xl mx-auto px-6 text-center">
-                <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-1.5 rounded-full mb-8">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+                <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-3.5 sm:px-4 py-1.5 rounded-full mb-6 sm:mb-8">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span class="text-xs font-semibold text-slate-300 tracking-wide">Production Ready • Powered by Gemini AI</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15] mb-8">
+                <h1 class="text-3xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.2] sm:leading-[1.15] mb-6 sm:mb-8">
                     Smart Resume Auditing & <br class="hidden sm:inline">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-300">
                         Career Path Optimization
                     </span>
                 </h1>
 
-                <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
+                <p class="text-sm sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10">
                     Bridge the gap between your resume and modern recruiter filters. Pinpoint missing industry skills, evaluate your real-world ATS score, and receive a weekly study roadmap.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="/dashboard" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 py-4 rounded-xl shadow-xl shadow-blue-600/25 transition group">
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                    <a href="/dashboard" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-xl shadow-blue-600/25 transition group">
                         <span>Analyze Resume Now</span>
                         <span class="group-hover:translate-x-1 transition duration-200">→</span>
                     </a>
-                    <a href="#how-it-works" class="w-full sm:w-auto inline-flex items-center justify-center text-base font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-8 py-4 rounded-xl transition">
+                    <a href="#how-it-works" class="w-full sm:w-auto inline-flex items-center justify-center text-sm sm:text-base font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition">
                         See How It Works
                     </a>
                 </div>
 
                 <!-- Stats Bar -->
-                <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-slate-800/80">
+                <div class="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-10 sm:pt-12 border-t border-slate-800/80">
                     <div class="text-center">
-                        <div class="text-3xl font-extrabold text-white">100%</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">100%</div>
                         <div class="text-xs font-medium text-slate-400 mt-1">Free for Students</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-extrabold text-white">40+</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">40+</div>
                         <div class="text-xs font-medium text-slate-400 mt-1">ATS Checkpoints</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-extrabold text-white">&lt; 15s</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">&lt; 15s</div>
                         <div class="text-xs font-medium text-slate-400 mt-1">AI Audit Latency</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl font-extrabold text-white">4-Week</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">4-Week</div>
                         <div class="text-xs font-medium text-slate-400 mt-1">Targeted Roadmap</div>
                     </div>
                 </div>
@@ -117,44 +117,41 @@
         </section>
 
         <!-- Features Grid -->
-        <section id="features" class="py-24 border-t border-slate-900 bg-slate-950/50">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+        <section id="features" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
                     <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Core Modules</h2>
-                    <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                         Engineered to maximize your interview conversion rate
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl font-bold mb-6">
                             🎯
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Algorithmic ATS Scoring</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Algorithmic ATS Scoring</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
                             Simulates recruitment parser engines (Workday, Greenhouse, Taleo) to score keyword density, structural formatting, and job title alignment.
                         </p>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-bold mb-6">
                             🔍
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Skill Gap Diagnosis</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Skill Gap Diagnosis</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
                             Contrasts your current projects and tools against targeted market positions to pinpoint absent technical skills and critical libraries.
                         </p>
                     </div>
 
-                    <!-- Card 3 -->
-                    <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl font-bold mb-6">
                             🗓️
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Structured Roadmap</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Structured Roadmap</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
                             Builds a chronological 4-week preparation timeline covering concept revisions, milestone projects, and role-specific interview queries.
                         </p>
@@ -164,29 +161,29 @@
         </section>
 
         <!-- How It Works -->
-        <section id="how-it-works" class="py-24 border-t border-slate-900">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center max-w-2xl mx-auto mb-16">
+        <section id="how-it-works" class="py-20 sm:py-24 border-t border-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
                     <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Workflow</h2>
-                    <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                         Three steps from draft to recruiter-ready
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                    <div class="bg-slate-900/40 border border-slate-800/80 p-8 rounded-2xl relative">
-                        <span class="text-5xl font-black text-slate-800 absolute top-6 right-6">01</span>
-                        <h4 class="text-lg font-bold text-white mb-3">Provide Resume & Role</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">01</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Provide Resume & Role</h4>
                         <p class="text-slate-400 text-sm leading-relaxed">Paste your raw resume text or upload your document, and enter your target career title.</p>
                     </div>
-                    <div class="bg-slate-900/40 border border-slate-800/80 p-8 rounded-2xl relative">
-                        <span class="text-5xl font-black text-slate-800 absolute top-6 right-6">02</span>
-                        <h4 class="text-lg font-bold text-white mb-3">Automated LLM Parsing</h4>
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">02</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Automated LLM Parsing</h4>
                         <p class="text-slate-400 text-sm leading-relaxed">Our pipeline executes strict system prompts via Gemini to evaluate structure, relevance, and omissions.</p>
                     </div>
-                    <div class="bg-slate-900/40 border border-slate-800/80 p-8 rounded-2xl relative">
-                        <span class="text-5xl font-black text-slate-800 absolute top-6 right-6">03</span>
-                        <h4 class="text-lg font-bold text-white mb-3">Execute Feedback</h4>
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">03</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Execute Feedback</h4>
                         <p class="text-slate-400 text-sm leading-relaxed">Review the real-time ATS match percentage, apply missing keywords, and follow the preparation track.</p>
                     </div>
                 </div>
@@ -194,11 +191,11 @@
         </section>
 
         <!-- Developer / College Attribution Section -->
-        <section id="creator" class="py-24 border-t border-slate-900 bg-slate-950/70">
-            <div class="max-w-4xl mx-auto px-6">
-                <div class="bg-gradient-to-b from-slate-900 to-slate-900/50 border border-slate-800 rounded-3xl p-8 sm:p-12">
-                    <div class="flex flex-col sm:flex-row items-center gap-8">
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-4xl shadow-xl shadow-blue-600/30 flex-shrink-0">
+        <section id="creator" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/70">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6">
+                <div class="bg-gradient-to-b from-slate-900 to-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-12">
+                    <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+                        <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-3xl sm:text-4xl shadow-xl shadow-blue-600/30 shrink-0">
                             👨‍💻
                         </div>
                         <div class="text-center sm:text-left">
@@ -206,10 +203,10 @@
                                 Architect & Developer
                             </span>
                             <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Satyam</h3>
-                            <p class="text-sm font-semibold text-blue-400 mb-4">
+                            <p class="text-xs sm:text-sm font-semibold text-blue-400 mb-3 sm:mb-4">
                                 B.Tech in Computer Science & Engineering (Artificial Intelligence)
                             </p>
-                            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                                 Developed at <strong class="text-white">Government Engineering College (GEC), Munger</strong> 
                                 (affiliated with <strong class="text-white">Bihar Engineering University</strong>).
                             </p>
@@ -223,27 +220,27 @@
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="py-24 border-t border-slate-900">
-            <div class="max-w-3xl mx-auto px-6">
-                <div class="text-center mb-16">
+        <section id="faq" class="py-20 sm:py-24 border-t border-slate-900">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12 sm:mb-16">
                     <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Knowledge Base</h2>
-                    <p class="text-3xl font-extrabold text-white tracking-tight">Frequently Asked Questions</p>
+                    <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Frequently Asked Questions</p>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-xl">
-                        <h4 class="font-bold text-white text-base mb-2">Is CareersAnalysis free to use?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Yes. This platform is an open student-led project created to assist college peers and freshers in auditing their resumes without paid subscriptions.</p>
+                    <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
+                        <h4 class="font-bold text-white text-sm sm:text-base mb-2">Is CareersAnalysis free to use?</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Yes. This platform is an open student-led project created to assist college peers and freshers in auditing their resumes without paid subscriptions.</p>
                     </div>
 
-                    <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-xl">
-                        <h4 class="font-bold text-white text-base mb-2">How accurate is the ATS score?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">The scoring model inspects semantic relevance, keyword completeness, and action-verb strength against modern corporate ATS criteria, providing actionable percentile scores.</p>
+                    <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
+                        <h4 class="font-bold text-white text-sm sm:text-base mb-2">How accurate is the ATS score?</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">The scoring model inspects semantic relevance, keyword completeness, and action-verb strength against modern corporate ATS criteria, providing actionable percentile scores.</p>
                     </div>
 
-                    <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-xl">
-                        <h4 class="font-bold text-white text-base mb-2">Is my uploaded resume text stored?</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Your resume content is securely analyzed in-memory during execution and is neither sold nor retained for model re-training.</p>
+                    <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
+                        <h4 class="font-bold text-white text-sm sm:text-base mb-2">Is my uploaded resume text stored?</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Your resume content is securely analyzed in-memory during execution and is neither sold nor retained for model re-training.</p>
                     </div>
                 </div>
             </div>
@@ -251,8 +248,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-900 py-12 bg-slate-950 text-slate-500 text-xs">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <footer class="border-t border-slate-900 py-8 sm:py-12 bg-slate-950 text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
             <div>
                 © 2026 CareersAnalysis. Designed & Engineered by Satyam • GEC Munger.
             </div>
