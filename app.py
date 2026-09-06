@@ -211,7 +211,7 @@ def forgot_password():
 
 @app.route('/robots.txt')
 def robots():
-    content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup"
+    content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup\nSitemap: https://ai-resume-analyzer-2jxj.onrender.com/sitemap.xml"
     return Response(content, mimetype="text/plain")
 
 
