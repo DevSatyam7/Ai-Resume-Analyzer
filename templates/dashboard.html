@@ -1,46 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- html2pdf Library for Instant PDF Download -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <div class="max-w-4xl mx-auto px-6 py-12">
     <!-- Title -->
-    <div class="text-center mb-10">
+    <div class="text-center mb-10 print:hidden">
         <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">
             AI Resume & Career Analyzer
         </h1>
         <p class="text-slate-400 text-sm md:text-base">
-            Analyze skill gaps, ATS fit, and generate a personalized preparation roadmap.
+            Analyze skill gaps, ATS fit, expected salary, and generate a personalized roadmap.
         </p>
     </div>
 
     <!-- Error Alert -->
     {% if result and result.error %}
-    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-6 py-4 rounded-2xl text-sm">
+    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-6 py-4 rounded-2xl text-sm print:hidden">
         <strong>Error:</strong> {{ result.error }}
     </div>
     {% endif %}
 
     <!-- Input Form -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-12">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-12 print:hidden">
         <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
             
             <!-- Target Career Role -->
             <div>
-                <label class="block text-sm font-semibold text-slate-200 mb-2">Target Career Role</label>
+                <label class="block text-sm font-semibold text-slate-200 mb-2">Target Career Role or Examination</label>
                 <input type="text" name="role" required
-                    placeholder="e.g. Backend Developer, Civil Site Engineer, Data Analyst"
+                    placeholder="e.g. Backend Developer, SSC CGL Inspector, Data Analyst, RRB NTPC"
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
+            </div>
+
+            <!-- Report Language Toggle -->
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Report Language</label>
+                <div class="flex items-center gap-6">
+                    <label class="inline-flex items-center gap-2 text-sm text-slate-200 cursor-pointer">
+                        <input type="radio" name="language" value="en" checked class="accent-blue-500">
+                        <span>English</span>
+                    </label>
+                    <label class="inline-flex items-center gap-2 text-sm text-slate-200 cursor-pointer">
+                        <input type="radio" name="language" value="hi" class="accent-blue-500">
+                        <span>हिंदी (Devanagari)</span>
+                    </label>
+                </div>
             </div>
 
             <!-- Resume Text -->
             <div>
                 <label class="block text-sm font-semibold text-slate-200 mb-2">
-                    Resume Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file)</span>
+                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file, or type qualifications)</span>
                 </label>
                 <textarea name="resume" rows="6"
-                    placeholder="Paste your resume text directly here..."
+                    placeholder="Paste your resume text here, or simply write: 'B.Tech CSE 2026, Python, SQL, 7.8 CGPA'..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
@@ -57,7 +69,7 @@
                     Run Analysis
                 </button>
 
-                <!-- Loading Spinner State (Hidden by default) -->
+                <!-- Loading Spinner State -->
                 <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg cursor-not-allowed">
                     <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -69,18 +81,18 @@
         </form>
     </div>
 
-    <!-- Complete Analysis Output (Report Container for PDF) -->
+    <!-- Complete Analysis Output -->
     {% if result and not result.error %}
     <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-8">
         
-        <!-- Score Header & Download PDF Button -->
+        <!-- Score Header & Save PDF Button -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
                 <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     Audit Evaluation Complete
                 </span>
-                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit & Gap Analysis</h2>
+                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit & Career Analysis</h2>
             </div>
             
             <div class="flex items-center gap-4">
@@ -91,18 +103,63 @@
                 </div>
                 {% endif %}
 
-                <!-- Download PDF Button -->
-                <button onclick="downloadReportPDF()" 
-                    class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-xl text-sm font-semibold transition shadow-md">
+                <!-- Native Save as PDF Button (No Library Required) -->
+                <button type="button" onclick="window.print()" 
+                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-xl text-sm font-semibold transition shadow-md">
                     <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"></path>
                     </svg>
-                    <span>Download PDF</span>
+                    <span>Save as PDF</span>
                 </button>
             </div>
         </div>
 
-        <!-- 1. Profile Summary -->
+        <!-- 1. Pay-Scale & Eligibility Dual Cards -->
+        {% if result.pay_scale or result.eligibility %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Pay-Scale Emerald Card -->
+            {% if result.pay_scale %}
+            <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale & CTC</span>
+                    <span class="text-xs bg-slate-900 border border-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md">{{ result.pay_scale.category }}</span>
+                </div>
+                <div class="text-2xl font-black text-emerald-400 my-1">
+                    {{ result.pay_scale.salary_range }}
+                </div>
+                <p class="text-xs text-blue-300 mb-2">
+                    In-Hand Approx: <span class="font-semibold text-white">{{ result.pay_scale.in_hand_monthly }}</span>
+                </p>
+                <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+                    <strong class="text-slate-300">Growth:</strong> {{ result.pay_scale.career_growth }}
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Eligibility Verification Card -->
+            {% if result.eligibility %}
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Eligibility Check</span>
+                    <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold {% if 'Eligible' in result.eligibility.status and 'Not' not in result.eligibility.status %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/30{% endif %}">
+                        {{ result.eligibility.status }}
+                    </span>
+                </div>
+                <div class="text-xs text-slate-300 space-y-1.5 mt-2">
+                    <p><span class="text-slate-500">Required:</span> {{ result.eligibility.required_qualification }}</p>
+                    <p><span class="text-slate-500">Candidate:</span> {{ result.eligibility.matched_qualification }}</p>
+                </div>
+                <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2 mt-2">
+                    <strong class="text-slate-300">Criteria Fit:</strong> {{ result.eligibility.age_or_experience_fit }}
+                </p>
+            </div>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        <!-- 2. Profile Summary -->
         {% if result.profile_summary %}
         <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
             <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">Executive Profile Summary</h3>
@@ -110,7 +167,7 @@
         </div>
         {% endif %}
 
-        <!-- 2. Identified Strengths & Skills -->
+        <!-- 3. Identified Strengths & Skills -->
         {% set skills_list = result.matched_skills or result.skills %}
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths & Skills</h3>
@@ -127,7 +184,7 @@
             </div>
         </div>
 
-        <!-- 3. Missing Critical Skills (Gaps) -->
+        <!-- 4. Missing Critical Skills (Gaps) -->
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Missing Critical Skills (Gaps)</h3>
             <div class="flex flex-wrap gap-2">
@@ -143,7 +200,7 @@
             </div>
         </div>
 
-        <!-- 4. Targeted Career Roadmap -->
+        <!-- 5. Targeted Career Roadmap -->
         {% if result.roadmap %}
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
@@ -161,10 +218,10 @@
         </div>
         {% endif %}
 
-        <!-- 5. Tailored Interview Questions -->
+        <!-- 6. Targeted Interview / Exam Questions -->
         {% if result.interview_questions %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical Interview Questions</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical & Exam Questions</h3>
             <div class="space-y-4">
                 {% for item in result.interview_questions %}
                 <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
@@ -172,7 +229,7 @@
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                             {{ loop.index }}
                         </span>
-                        <h4 class="text-sm font-semibold text-white leading-snug">{{ item.question }}</h4>
+                        <h4 class="text-sm font-semibold text-white leading-snug">{{ item.question or item.q }}</h4>
                     </div>
                     {% if item.tip %}
                     <div class="pl-9 text-xs text-slate-400 border-l border-purple-500/30 ml-3">
@@ -189,29 +246,17 @@
     {% endif %}
 </div>
 
-<!-- JavaScript for Loading State & PDF Generation -->
+<!-- Only 6 lines of pure JS for form submit spinner -->
 <script>
-    // Form submit listener for loading spinner
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingState = document.getElementById('loadingState');
 
-    form.addEventListener('submit', function() {
-        submitBtn.classList.add('hidden');
-        loadingState.classList.remove('hidden');
-    });
-
-    // PDF Download function using html2pdf
-    function downloadReportPDF() {
-        const report = document.getElementById('reportContainer');
-        const opt = {
-            margin: [10, 10, 10, 10],
-            filename: 'Resume_Analysis_Report.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(report).save();
+    if (form) {
+        form.addEventListener('submit', function() {
+            submitBtn.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+        });
     }
 </script>
 {% endblock %}
