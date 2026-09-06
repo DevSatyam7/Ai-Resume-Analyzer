@@ -10,14 +10,17 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    # Saari keys clean karna aur aadhi-adhuri tooti hui keys ko filter karna
-    raw_tokens = re.split(r'[\s,]+', raw_keys)
-    api_keys = [k.strip().strip("'\"") for k in raw_tokens if len(k.strip().strip("'\"")) >= 30]
+    # Comma se split karke har key ke andar ke newlines aur spaces ko auto-stitch karna
+    api_keys = ["".join(k.split()).strip("'\"") for k in raw_keys.split(",") if k.strip()]
+
+    # Sirf genuine full-length keys rakhna
+    api_keys = [k for k in api_keys if len(k) >= 35]
 
     if not api_keys:
-        raise ValueError("No valid GEMINI_API_KEY found (length >= 30).")
+        raise ValueError("No valid GEMINI_API_KEY found after cleaning.")
 
-    # cURL wala official default model
+    print(f"--> [Gemini Engine] Successfully loaded {len(api_keys)} active keys for rotation.")
+
     if not models_to_try:
         models_to_try = [
             "gemini-flash-latest",
@@ -27,13 +30,11 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
 
     last_error = None
 
-    for key in api_keys:
+    # Multi-Key Rotation Loop
+    for idx, key in enumerate(api_keys):
         for m_name in models_to_try:
             try:
-                # Exact cURL URL (bina ?key= ke)
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent"
-                
-                # Exact cURL Headers
                 headers = {
                     "Content-Type": "application/json",
                     "X-goog-api-key": key
@@ -70,10 +71,10 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
 
             except urllib.error.HTTPError as e:
                 err_msg = e.read().decode("utf-8", errors="ignore")
-                last_error = f"HTTP {e.code}: {err_msg}"
+                last_error = f"Key #{idx+1} ({m_name}) - HTTP {e.code}: {err_msg}"
                 continue
             except Exception as e:
-                last_error = str(e)
+                last_error = f"Key #{idx+1} ({m_name}) - {str(e)}"
                 continue
 
     raise Exception(f"All keys and models failed. Last error: {last_error}")
