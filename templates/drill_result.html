@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.query_title }} — CareersAnalysis Breakdown</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background-color: #030712;
+            color: #f8fafc;
+            padding: 40px 16px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #0f172a;
+            color: #38bdf8;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: border-color 0.2s;
+        }
+        .btn-back:hover {
+            border-color: #38bdf8;
+        }
+        .card {
+            background: #0b1120;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 12px 0 8px;
+            color: #ffffff;
+        }
+        .summary {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .stat-box {
+            background: #111c35;
+            border: 1px solid #1e293b;
+            padding: 14px;
+            border-radius: 10px;
+            border-left: 3px solid #38bdf8;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .stat-val {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-top: 4px;
+        }
+        .section-heading {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .unit-card {
+            background: #111c35;
+            border: 1px solid #1e293b;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .unit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .unit-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+        }
+        .tag-weight {
+            font-size: 0.72rem;
+            background: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .unit-topics {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        .q-card {
+            background: #111c35;
+            border: 1px solid #1e293b;
+            border-left: 4px solid #2563eb;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #f8fafc;
+            margin-bottom: 6px;
+        }
+        .q-ans {
+            font-size: 0.86rem;
+            color: #94a3b8;
+        }
+        .q-ans strong {
+            color: #10b981;
+        }
+        .tips-list {
+            padding-left: 18px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .tips-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-back">← Back to CareersAnalysis</a>
+
+        <!-- Hero Overview -->
+        <div class="card">
+            <span class="badge">{{ data.category_type }}</span>
+            <h1 class="title">{{ data.query_title }}</h1>
+            <p class="summary">{{ data.summary }}</p>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Eligibility / Target</div>
+                    <div class="stat-val">{{ data.key_stats.eligibility_or_prereq }}</div>
+                </div>
+                <div class="stat-box" style="border-left-color: #f59e0b;">
+                    <div class="stat-label">Difficulty Rating</div>
+                    <div class="stat-val" style="color: #fbbf24;">{{ data.key_stats.difficulty_rating }}</div>
+                </div>
+                <div class="stat-box" style="border-left-color: #10b981;">
+                    <div class="stat-label">Prep Timeline</div>
+                    <div class="stat-val" style="color: #34d399;">{{ data.key_stats.recommended_timeline }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Syllabus Breakdown -->
+        {% if data.syllabus_units %}
+        <div class="card">
+            <h2 class="section-heading">📚 High-Yield Syllabus & Units</h2>
+            {% for unit in data.syllabus_units %}
+            <div class="unit-card">
+                <div class="unit-header">
+                    <div class="unit-title">{{ unit.unit_name }}</div>
+                    <span class="tag-weight">{{ unit.weightage }} Weightage</span>
+                </div>
+                <div class="unit-topics">{{ unit.must_cover_topics }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- High-Yield Questions -->
+        {% if data.high_yield_questions %}
+        <div class="card">
+            <h2 class="section-heading">🎯 High-Yield Questions & Approaches</h2>
+            {% for item in data.high_yield_questions %}
+            <div class="q-card">
+                <div class="q-text">Q{{ loop.index }}: {{ item.q }}</div>
+                <div class="q-ans"><strong>Best Approach:</strong> {{ item.approach }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Examiner Strategy & Traps -->
+        {% if data.strategy_and_mistakes %}
+        <div class="card">
+            <h2 class="section-heading">💡 Examiner Tips & Critical Traps</h2>
+            <ul class="tips-list">
+                {% for tip in data.strategy_and_mistakes %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
