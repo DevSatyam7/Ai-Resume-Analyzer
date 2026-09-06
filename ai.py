@@ -1,20 +1,85 @@
 import os
 import json
 import re
-import google.generativeai as genai
+import urllib.request
+import urllib.error
+
+
+def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True):
+    """
+    6 keys rotation ke sath Gemini ko direct x-goog-api-key header se call karta hai
+    taaki nayi AQ. wali keys par 401 unsupported token error na aaye.
+    """
+    raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
+    if not raw_keys:
+        raise ValueError("GEMINI_API_KEY is not set in Render environment.")
+
+    # Comma, newline ya spaces se split karke saari keys ko safely clean karna
+    api_keys = [k.strip().strip("'\"") for k in re.split(r'[\s,]+', raw_keys) if k.strip().strip("'\"")]
+
+    if not models_to_try:
+        models_to_try = [
+            "gemini-2.0-flash",
+            "gemini-1.5-flash",
+            "gemini-1.5-pro"
+        ]
+
+    last_error = None
+
+    # Bari-bari har key aur model par try karega (Multi-key rotation)
+    for key in api_keys:
+        for m_name in models_to_try:
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent"
+                headers = {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": key
+                }
+                body = {
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "temperature": temperature
+                    }
+                }
+                if json_mode:
+                    body["generationConfig"]["responseMimeType"] = "application/json"
+
+                req = urllib.request.Request(
+                    url,
+                    data=json.dumps(body).encode("utf-8"),
+                    headers=headers,
+                    method="POST"
+                )
+
+                with urllib.request.urlopen(req, timeout=25) as resp:
+                    resp_data = json.loads(resp.read().decode("utf-8"))
+                    raw_text = resp_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+                    # Markdown tags clean karna
+                    raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
+                    raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
+
+                    start = raw_text.find("{")
+                    end = raw_text.rfind("}")
+                    if start != -1 and end != -1:
+                        raw_text = raw_text[start : end + 1]
+
+                    return json.loads(raw_text)
+
+            except urllib.error.HTTPError as e:
+                err_msg = e.read().decode("utf-8", errors="ignore")
+                last_error = f"HTTP {e.code}: {err_msg}"
+                continue
+            except Exception as e:
+                last_error = str(e)
+                continue
+
+    raise Exception(f"All keys and models failed. Last error: {last_error}")
 
 
 def analyze_resume(resume_text, target_role="Software Developer", language="en", **kwargs):
     role = kwargs.get("role", target_role) or "Software Developer"
 
-    raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
-    if not raw_keys:
-        raise ValueError("GEMINI_API_KEY is not set in Render environment.")
-
-    # Quotes (' ya ") aur extra spaces clean karna
-    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
-
-    # Language toggle rule
     lang_rule = (
         "Respond in clear Hindi (Devanagari script), keeping core technical terms in English."
         if language == "hi"
@@ -26,7 +91,7 @@ You are an expert ATS auditor, senior corporate technical recruiter, and governm
 Target Role / Examination: {role}
 Language Instruction: {lang_rule}
 
-Analyze the candidate profile. Return ONLY a valid JSON object matching this schema:
+Analyze the candidate profile. Return ONLY a valid JSON object matching exactly this schema:
 {{
   "ats_score": 78,
   "pay_scale": {{
@@ -60,61 +125,10 @@ Analyze the candidate profile. Return ONLY a valid JSON object matching this sch
 Candidate Details:
 {resume_text}
 """
-
-    models_to_try = [
-        "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-pro"
-    ]
-
-    last_error = None
-
-    for key in api_keys:
-        try:
-            genai.configure(api_key=key)
-        except Exception as e:
-            last_error = e
-            continue
-
-        for m_name in models_to_try:
-            try:
-                model = genai.GenerativeModel(
-                    model_name=m_name,
-                    system_instruction=f"You are a strict ATS and exam career evaluator. Output only valid JSON. {lang_rule}"
-                )
-                response = model.generate_content(
-                    prompt,
-                    generation_config={
-                        "temperature": 0.2,
-                        "response_mime_type": "application/json"
-                    }
-                )
-
-                raw_text = response.text.strip()
-                raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
-                raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
-
-                start = raw_text.find("{")
-                end = raw_text.rfind("}")
-                if start != -1 and end != -1:
-                    raw_text = raw_text[start : end + 1]
-
-                return json.loads(raw_text)
-
-            except Exception as e:
-                last_error = e
-                continue
-
-    raise Exception(f"All models failed for resume analysis. Last error: {last_error}")
+    return _call_gemini_raw(prompt, temperature=0.2, json_mode=True)
 
 
 def get_comprehensive_drill(user_query):
-    raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
-    if not raw_keys:
-        raise ValueError("GEMINI_API_KEY is not set in Render environment.")
-
-    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
-
     prompt = f"""
 You are an expert exam mentor and academic strategist.
 Analyze this user query: "{user_query}"
@@ -150,83 +164,40 @@ Return ONLY a valid JSON object matching this schema:
   ]
 }}
 """
-
-    models_to_try = [
-        "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-pro"
-    ]
-
-    for key in api_keys:
-        try:
-            genai.configure(api_key=key)
-        except Exception:
-            continue
-
-        for m_name in models_to_try:
-            try:
-                model = genai.GenerativeModel(
-                    model_name=m_name,
-                    system_instruction="You are an exam and subject expert. Output only valid JSON."
-                )
-                response = model.generate_content(
-                    prompt,
-                    generation_config={
-                        "temperature": 0.3,
-                        "response_mime_type": "application/json"
-                    }
-                )
-
-                raw_text = response.text.strip()
-                raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
-                raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
-
-                start = raw_text.find("{")
-                end = raw_text.rfind("}")
-                if start != -1 and end != -1:
-                    raw_text = raw_text[start : end + 1]
-
-                return json.loads(raw_text)
-
-            except Exception:
-                continue
-
-    return {
-        "query_title": user_query,
-        "category_type": "Quick Guide",
-        "summary": "Essential roadmap and practice outline for preparation.",
-        "key_stats": {
-            "eligibility_or_prereq": "Standard eligibility criteria",
-            "difficulty_rating": "Moderate",
-            "recommended_timeline": "Consistent 4-8 weeks"
-        },
-        "syllabus_units": [
-            {
-                "unit_name": "Core Fundamentals",
-                "weightage": "High",
-                "must_cover_topics": "Basics, conceptual problems, and previous year patterns"
-            }
-        ],
-        "high_yield_questions": [
-            {
-                "q": f"What are the foundational concepts tested in {user_query}?",
-                "approach": "Master definitions, standard formulas, and practice 15-20 previous year questions."
-            }
-        ],
-        "strategy_and_mistakes": [
-            "Pro Tip: Stick to 1 standard reference book and do active revision.",
-            "Pitfall: Spending too much time on theory without solving time-bound questions."
-        ]
-    }
+    try:
+        return _call_gemini_raw(prompt, temperature=0.3, json_mode=True)
+    except Exception as e:
+        print("Fallback triggered for drill:", e)
+        return {
+            "query_title": user_query,
+            "category_type": "Quick Guide",
+            "summary": "Essential roadmap and practice outline for preparation.",
+            "key_stats": {
+                "eligibility_or_prereq": "Standard eligibility criteria",
+                "difficulty_rating": "Moderate",
+                "recommended_timeline": "Consistent 4-8 weeks"
+            },
+            "syllabus_units": [
+                {
+                    "unit_name": "Core Fundamentals",
+                    "weightage": "High",
+                    "must_cover_topics": "Basics, conceptual problems, and previous year patterns"
+                }
+            ],
+            "high_yield_questions": [
+                {
+                    "q": f"What are the foundational concepts tested in {user_query}?",
+                    "approach": "Master definitions, standard formulas, and practice previous year questions."
+                }
+            ],
+            "strategy_and_mistakes": [
+                "Pro Tip: Stick to 1 standard reference book and do active revision.",
+                "Pitfall: Spending too much time on theory without solving time-bound questions."
+            ]
+        }
 
 
 def evaluate_answer(question, user_answer):
-    raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
-    if not raw_keys:
-        raise ValueError("GEMINI_API_KEY is not set.")
-
-    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
-
     prompt = f"""
 You are a senior technical interviewer and viva examiner.
 Question: "{question}"
@@ -240,40 +211,13 @@ Evaluate the answer objectively and return ONLY valid JSON:
   "ideal_answer": "Crisp 2-sentence ideal response."
 }}
 """
-
-    models_to_try = [
-        "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-pro"
-    ]
-
-    for key in api_keys:
-        try:
-            genai.configure(api_key=key)
-        except Exception:
-            continue
-
-        for m_name in models_to_try:
-            try:
-                model = genai.GenerativeModel(m_name)
-                response = model.generate_content(
-                    prompt,
-                    generation_config={"temperature": 0.2, "response_mime_type": "application/json"}
-                )
-                raw_text = response.text.strip()
-                raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
-                raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
-                start = raw_text.find("{")
-                end = raw_text.rfind("}")
-                if start != -1 and end != -1:
-                    raw_text = raw_text[start : end + 1]
-                return json.loads(raw_text)
-            except Exception:
-                continue
-
-    return {
-        "score": "N/A",
-        "verdict": "Reviewed",
-        "feedback": "Include more direct keywords and practical examples in your answer.",
-        "ideal_answer": "State the definition directly, mention a use case, and keep it crisp."
-    }
+    try:
+        return _call_gemini_raw(prompt, temperature=0.2, json_mode=True)
+    except Exception as e:
+        print("Fallback triggered for evaluation:", e)
+        return {
+            "score": "N/A",
+            "verdict": "Reviewed",
+            "feedback": "Include more direct keywords and practical examples in your answer.",
+            "ideal_answer": "State the definition directly, mention a use case, and keep it crisp."
+        }
