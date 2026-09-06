@@ -3,19 +3,20 @@ import json
 import re
 import urllib.request
 import urllib.error
+import urllib.parse
 
 
 def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True):
-    """
-    6 keys rotation ke sath Gemini ko direct x-goog-api-key header se call karta hai
-    taaki nayi AQ. wali keys par 401 unsupported token error na aaye.
-    """
     raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    # Comma, newline ya spaces se split karke saari keys ko safely clean karna
-    api_keys = [k.strip().strip("'\"") for k in re.split(r'[\s,]+', raw_keys) if k.strip().strip("'\"")]
+    # Saari keys clean karna aur sirf valid length (25+ chars) wali keys rakhna
+    parsed_keys = re.split(r'[\s,]+', raw_keys)
+    api_keys = [k.strip().strip("'\"") for k in parsed_keys if len(k.strip().strip("'\"")) >= 25]
+
+    if not api_keys:
+        raise ValueError("No valid GEMINI_API_KEY found (length must be >= 25 chars).")
 
     if not models_to_try:
         models_to_try = [
@@ -26,14 +27,16 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
 
     last_error = None
 
-    # Bari-bari har key aur model par try karega (Multi-key rotation)
+    # Key aur Model rotation
     for key in api_keys:
+        safe_key = urllib.parse.quote(key)
         for m_name in models_to_try:
             try:
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent"
+                # ?key= parameter URL mein explicitly pass kiya gaya hai
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent?key={safe_key}"
+                
                 headers = {
-                    "Content-Type": "application/json",
-                    "x-goog-api-key": key
+                    "Content-Type": "application/json"
                 }
                 body = {
                     "contents": [{"parts": [{"text": prompt}]}],
@@ -55,7 +58,6 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
                     resp_data = json.loads(resp.read().decode("utf-8"))
                     raw_text = resp_data["candidates"][0]["content"]["parts"][0]["text"].strip()
 
-                    # Markdown tags clean karna
                     raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
                     raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
 
@@ -167,7 +169,6 @@ Return ONLY a valid JSON object matching this schema:
     try:
         return _call_gemini_raw(prompt, temperature=0.3, json_mode=True)
     except Exception as e:
-        print("Fallback triggered for drill:", e)
         return {
             "query_title": user_query,
             "category_type": "Quick Guide",
@@ -213,8 +214,7 @@ Evaluate the answer objectively and return ONLY valid JSON:
 """
     try:
         return _call_gemini_raw(prompt, temperature=0.2, json_mode=True)
-    except Exception as e:
-        print("Fallback triggered for evaluation:", e)
+    except Exception:
         return {
             "score": "N/A",
             "verdict": "Reviewed",
