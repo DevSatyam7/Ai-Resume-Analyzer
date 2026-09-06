@@ -213,7 +213,9 @@ def forgot_password():
 def robots():
     content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup\nSitemap: https://ai-resume-analyzer-2jxj.onrender.com/sitemap.xml"
     return Response(content, mimetype="text/plain")
-
+@app.route('/google46e0869a1ebb8f89.html')
+def google_verify_file():
+    return "google-site-verification: google46e0869a1ebb8f89.html"
 
 @app.route('/sitemap.xml')
 def sitemap():
