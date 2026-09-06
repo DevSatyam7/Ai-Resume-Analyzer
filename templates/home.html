@@ -94,6 +94,34 @@
                     </a>
                 </div>
 
+                <!-- === UNIVERSAL EXAM & TOPIC DRILL BOX === -->
+<div style="max-width: 540px; margin: 30px auto 0; padding: 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;">
+    
+    <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em;">
+        ⚡ Instant Exam & Topic Explorer
+    </span>
+    
+    <p style="color: #94a3b8; font-size: 0.85rem; margin: 10px 0 14px;">
+        No resume? Ask anything about JEE, NEET, RRB NTPC, SSC, DSA, or university viva:
+    </p>
+
+    <form action="/topic-drill" method="POST" style="display: flex; gap: 8px;">
+        <input 
+            type="text" 
+            name="query" 
+            placeholder="e.g. JEE Mains 2027, RRB NTPC CBT 1, DBMS Normalization..." 
+            required 
+            style="flex: 1; padding: 12px 14px; background: #0b1120; border: 1px solid #334155; border-radius: 8px; color: #f8fafc; font-size: 0.9rem; outline: none;"
+        >
+        <button 
+            type="submit" 
+            style="background: #2563eb; color: #ffffff; border: none; padding: 0 18px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">
+            Explore ⚡
+        </button>
+    </form>
+</div>
+<!-- ======================================= -->
+              
                 <!-- Stats Bar -->
                 <div class="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-10 sm:pt-12 border-t border-slate-800/80">
                     <div class="text-center">
