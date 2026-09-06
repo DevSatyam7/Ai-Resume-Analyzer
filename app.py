@@ -4,7 +4,7 @@ import models
 import PyPDF2
 import docx
 import json
-from ai import analyze_resume
+from ai import analyze_resume, get_comprehensive_drill
 
 app = Flask(__name__)
 app.secret_key = "secret12345678"
@@ -211,6 +211,15 @@ def sitemap():
        </url>
     </urlset>"""
     return Response(xml, mimetype="application/xml")
-
+@app.route("/topic-drill", methods=["POST"])
+def topic_drill():
+    query = request.form.get("query", "").strip()
+    if not query:
+        return redirect("/")
+    
+    # Gemini engine se full breakdown 
+    drill_data = get_comprehensive_drill(query)
+    
+    return render_template("drill_result.html", data=drill_data)
 if __name__ == "__main__":
     app.run(debug=True)
