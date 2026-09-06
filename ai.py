@@ -84,3 +84,90 @@ Resume:
                 continue
 
     raise Exception(f"All models failed. Last error: {last_error}")
+def get_comprehensive_drill(user_query):
+    prompt = f"""
+    You are an elite academic counselor, competitive exam strategist, and subject master.
+    The user is asking about: "{user_query}"
+
+    Analyze whether this is an EXAM (e.g. JEE, NEET, SSC CGL, RRB NTPC, GATE, UPSC) 
+    or an ACADEMIC/TECH SUBJECT/TOPIC (e.g. DSA, Thermodynamics, DBMS, Operating Systems).
+
+    Provide a complete, accurate breakdown strictly in valid JSON format without any markdown backticks.
+    
+    Format:
+    {{
+      "query_title": "{user_query}",
+      "category_type": "Competitive Exam OR Academic Topic",
+      "summary": "2-3 crisp sentences detailing what this exam/topic covers and why it matters.",
+      "key_stats": {{
+        "eligibility_or_prereq": "Eligibility criteria (for exam) or prerequisites (for topic)",
+        "difficulty_rating": "Moderate / High / Extreme",
+        "recommended_timeline": "Estimated prep duration (e.g. 6 Months, 4 Weeks)"
+      }},
+      "syllabus_units": [
+        {{
+          "unit_name": "Core Unit / Section Name",
+          "weightage": "High / Medium / Low",
+          "must_cover_topics": "Comma separated key topics under this unit"
+        }},
+        {{
+          "unit_name": "Secondary Unit / Section Name",
+          "weightage": "High / Medium",
+          "must_cover_topics": "Comma separated key topics"
+        }}
+      ],
+      "high_yield_questions": [
+        {{
+          "q": "Real exam pattern / Viva / Interview question 1",
+          "approach": "Step-by-step logic, formula, or crisp answer"
+        }},
+        {{
+          "q": "Real exam pattern / Viva / Interview question 2",
+          "approach": "Step-by-step logic, formula, or crisp answer"
+        }},
+        {{
+          "q": "Real exam pattern / Viva / Interview question 3",
+          "approach": "Step-by-step logic, formula, or crisp answer"
+        }},
+        {{
+          "q": "Real exam pattern / Viva / Interview question 4",
+          "approach": "Step-by-step logic, formula, or crisp answer"
+        }},
+        {{
+          "q": "Real exam pattern / Viva / Interview question 5",
+          "approach": "Step-by-step logic, formula, or crisp answer"
+        }}
+      ],
+      "strategy_and_mistakes": [
+        "Pro Tip: Recommended standard resource, book, or scoring strategy",
+        "Pitfall: Frequent trap where students lose marks or get negative marking"
+      ]
+    }}
+    """
+
+    # Aapka existing Gemini model call
+    response = model.generate_content(prompt)
+    clean_text = response.text.strip()
+    
+    # Markdown formatting clean karna
+    clean_text = re.sub(r"^```json\s*", "", clean_text)
+    clean_text = re.sub(r"^```\s*", "", clean_text)
+    clean_text = re.sub(r"\s*```$", "", clean_text)
+
+    try:
+        return json.loads(clean_text)
+    except Exception as e:
+        print("JSON Parsing Error in Topic Drill:", e)
+        return {
+            "query_title": user_query,
+            "category_type": "Overview",
+            "summary": "Quick breakdown for preparation.",
+            "key_stats": {
+                "eligibility_or_prereq": "Standard criteria",
+                "difficulty_rating": "Moderate",
+                "recommended_timeline": "Consistent Practice"
+            },
+            "syllabus_units": [],
+            "high_yield_questions": [],
+            "strategy_and_mistakes": ["Focus on core concepts and past questions."]
+        }    
