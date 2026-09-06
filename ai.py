@@ -3,7 +3,6 @@ import json
 import re
 import urllib.request
 import urllib.error
-import urllib.parse
 
 
 def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True):
@@ -11,32 +10,33 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    # Saari keys clean karna aur sirf valid length (25+ chars) wali keys rakhna
-    parsed_keys = re.split(r'[\s,]+', raw_keys)
-    api_keys = [k.strip().strip("'\"") for k in parsed_keys if len(k.strip().strip("'\"")) >= 25]
+    # Saari keys clean karna aur aadhi-adhuri tooti hui keys ko filter karna
+    raw_tokens = re.split(r'[\s,]+', raw_keys)
+    api_keys = [k.strip().strip("'\"") for k in raw_tokens if len(k.strip().strip("'\"")) >= 30]
 
     if not api_keys:
-        raise ValueError("No valid GEMINI_API_KEY found (length must be >= 25 chars).")
+        raise ValueError("No valid GEMINI_API_KEY found (length >= 30).")
 
+    # cURL wala official default model
     if not models_to_try:
         models_to_try = [
-            "gemini-2.0-flash",
+            "gemini-flash-latest",
             "gemini-1.5-flash",
-            "gemini-1.5-pro"
+            "gemini-2.0-flash"
         ]
 
     last_error = None
 
-    # Key aur Model rotation
     for key in api_keys:
-        safe_key = urllib.parse.quote(key)
         for m_name in models_to_try:
             try:
-                # ?key= parameter URL mein explicitly pass kiya gaya hai
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent?key={safe_key}"
+                # Exact cURL URL (bina ?key= ke)
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m_name}:generateContent"
                 
+                # Exact cURL Headers
                 headers = {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "X-goog-api-key": key
                 }
                 body = {
                     "contents": [{"parts": [{"text": prompt}]}],
