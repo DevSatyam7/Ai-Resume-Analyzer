@@ -16,6 +16,7 @@ Base.metadata.create_all(bind=engine)
 def home():
     return render_template("home.html", logged_in=("user" in session))
 
+
 # -----signup
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -56,6 +57,8 @@ def login():
             return "Invalid credentials"
 
     return render_template("login.html")
+
+
 # --dashboard
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
@@ -68,6 +71,7 @@ def dashboard():
         user_goal = request.form.get("goal") or request.form.get("role")
         resume_text = request.form.get("resume", "").strip()
         file = request.files.get("file")
+        language = request.form.get("language", "en")  # Language toggle receive
 
         # File se text extract karna
         if file and file.filename != "":
@@ -94,8 +98,8 @@ def dashboard():
             result = {"error": "Kripya apna career goal likhein."}
         else:
             try:
-                # AI Analysis
-                result = analyze_resume(resume_text, user_goal)
+                # AI Analysis with Language toggle support
+                result = analyze_resume(resume_text, user_goal, language=language)
 
                 # Database Save (Bina email column ke taaki crash na ho)
                 db = SessionLocal()
@@ -113,6 +117,8 @@ def dashboard():
                 result = {"error": f"Backend/AI Error: {str(e)}"}
 
     return render_template("dashboard.html", result=result)
+
+
 # history
 @app.route("/history")
 def history():
@@ -143,9 +149,11 @@ def history():
             "result": parsed_data
         })
 
-    db.close()  # <-- Ab ye safe jagah par close hoga
+    db.close()
 
     return render_template("history.html", reports=parsed_reports)
+
+
 @app.route("/delete-report/<int:report_id>", methods=["POST"])
 def delete_report(report_id):
     if "user" not in session:
@@ -163,11 +171,14 @@ def delete_report(report_id):
     db.close()
     return redirect("/history")
 
+
 # logout
 @app.route("/logout")
 def logout():
     session.pop("user", None)
     return redirect("/login")
+
+
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
     if request.method == 'GET':
@@ -196,10 +207,13 @@ def forgot_password():
         return f"<h3>Database Error:</h3><pre>{traceback.format_exc()}</pre>", 500
     finally:
         db_session.close()
+
+
 @app.route('/robots.txt')
 def robots():
     content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup"
     return Response(content, mimetype="text/plain")
+
 
 @app.route('/sitemap.xml')
 def sitemap():
@@ -211,6 +225,8 @@ def sitemap():
        </url>
     </urlset>"""
     return Response(xml, mimetype="application/xml")
+
+
 @app.route("/topic-drill", methods=["POST"])
 def topic_drill():
     query = request.form.get("query", "").strip()
@@ -221,5 +237,7 @@ def topic_drill():
     drill_data = get_comprehensive_drill(query)
     
     return render_template("drill_result.html", data=drill_data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
