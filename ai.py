@@ -11,9 +11,10 @@ def analyze_resume(resume_text, target_role="Software Developer", language="en",
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    api_keys = [k.strip() for k in raw_keys.split(",") if k.strip()]
+    # Quotes (' ya ") aur extra spaces clean karna
+    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
 
-    # Language toggle instruction
+    # Language toggle rule
     lang_rule = (
         "Respond in clear Hindi (Devanagari script), keeping core technical terms in English."
         if language == "hi"
@@ -25,7 +26,7 @@ You are an expert ATS auditor, senior corporate technical recruiter, and governm
 Target Role / Examination: {role}
 Language Instruction: {lang_rule}
 
-Analyze the resume or candidate details below. Return ONLY a valid JSON object matching exactly this schema:
+Analyze the candidate profile. Return ONLY a valid JSON object matching this schema:
 {{
   "ats_score": 78,
   "pay_scale": {{
@@ -48,30 +49,29 @@ Analyze the resume or candidate details below. Return ONLY a valid JSON object m
     {{"phase": "Phase 2 (Week 3-4)", "tasks": "Real-world projects or high-weightage mock drills"}}
   ],
   "interview_questions": [
-    {{"q": "Technical / CBT Question 1", "tip": "What interviewer or examiner looks for"}},
-    {{"q": "Technical / CBT Question 2", "tip": "What interviewer or examiner looks for"}},
-    {{"q": "Technical / CBT Question 3", "tip": "What interviewer or examiner looks for"}},
-    {{"q": "Technical / CBT Question 4", "tip": "What interviewer or examiner looks for"}},
-    {{"q": "Technical / CBT Question 5", "tip": "What interviewer or examiner looks for"}}
+    {{"q": "Technical / CBT Question 1", "tip": "What interviewer looks for"}},
+    {{"q": "Technical / CBT Question 2", "tip": "What interviewer looks for"}},
+    {{"q": "Technical / CBT Question 3", "tip": "What interviewer looks for"}},
+    {{"q": "Technical / CBT Question 4", "tip": "What interviewer looks for"}},
+    {{"q": "Technical / CBT Question 5", "tip": "What interviewer looks for"}}
   ]
 }}
 
-Resume / Profile Details:
+Candidate Details:
 {resume_text}
 """
 
     models_to_try = [
-        "gemini-2.0-flash-lite",
-        "gemini-2.5-flash",
+        "gemini-2.0-flash",
         "gemini-1.5-flash",
-        "gemini-flash-latest"
+        "gemini-1.5-pro"
     ]
 
     last_error = None
 
     for key in api_keys:
         try:
-            genai.configure(api_key=key, transport="rest")
+            genai.configure(api_key=key)
         except Exception as e:
             last_error = e
             continue
@@ -113,7 +113,7 @@ def get_comprehensive_drill(user_query):
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    api_keys = [k.strip() for k in raw_keys.split(",") if k.strip()]
+    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
 
     prompt = f"""
 You are an expert exam mentor and academic strategist.
@@ -152,15 +152,14 @@ Return ONLY a valid JSON object matching this schema:
 """
 
     models_to_try = [
-        "gemini-2.0-flash-lite",
-        "gemini-2.5-flash",
+        "gemini-2.0-flash",
         "gemini-1.5-flash",
-        "gemini-flash-latest"
+        "gemini-1.5-pro"
     ]
 
     for key in api_keys:
         try:
-            genai.configure(api_key=key, transport="rest")
+            genai.configure(api_key=key)
         except Exception:
             continue
 
@@ -218,4 +217,63 @@ Return ONLY a valid JSON object matching this schema:
             "Pro Tip: Stick to 1 standard reference book and do active revision.",
             "Pitfall: Spending too much time on theory without solving time-bound questions."
         ]
+    }
+
+
+def evaluate_answer(question, user_answer):
+    raw_keys = os.getenv("GEMINI_API_KEY", "").strip()
+    if not raw_keys:
+        raise ValueError("GEMINI_API_KEY is not set.")
+
+    api_keys = [k.strip().strip("'\"") for k in raw_keys.split(",") if k.strip().strip("'\"")]
+
+    prompt = f"""
+You are a senior technical interviewer and viva examiner.
+Question: "{question}"
+Candidate Answer: "{user_answer}"
+
+Evaluate the answer objectively and return ONLY valid JSON:
+{{
+  "score": "7/10",
+  "verdict": "Strong / Average / Needs Improvement",
+  "feedback": "1-2 crisp sentences on what was good and what was missing.",
+  "ideal_answer": "Crisp 2-sentence ideal response."
+}}
+"""
+
+    models_to_try = [
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro"
+    ]
+
+    for key in api_keys:
+        try:
+            genai.configure(api_key=key)
+        except Exception:
+            continue
+
+        for m_name in models_to_try:
+            try:
+                model = genai.GenerativeModel(m_name)
+                response = model.generate_content(
+                    prompt,
+                    generation_config={"temperature": 0.2, "response_mime_type": "application/json"}
+                )
+                raw_text = response.text.strip()
+                raw_text = re.sub(r"^```json\s*", "", raw_text, flags=re.MULTILINE)
+                raw_text = re.sub(r"^```\s*", "", raw_text, flags=re.MULTILINE)
+                start = raw_text.find("{")
+                end = raw_text.rfind("}")
+                if start != -1 and end != -1:
+                    raw_text = raw_text[start : end + 1]
+                return json.loads(raw_text)
+            except Exception:
+                continue
+
+    return {
+        "score": "N/A",
+        "verdict": "Reviewed",
+        "feedback": "Include more direct keywords and practical examples in your answer.",
+        "ideal_answer": "State the definition directly, mention a use case, and keep it crisp."
     }
