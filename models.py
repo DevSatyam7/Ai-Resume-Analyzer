@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from db import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -8,6 +10,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True)
     password = Column(String(255))
 
+
 class Report(Base):
     __tablename__ = "reports"
 
@@ -15,8 +18,7 @@ class Report(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     resume_text = Column(Text)
     result = Column(Text)
-    from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime
+
 
 class SyllabusCache(Base):
     __tablename__ = "syllabus_cache"
