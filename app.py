@@ -11,6 +11,40 @@ app.secret_key = "secret12345678"
 Base.metadata.create_all(bind=engine)
 
 
+# Helper: TiDB Cache-First Query Engine (Zero Quota Waste)
+def get_or_cache_syllabus(query):
+    norm_query = query.lower().strip()
+    db = SessionLocal()
+    try:
+        # 1. Pehle TiDB check karo (Instant 0.05s response)
+        cached = db.query(models.SyllabusCache).filter_by(normalized_query=norm_query).first()
+        if cached:
+            try:
+                return json.loads(cached.content_json)
+            except Exception:
+                return cached.content_json
+
+        # 2. Agar database me nahi hai, tab Gemini call karo
+        drill_data = get_comprehensive_drill(query)
+
+        # 3. Future users ke liye TiDB me save kar lo
+        content_to_save = json.dumps(drill_data) if isinstance(drill_data, (dict, list)) else str(drill_data)
+        new_cache = models.SyllabusCache(
+            normalized_query=norm_query,
+            display_title=query.title(),
+            content_json=content_to_save
+        )
+        db.add(new_cache)
+        db.commit()
+        return drill_data
+    except Exception as e:
+        db.rollback()
+        # Edge-case fallback: database issue aane par direct AI response render hoga
+        return get_comprehensive_drill(query)
+    finally:
+        db.close()
+
+
 # home
 @app.route("/")
 def home():
@@ -71,7 +105,7 @@ def dashboard():
         user_goal = request.form.get("goal") or request.form.get("role")
         resume_text = request.form.get("resume", "").strip()
         file = request.files.get("file")
-        language = request.form.get("language", "en")  # Language toggle receive
+        language = request.form.get("language", "en")
 
         # File se text extract karna
         if file and file.filename != "":
@@ -98,10 +132,8 @@ def dashboard():
             result = {"error": "Kripya apna career goal likhein."}
         else:
             try:
-                # AI Analysis with Language toggle support
                 result = analyze_resume(resume_text, user_goal, language=language)
 
-                # Database Save (Bina email column ke taaki crash na ho)
                 db = SessionLocal()
                 user = db.query(models.User).filter_by(email=session["user"]).first()
                 if user:
@@ -213,9 +245,12 @@ def forgot_password():
 def robots():
     content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup\nSitemap: https://ai-resume-analyzer-2jxj.onrender.com/sitemap.xml"
     return Response(content, mimetype="text/plain")
+
+
 @app.route('/google46e0869a1ebb8f89.html')
 def google_verify_file():
     return "google-site-verification: google46e0869a1ebb8f89.html"
+
 
 @app.route('/sitemap.xml')
 def sitemap():
@@ -229,16 +264,28 @@ def sitemap():
     return Response(xml, mimetype="application/xml")
 
 
+# Cached Topic Drill (Home Page Instant Explorer)
 @app.route("/topic-drill", methods=["POST"])
 def topic_drill():
     query = request.form.get("query", "").strip()
     if not query:
         return redirect("/")
     
-    # Gemini engine se full breakdown 
-    drill_data = get_comprehensive_drill(query)
+    drill_data = get_or_cache_syllabus(query)
+    return render_template("drill_result.html", data=drill_data, query=query)
+
+
+# --placement & syllabus hub (Dedicated Route)
+@app.route("/prep-hub", methods=["GET", "POST"])
+def prep_hub():
+    result_data = None
+    query = ""
+    if request.method == "POST":
+        query = request.form.get("query", "").strip()
+        if query:
+            result_data = get_or_cache_syllabus(query)
     
-    return render_template("drill_result.html", data=drill_data)
+    return render_template("prep_hub.html", data=result_data, query=query, logged_in=("user" in session))
 
 
 if __name__ == "__main__":
