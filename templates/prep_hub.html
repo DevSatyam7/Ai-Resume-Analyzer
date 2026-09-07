@@ -222,6 +222,42 @@
             btnText.innerText = "Analyzing...";
             spinner.classList.remove('hidden');
         });
+     function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Aapka browser voice search support nahi karta. Kripya Google Chrome ya Edge use karein.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-IN'; // Indian English / Hinglish terms acche se recognise karta hai
+
+    const micBtn = document.getElementById('mic-btn');
+    const inputField = document.getElementById('hub-input');
+
+    recognition.onstart = function() {
+        micBtn.classList.add('text-red-500', 'animate-pulse');
+        inputField.placeholder = "Listening... Bolna shuru kijiye...";
+    };
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        inputField.value = transcript;
+        // Bolte hi auto-search submit ho jayega
+        document.getElementById('hub-form').submit();
+    };
+
+    recognition.onerror = function() {
+        micBtn.classList.remove('text-red-500', 'animate-pulse');
+        inputField.placeholder = "Search e.g. GATE CSE, TCS NQT Pattern...";
+    };
+
+    recognition.onend = function() {
+        micBtn.classList.remove('text-red-500', 'animate-pulse');
+    };
+
+    recognition.start();
+}   
     </script>
 </body>
 </html>
