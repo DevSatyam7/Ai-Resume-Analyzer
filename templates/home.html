@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -6,8 +7,8 @@
     
     <!-- Title & SEO Meta Tags -->
     <title>CareersAnalysis - AI Resume & Career Roadmap</title>
-    <meta name="description" content="Smart AI-powered resume auditing and career roadmap platform. Check ATS score, find missing technical skills, and optimize your resume for free.">
-    <meta name="keywords" content="AI Resume Analyzer, CareersAnalysis, ATS resume checker, career roadmap, resume audit, tech resume">
+    <meta name="description" content="Smart AI-powered resume auditing and career roadmap platform. Check ATS score, find missing technical skills, and explore engineering syllabi for free.">
+    <meta name="keywords" content="AI Resume Analyzer, CareersAnalysis, ATS resume checker, career roadmap, resume audit, tech resume, GATE syllabus">
     <meta name="robots" content="index, follow">
 
     <!-- Favicon -->
@@ -21,7 +22,6 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Pure CSS Spinner Animation (No JavaScript) */
         @keyframes pureSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -37,7 +37,6 @@
             animation: pureSpin 0.7s linear infinite;
         }
 
-        /* Click / Focus hote hi text hide hokar spinner ghumega */
         .explorer-submit-btn:focus .explorer-btn-text,
         .explorer-submit-btn:active .explorer-btn-text {
             display: none;
@@ -65,14 +64,14 @@
 
             <!-- Desktop Nav Links -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-                <a href="/prep-hub" class="text-blue-400 font-semibold hover:text-white transition">Prep Hub ✦</a>
+                <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-white transition">Prep Hub ✦</a>
                 <a href="#features" class="hover:text-white transition">Features</a>
                 <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
-                <a href="#creator" class="hover:text-white transition">Developer</a>
+                <a href="#architect" class="hover:text-white transition">Architect</a>
                 <a href="#faq" class="hover:text-white transition">FAQ</a>
             </nav>
 
-            <!-- Buttons -->
+            <!-- Action Buttons -->
             <div class="flex items-center gap-1.5 sm:gap-4 shrink-0">
                 {% if logged_in %}
                     <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition">
@@ -98,18 +97,18 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
                 <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-3.5 sm:px-4 py-1.5 rounded-full mb-6 sm:mb-8">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-xs font-semibold text-slate-300 tracking-wide">Production Ready • Powered by Gemini AI</span>
+                    <span class="text-xs font-semibold text-slate-300 tracking-wide">Production Ready • Powered by Gemini AI &amp; TiDB Cloud</span>
                 </div>
 
                 <h1 class="text-3xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.2] sm:leading-[1.15] mb-6 sm:mb-8">
-                    Smart Resume Auditing & <br class="hidden sm:inline">
+                    Smart Resume Auditing &amp; <br class="hidden sm:inline">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-300">
                         Career Path Optimization
                     </span>
                 </h1>
 
                 <p class="text-sm sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10">
-                    Bridge the gap between your resume and modern recruiter filters. Pinpoint missing industry skills, evaluate your real-world ATS score, and receive a weekly study roadmap.
+                    Bridge the gap between your engineering profile and recruiter filters. Pinpoint missing industry skills, calculate ATS match, and discover role-specific preparation syllabi.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
@@ -122,60 +121,56 @@
                     </a>
                 </div>
 
-                <!-- === UNIVERSAL EXAM & TOPIC DRILL BOX === -->
-                <div style="max-width: 540px; margin: 30px auto 0; padding: 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;">
-                    
+                <!-- Universal Instant Explorer -->
+                <div style="max-width: 560px; margin: 30px auto 0; padding: 22px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.5); text-align: center;">
                     <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em;">
-                        ⚡ Instant Exam & Topic Explorer
+                        ⚡ Instant Exam &amp; Topic Explorer
                     </span>
-                    
                     <p style="color: #94a3b8; font-size: 0.85rem; margin: 10px 0 14px;">
-                        No resume? Ask anything about JEE, NEET, RRB NTPC, SSC, DSA, or university viva:
+                        Explore TCS NQT patterns, GATE syllabus, university semesters, or core CS topics:
                     </p>
 
                     <form action="/topic-drill" method="POST" style="display: flex; gap: 8px;">
                         <input 
                             type="text" 
                             name="query" 
-                            placeholder="e.g. JEE Mains 2027, RRB NTPC CBT 1, DBMS Normalization..." 
+                            placeholder="e.g. GATE CSE 2027, TCS NQT, B.Tech 4th Sem..." 
                             required 
-                            style="flex: 1; padding: 12px 14px; background: #0b1120; border: 1px solid #334155; border-radius: 8px; color: #f8fafc; font-size: 0.9rem; outline: none;"
+                            style="flex: 1; padding: 12px 14px; background: #0b1120; border: 1px solid #334155; border-radius: 10px; color: #f8fafc; font-size: 0.9rem; outline: none;"
                         >
                         <button 
                             type="submit" 
                             class="explorer-submit-btn"
-                            style="background: #2563eb; color: #ffffff; border: none; padding: 0 18px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; min-width: 105px; height: 44px;">
+                            style="background: #2563eb; color: #ffffff; border: none; padding: 0 18px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; min-width: 105px; height: 44px;">
                             <span class="explorer-btn-text">Explore ⚡</span>
                             <span class="explorer-spinner"></span>
                         </button>
                     </form>
 
-                    <!-- Prep Hub Sub-link -->
                     <div style="margin-top: 14px;">
                         <a href="/prep-hub" style="color: #60a5fa; font-size: 0.8rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
-                            Looking for company test patterns or full branch syllabi? Open Placement &amp; Syllabus Hub &rarr;
+                            Looking for full exam blueprints &amp; viva questions? Open Placement Hub &rarr;
                         </a>
                     </div>
                 </div>
-                <!-- ======================================= -->
-              
-                <!-- Stats Bar -->
+
+                <!-- Platform Stats -->
                 <div class="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-10 sm:pt-12 border-t border-slate-800/80">
                     <div class="text-center">
                         <div class="text-2xl sm:text-3xl font-extrabold text-white">100%</div>
-                        <div class="text-xs font-medium text-slate-400 mt-1">Free for Students</div>
+                        <div class="text-xs font-medium text-slate-400 mt-1">Free for Engineers</div>
                     </div>
                     <div class="text-center">
                         <div class="text-2xl sm:text-3xl font-extrabold text-white">40+</div>
                         <div class="text-xs font-medium text-slate-400 mt-1">ATS Checkpoints</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-white">&lt; 15s</div>
-                        <div class="text-xs font-medium text-slate-400 mt-1">AI Audit Latency</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">&lt; 50ms</div>
+                        <div class="text-xs font-medium text-slate-400 mt-1">Cached Query Latency</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-white">4-Week</div>
-                        <div class="text-xs font-medium text-slate-400 mt-1">Targeted Roadmap</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white">Bilingual</div>
+                        <div class="text-xs font-medium text-slate-400 mt-1">English &amp; हिंदी Reports</div>
                     </div>
                 </div>
             </div>
@@ -185,9 +180,9 @@
         <section id="features" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
                 <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Core Modules</h2>
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Engineered Modules</h2>
                     <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Engineered to maximize your interview conversion rate
+                        Engineered to maximize interview conversion rates
                     </p>
                 </div>
 
@@ -198,7 +193,7 @@
                         </div>
                         <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Algorithmic ATS Scoring</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Simulates recruitment parser engines (Workday, Greenhouse, Taleo) to score keyword density, structural formatting, and job title alignment.
+                            Simulates corporate parsing engines to evaluate keyword alignment, qualification fit, and action-verb strength against modern recruiters.
                         </p>
                     </div>
 
@@ -208,79 +203,136 @@
                         </div>
                         <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Skill Gap Diagnosis</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Contrasts your current projects and tools against targeted market positions to pinpoint absent technical skills and critical libraries.
+                            Contrasts project experience against targeted industry positions to pinpoint absent tools, modern libraries, and core architectural concepts.
                         </p>
                     </div>
 
                     <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl font-bold mb-6">
-                            🗓️
+                        <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-2xl font-bold mb-6">
+                            ✦
                         </div>
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Structured Roadmap</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Universal Prep Engine</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Builds a chronological 4-week preparation timeline covering concept revisions, milestone projects, and role-specific interview queries.
+                            Delivers structured test matrices for IT drives (TCS, Google), competitive papers (GATE), and university engineering semester courses.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- How It Works -->
+        <!-- Workflow Section -->
         <section id="how-it-works" class="py-20 sm:py-24 border-t border-slate-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
                 <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Workflow</h2>
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">System Pipeline</h2>
                     <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Three steps from draft to recruiter-ready
+                        Three steps from submission to actionable audit
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
                     <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
                         <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">01</span>
-                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Provide Resume & Role</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Paste your raw resume text or upload your document, and enter your target career title.</p>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Input Profile &amp; Target</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Provide qualifications, paste raw resume content or upload a document, and set your target career designation.</p>
                     </div>
                     <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
                         <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">02</span>
-                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Automated LLM Parsing</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Our pipeline executes strict system prompts via Gemini to evaluate structure, relevance, and omissions.</p>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">LLM Parsing &amp; TiDB Cache</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Analyzed via Gemini 1.5 system prompts with automatic TiDB database caching to ensure ultra-fast subsequent retrieval.</p>
                     </div>
                     <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
                         <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">03</span>
-                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Execute Feedback</h4>
-                        <p class="text-slate-400 text-sm leading-relaxed">Review the real-time ATS match percentage, apply missing keywords, and follow the preparation track.</p>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Inspect Roadmap &amp; PDF</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Review salary benchmarks, missing critical skills, and customized viva practice questions with 1-click PDF download.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Developer / College Attribution Section -->
-        <section id="creator" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/70">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6">
-                <div class="bg-gradient-to-b from-slate-900 to-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-12">
-                    <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-                        <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-3xl sm:text-4xl shadow-xl shadow-blue-600/30 shrink-0">
-                            👨‍💻
-                        </div>
-                        <div class="text-center sm:text-left">
-                            <span class="inline-block bg-blue-500/10 text-blue-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                                Architect & Developer
+        <!-- Developer & Architect Spotlight Section -->
+        <section id="architect" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/80 relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6">
+                
+                <div class="bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl -z-10"></div>
+                    
+                    <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 sm:gap-10">
+                        
+                        <!-- Architect Avatar & Open to Work Tag -->
+                        <div class="flex flex-col items-center shrink-0">
+                            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 p-1 shadow-2xl shadow-blue-500/20">
+                                <div class="w-full h-full bg-slate-950 rounded-[22px] flex items-center justify-center text-4xl sm:text-5xl">
+                                    👨‍💻
+                                </div>
+                            </div>
+                            <span class="mt-4 inline-flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Open to SDE Roles
                             </span>
-                            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Satyam</h3>
-                            <p class="text-xs sm:text-sm font-semibold text-blue-400 mb-3 sm:mb-4">
-                                B.Tech in Computer Science & Engineering (Artificial Intelligence)
+                        </div>
+
+                        <!-- Details & Pitch -->
+                        <div class="text-center lg:text-left flex-1">
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-2">
+                                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-semibold px-3 py-0.5 rounded-md">
+                                    Lead Architect &amp; Developer
+                                </span>
+                                <span class="bg-slate-800 text-slate-300 text-xs px-2.5 py-0.5 rounded-md">
+                                    Full-Stack &amp; AI Integration
+                                </span>
+                            </div>
+
+                            <h3 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">Satyam Kumar</h3>
+                            
+                            <p class="text-sm sm:text-base font-semibold text-sky-400 mb-2">
+                                B.Tech in Computer Science &amp; Engineering (Artificial Intelligence)
                             </p>
-                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
-                                Developed at <strong class="text-white">Government Engineering College (GEC), Munger</strong> 
-                                (affiliated with <strong class="text-white">Bihar Engineering University</strong>).
+
+                            <p class="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed">
+                                <strong class="text-white">Government Engineering College (GEC), Munger</strong> 
+                                • Affiliated with <strong class="text-white">Bihar Engineering University (BEU)</strong>.
                             </p>
-                            <p class="text-slate-400 text-xs leading-relaxed">
-                                Built to provide open, accessible career tooling for engineering students, solving real-world hiring disconnects with full-stack Flask architecture and Generative AI integration.
+
+                            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                                Architected CareersAnalysis from scratch to solve placement friction for engineering peers. Built with a distributed TiDB database caching pipeline to minimize Gemini LLM overhead, pairing high-throughput server architecture with a zero-library, pure HTML/CSS user interface.
                             </p>
+
+                            <!-- Tech Stack Grid -->
+                            <div class="mb-8">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2.5">
+                                    Engineered With:
+                                </span>
+                                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">Python (Flask)</span>
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">TiDB Cloud (Distributed SQL)</span>
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">Google Gemini 1.5 API</span>
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">SQLAlchemy ORM</span>
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">Tailwind CSS</span>
+                                    <span class="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-medium px-3 py-1 rounded-lg">Web Speech API</span>
+                                </div>
+                            </div>
+
+                            <!-- Professional Action Links -->
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                                <a href="mailto:satyam62kumar02@gmail.com" 
+                                   class="bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
+                                    <span>✉</span> Email Satyam
+                                </a>
+                                <a href="https://github.com/Satyamkumar02" target="_blank" rel="noopener noreferrer"
+                                   class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl border border-slate-700 transition flex items-center gap-2">
+                                    <span>⌥</span> GitHub Profile
+                                </a>
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                                   class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl border border-slate-700 transition flex items-center gap-2">
+                                    <span>⚡</span> LinkedIn Profile
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -295,17 +347,17 @@
                 <div class="space-y-4">
                     <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
                         <h4 class="font-bold text-white text-sm sm:text-base mb-2">Is CareersAnalysis free to use?</h4>
-                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Yes. This platform is an open student-led project created to assist college peers and freshers in auditing their resumes without paid subscriptions.</p>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Yes. This platform is an open student-led project created to assist college peers and freshers in auditing their resumes and preparing for placements without subscriptions.</p>
                     </div>
 
                     <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
-                        <h4 class="font-bold text-white text-sm sm:text-base mb-2">How accurate is the ATS score?</h4>
-                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">The scoring model inspects semantic relevance, keyword completeness, and action-verb strength against modern corporate ATS criteria, providing actionable percentile scores.</p>
+                        <h4 class="font-bold text-white text-sm sm:text-base mb-2">How accurate is the ATS scoring?</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">The engine inspects semantic relevance, keyword completeness, and action-verb strength against modern recruitment parser standards.</p>
                     </div>
 
                     <div class="bg-slate-900/60 border border-slate-800 p-5 sm:p-6 rounded-xl">
                         <h4 class="font-bold text-white text-sm sm:text-base mb-2">Is my uploaded resume text stored?</h4>
-                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Your resume content is securely analyzed in-memory during execution and is neither sold nor retained for model re-training.</p>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Your resume content is analyzed in-memory during execution and is neither sold nor retained for model training.</p>
                     </div>
                 </div>
             </div>
@@ -316,9 +368,9 @@
     <footer class="border-t border-slate-900 py-8 sm:py-12 bg-slate-950 text-slate-500 text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
             <div>
-                © 2026 CareersAnalysis. Designed & Engineered by Satyam • GEC Munger.
+                © 2026 CareersAnalysis. Engineered by Satyam Kumar • GEC Munger.
             </div>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center justify-center gap-6">
                 <a href="/prep-hub" class="hover:text-slate-300 transition">Prep Hub</a>
                 <a href="/login" class="hover:text-slate-300 transition">Login</a>
                 <a href="/signup" class="hover:text-slate-300 transition">Register</a>
