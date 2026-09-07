@@ -23,6 +23,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-sky-500 selection:text-white">
 
+    <!-- Header Navigation -->
     <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2 font-bold text-lg tracking-tight text-white hover:opacity-90">
@@ -41,17 +42,20 @@
         </div>
     </header>
 
-    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-10">
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-10">
+
+        <!-- Header Title -->
         <div class="text-center space-y-3 mb-8">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-950/80 text-sky-400 border border-sky-800/60">
                 <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span> Universal Assessment &amp; Syllabus Engine
             </div>
             <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Placement &amp; Syllabus Hub</h1>
-            <p class="text-slate-400 text-sm max-w-xl mx-auto">
-                Search real hiring matrices, coding rounds, and full semester syllabi across all engineering branches, IT recruiters, GATE, and competitive exams.
+            <p class="text-slate-400 text-sm max-w-2xl mx-auto">
+                Real corporate assessment patterns, coding interview matrices, and semester-wise engineering syllabi across all disciplines.
             </p>
         </div>
 
+        <!-- Universal Search Input -->
         <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-6">
             <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
                 <input 
@@ -59,7 +63,7 @@
                     name="query" 
                     id="hub-input" 
                     value="{{ query }}" 
-                    placeholder="e.g. GATE Civil, TCS NQT 2027, Mech 4th Sem, Amazon SDE-1..." 
+                    placeholder="Search e.g. GATE CSE, TCS NQT Pattern, B.Tech 4th Sem CSE..." 
                     required
                     class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
                 >
@@ -74,32 +78,133 @@
             </div>
         </form>
 
-        <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto mb-10 text-xs">
+        <!-- Professional Quick Explore Chips -->
+        <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto mb-10 text-xs">
             <span class="text-slate-500 font-medium">Quick explore:</span>
-            <button type="button" onclick="fillQuery('TCS NQT Assessment Pattern')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">TCS NQT Pattern</button>
-            <button type="button" onclick="fillQuery('GATE Civil Engineering Core Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">GATE Civil</button>
-            <button type="button" onclick="fillQuery('B.Tech Mechanical 4th Sem Core Topics')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Mech 4th Sem</button>
-            <button type="button" onclick="fillQuery('Google SDE Technical Rounds')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Google SDE</button>
-            <button type="button" onclick="fillQuery('Core CS Interview Checklist (OS, DBMS, CN)')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Core CS Checklist</button>
+            <button type="button" onclick="fillQuery('TCS NQT Assessment Pattern')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">TCS NQT Pattern</button>
+            <button type="button" onclick="fillQuery('GATE CSE Core Syllabus &amp; Weightage')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">GATE CSE Core Syllabus</button>
+            <button type="button" onclick="fillQuery('B.Tech CSE 4th Semester Core Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">B.Tech CSE 4th Semester Syllabus</button>
+            <button type="button" onclick="fillQuery('B.Tech 1st Year Engineering Common Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">B.Tech 1st Year (All Branches)</button>
+            <button type="button" onclick="fillQuery('Google SDE Technical Rounds')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">Google SDE Technical Rounds</button>
+            <button type="button" onclick="fillQuery('Core CS Interview Drill (OS, DBMS, CN)')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">Core CS Interview (OS/DBMS/CN)</button>
         </div>
 
+        <!-- Clean Structured Result Card -->
         {% if data %}
-        <section class="bg-slate-900 border border-slate-800/80 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-2">
-                <div>
-                    <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">Verified Blueprint</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-white">{{ query }}</h2>
+        <div class="space-y-6 animate-fade-in">
+
+            <!-- Overview Header -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+                    <div>
+                        <span class="inline-block bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-semibold px-2.5 py-0.5 rounded-md mb-2 uppercase">
+                            {{ data.category_type if data.category_type else 'Verified Blueprint' }}
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white capitalize tracking-tight">{{ query }}</h2>
+                    </div>
+                    <button onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-xl border border-slate-700 flex items-center gap-2 self-start sm:self-auto font-medium transition">
+                        <i class="fa-solid fa-download"></i> Save as PDF
+                    </button>
                 </div>
-                <button onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 self-start sm:self-auto">
-                    <i class="fa-solid fa-download"></i> Save as PDF
-                </button>
+
+                {% if data.key_stats %}
+                <!-- Metrics Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
+                    <div class="bg-slate-950/60 border border-slate-800/80 p-3.5 rounded-xl">
+                        <span class="text-slate-500 text-xs uppercase font-medium">Difficulty Level</span>
+                        <p class="text-amber-400 font-bold text-sm mt-0.5">{{ data.key_stats.difficulty_rating }}</p>
+                    </div>
+                    <div class="bg-slate-950/60 border border-slate-800/80 p-3.5 rounded-xl">
+                        <span class="text-slate-500 text-xs uppercase font-medium">Recommended Duration</span>
+                        <p class="text-emerald-400 font-bold text-sm mt-0.5">{{ data.key_stats.recommended_timeline }}</p>
+                    </div>
+                    <div class="bg-slate-950/60 border border-slate-800/80 p-3.5 rounded-xl">
+                        <span class="text-slate-500 text-xs uppercase font-medium">Prerequisites</span>
+                        <p class="text-slate-300 font-semibold text-xs mt-0.5 truncate">{{ data.key_stats.eligibility_or_prereq }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.summary %}
+                <p class="text-slate-300 text-sm leading-relaxed">{{ data.summary }}</p>
+                {% endif %}
             </div>
 
-            <div class="text-slate-300 text-sm leading-relaxed space-y-4 whitespace-pre-line font-normal">
+            <!-- Syllabus Units / Modules Grid -->
+            {% if data.syllabus_units %}
+            <div class="space-y-3">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span class="text-sky-400 font-mono">01.</span> Core Units &amp; Technical Breakdown
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for unit in data.syllabus_units %}
+                    <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between hover:border-slate-700 transition">
+                        <div>
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <h4 class="font-bold text-white text-sm sm:text-base">{{ unit.unit_name }}</h4>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded {% if unit.weightage == 'High' %}bg-rose-500/10 text-rose-400 border border-rose-500/20{% else %}bg-sky-500/10 text-sky-400 border border-sky-500/20{% endif %} shrink-0">
+                                    {{ unit.weightage }} Weight
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mt-2">
+                                <strong class="text-slate-300">Key Focus Topics:</strong> {{ unit.must_cover_topics }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- High Yield Questions Section -->
+            {% if data.high_yield_questions %}
+            <div class="space-y-3 pt-2">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span class="text-sky-400 font-mono">02.</span> High-Frequency Assessment Questions
+                </h3>
+                <div class="space-y-3">
+                    {% for item in data.high_yield_questions %}
+                    <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl space-y-2">
+                        <p class="text-white text-sm font-semibold flex items-start gap-2">
+                            <span class="text-sky-400 font-bold">Q:</span> {{ item.q }}
+                        </p>
+                        <div class="bg-slate-950/70 border-l-2 border-sky-500 p-3 rounded-r-xl text-xs text-slate-300 leading-relaxed">
+                            <strong class="text-sky-400 block mb-0.5 font-medium">Expected Solution Approach:</strong>
+                            {{ item.approach }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Strategy & Traps -->
+            {% if data.strategy_and_mistakes %}
+            <div class="space-y-3 pt-2">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span class="text-sky-400 font-mono">03.</span> Preparation Strategy &amp; Pitfalls
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {% for tip in data.strategy_and_mistakes %}
+                    <div class="bg-slate-900 border {% if 'Pitfall' in tip %}border-rose-900/40 bg-rose-950/10{% else %}border-emerald-900/40 bg-emerald-950/10{% endif %} p-4 rounded-xl text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
+                        <span class="text-base shrink-0 mt-[-2px]">{% if 'Pitfall' in tip %}⚠️{% else %}💡{% endif %}</span>
+                        <span>{{ tip }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Fallback for plain text response -->
+            {% if not data.syllabus_units and not data.summary %}
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl text-slate-300 text-sm whitespace-pre-line leading-relaxed">
                 {{ data }}
             </div>
-        </section>
+            {% endif %}
+
+        </div>
         {% endif %}
+
     </main>
 
     <script>
