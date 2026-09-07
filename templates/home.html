@@ -20,11 +20,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Pure CSS Spinner Animation (No JavaScript) */
+        @keyframes pureSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .explorer-spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: pureSpin 0.7s linear infinite;
+        }
+
+        /* Click / Focus hote hi text hide hokar spinner ghumega */
+        .explorer-submit-btn:focus .explorer-btn-text,
+        .explorer-submit-btn:active .explorer-btn-text {
+            display: none;
+        }
+
+        .explorer-submit-btn:focus .explorer-spinner,
+        .explorer-submit-btn:active .explorer-spinner {
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Sticky Navigation Bar (Mobile Responsive Fix) -->
+    <!-- Sticky Navigation Bar -->
     <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
             
@@ -38,13 +65,14 @@
 
             <!-- Desktop Nav Links -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="/prep-hub" class="text-blue-400 font-semibold hover:text-white transition">Prep Hub ✦</a>
                 <a href="#features" class="hover:text-white transition">Features</a>
                 <a href="#how-it-works" class="hover:text-white transition">How It Works</a>
                 <a href="#creator" class="hover:text-white transition">Developer</a>
                 <a href="#faq" class="hover:text-white transition">FAQ</a>
             </nav>
 
-            <!-- Buttons (Auto-fit on Mobile) -->
+            <!-- Buttons -->
             <div class="flex items-center gap-1.5 sm:gap-4 shrink-0">
                 {% if logged_in %}
                     <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition">
@@ -89,38 +117,47 @@
                         <span>Analyze Resume Now</span>
                         <span class="group-hover:translate-x-1 transition duration-200">→</span>
                     </a>
-                    <a href="#how-it-works" class="w-full sm:w-auto inline-flex items-center justify-center text-sm sm:text-base font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition">
-                        See How It Works
+                    <a href="/prep-hub" class="w-full sm:w-auto inline-flex items-center justify-center text-sm sm:text-base font-semibold bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition">
+                        Explore Prep Hub ✦
                     </a>
                 </div>
 
                 <!-- === UNIVERSAL EXAM & TOPIC DRILL BOX === -->
-<div style="max-width: 540px; margin: 30px auto 0; padding: 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;">
-    
-    <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em;">
-        ⚡ Instant Exam & Topic Explorer
-    </span>
-    
-    <p style="color: #94a3b8; font-size: 0.85rem; margin: 10px 0 14px;">
-        No resume? Ask anything about JEE, NEET, RRB NTPC, SSC, DSA, or university viva:
-    </p>
+                <div style="max-width: 540px; margin: 30px auto 0; padding: 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;">
+                    
+                    <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em;">
+                        ⚡ Instant Exam & Topic Explorer
+                    </span>
+                    
+                    <p style="color: #94a3b8; font-size: 0.85rem; margin: 10px 0 14px;">
+                        No resume? Ask anything about JEE, NEET, RRB NTPC, SSC, DSA, or university viva:
+                    </p>
 
-    <form action="/topic-drill" method="POST" style="display: flex; gap: 8px;">
-        <input 
-            type="text" 
-            name="query" 
-            placeholder="e.g. JEE Mains 2027, RRB NTPC CBT 1, DBMS Normalization..." 
-            required 
-            style="flex: 1; padding: 12px 14px; background: #0b1120; border: 1px solid #334155; border-radius: 8px; color: #f8fafc; font-size: 0.9rem; outline: none;"
-        >
-        <button 
-            type="submit" 
-            style="background: #2563eb; color: #ffffff; border: none; padding: 0 18px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap;">
-            Explore ⚡
-        </button>
-    </form>
-</div>
-<!-- ======================================= -->
+                    <form action="/topic-drill" method="POST" style="display: flex; gap: 8px;">
+                        <input 
+                            type="text" 
+                            name="query" 
+                            placeholder="e.g. JEE Mains 2027, RRB NTPC CBT 1, DBMS Normalization..." 
+                            required 
+                            style="flex: 1; padding: 12px 14px; background: #0b1120; border: 1px solid #334155; border-radius: 8px; color: #f8fafc; font-size: 0.9rem; outline: none;"
+                        >
+                        <button 
+                            type="submit" 
+                            class="explorer-submit-btn"
+                            style="background: #2563eb; color: #ffffff; border: none; padding: 0 18px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; min-width: 105px; height: 44px;">
+                            <span class="explorer-btn-text">Explore ⚡</span>
+                            <span class="explorer-spinner"></span>
+                        </button>
+                    </form>
+
+                    <!-- Prep Hub Sub-link -->
+                    <div style="margin-top: 14px;">
+                        <a href="/prep-hub" style="color: #60a5fa; font-size: 0.8rem; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+                            Looking for company test patterns or full branch syllabi? Open Placement &amp; Syllabus Hub &rarr;
+                        </a>
+                    </div>
+                </div>
+                <!-- ======================================= -->
               
                 <!-- Stats Bar -->
                 <div class="mt-16 sm:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-10 sm:pt-12 border-t border-slate-800/80">
@@ -282,6 +319,7 @@
                 © 2026 CareersAnalysis. Designed & Engineered by Satyam • GEC Munger.
             </div>
             <div class="flex items-center gap-6">
+                <a href="/prep-hub" class="hover:text-slate-300 transition">Prep Hub</a>
                 <a href="/login" class="hover:text-slate-300 transition">Login</a>
                 <a href="/signup" class="hover:text-slate-300 transition">Register</a>
                 <a href="/dashboard" class="hover:text-slate-300 transition">Analyzer</a>
