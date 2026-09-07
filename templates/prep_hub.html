@@ -55,28 +55,43 @@
             </p>
         </div>
 
-        <!-- Universal Search Input -->
-        <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-6">
-            <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
-                <input 
-                    type="text" 
-                    name="query" 
-                    id="hub-input" 
-                    value="{{ query }}" 
-                    placeholder="Search e.g. GATE CSE, TCS NQT Pattern, B.Tech 4th Sem CSE..." 
-                    required
-                    class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
-                >
-                <button 
-                    type="submit" 
-                    id="hub-btn" 
-                    class="bg-sky-600 hover:bg-sky-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-sky-600/30"
-                >
-                    <span id="hub-btn-text">Generate ✦</span>
-                    <div id="hub-spinner" class="loader-spin hidden"></div>
-                </button>
-            </div>
-        </form>
+     <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-6">
+    <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
+        <!-- Text Input -->
+        <input 
+            type="text" 
+            name="query" 
+            id="hub-input" 
+            value="{{ query }}" 
+            placeholder="Search or Speak e.g. GATE CSE, TCS NQT..." 
+            required
+            class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
+        >
+
+        <!-- 🎙️ Voice Search Mic Button -->
+        <button 
+            type="button" 
+            onclick="startVoiceSearch()" 
+            id="mic-btn"
+            title="Search by Voice"
+            class="p-2.5 text-slate-400 hover:text-sky-400 hover:bg-slate-800/80 rounded-xl transition flex items-center justify-center shrink-0 mr-1"
+        >
+            <svg id="mic-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+            </svg>
+        </button>
+
+        <!-- Generate Button -->
+        <button 
+            type="submit" 
+            id="hub-btn" 
+            class="bg-sky-600 hover:bg-sky-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-sky-600/30"
+        >
+            <span id="hub-btn-text">Generate ✦</span>
+            <div id="hub-spinner" class="loader-spin hidden"></div>
+        </button>
+    </div>
+</form>
 
         <!-- Professional Quick Explore Chips -->
         <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto mb-10 text-xs">
