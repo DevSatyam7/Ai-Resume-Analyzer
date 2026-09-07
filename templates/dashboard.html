@@ -1,11 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-6 py-12">
+<div class="max-w-4xl mx-auto px-6 py-8">
+
+    <!-- Top Navigation Bar (Home & Prep Hub Shortcut) -->
+    <div class="flex items-center justify-between pb-6 mb-8 border-b border-slate-800 print:hidden">
+        <a href="/" class="flex items-center gap-2 font-bold text-slate-300 hover:text-white transition text-sm">
+            <span class="text-blue-500 text-base">←</span> Back to Home
+        </a>
+
+        <div class="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm font-medium">
+            <a href="/prep-hub" class="text-sky-400 hover:text-sky-300 transition flex items-center gap-1 font-semibold">
+                <span>✦</span> Prep Hub
+            </a>
+            <a href="/history" class="text-slate-400 hover:text-slate-200 transition">
+                History
+            </a>
+            <a href="/logout" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 rounded-lg border border-red-500/20 transition font-semibold">
+                Logout
+            </a>
+        </div>
+    </div>
+
     <!-- Title -->
     <div class="text-center mb-10 print:hidden">
         <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">
-            AI Resume & Career Analyzer
+            AI Resume &amp; Career Analyzer
         </h1>
         <p class="text-slate-400 text-sm md:text-base">
             Analyze skill gaps, ATS fit, expected salary, and generate a personalized roadmap.
@@ -92,7 +112,7 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     Audit Evaluation Complete
                 </span>
-                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit & Career Analysis</h2>
+                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit &amp; Career Analysis</h2>
             </div>
             
             <div class="flex items-center gap-4">
@@ -103,7 +123,7 @@
                 </div>
                 {% endif %}
 
-                <!-- Native Save as PDF Button (No Library Required) -->
+                <!-- Native Save as PDF Button -->
                 <button type="button" onclick="window.print()" 
                     class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-xl text-sm font-semibold transition shadow-md">
                     <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -118,11 +138,10 @@
         {% if result.pay_scale or result.eligibility %}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <!-- Pay-Scale Emerald Card -->
             {% if result.pay_scale %}
             <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale & CTC</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale &amp; CTC</span>
                     <span class="text-xs bg-slate-900 border border-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md">{{ result.pay_scale.category }}</span>
                 </div>
                 <div class="text-2xl font-black text-emerald-400 my-1">
@@ -137,7 +156,6 @@
             </div>
             {% endif %}
 
-            <!-- Eligibility Verification Card -->
             {% if result.eligibility %}
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
@@ -170,7 +188,7 @@
         <!-- 3. Identified Strengths & Skills -->
         {% set skills_list = result.matched_skills or result.skills %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths & Skills</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths &amp; Skills</h3>
             <div class="flex flex-wrap gap-2">
                 {% if skills_list and skills_list is iterable and skills_list is not string %}
                     {% for skill in skills_list %}
@@ -221,7 +239,7 @@
         <!-- 6. Targeted Interview / Exam Questions -->
         {% if result.interview_questions %}
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical & Exam Questions</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical &amp; Exam Questions</h3>
             <div class="space-y-4">
                 {% for item in result.interview_questions %}
                 <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
@@ -246,7 +264,6 @@
     {% endif %}
 </div>
 
-<!-- Only 6 lines of pure JS for form submit spinner -->
 <script>
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
