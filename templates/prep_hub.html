@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement &amp; Syllabus Hub | CareersAnalysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .loader-spin {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #38bdf8;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-sky-500 selection:text-white">
+
+    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-lg tracking-tight text-white hover:opacity-90">
+                <span class="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-sm shadow-md shadow-sky-500/20">✦</span>
+                CareersAnalysis
+            </a>
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="/" class="text-slate-400 hover:text-slate-200">Home</a>
+                <a href="/prep-hub" class="text-sky-400 font-semibold">Prep Hub</a>
+                {% if logged_in %}
+                    <a href="/dashboard" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg">Dashboard</a>
+                {% else %}
+                    <a href="/login" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg">Log In</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-10">
+        <div class="text-center space-y-3 mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-950/80 text-sky-400 border border-sky-800/60">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span> Universal Assessment &amp; Syllabus Engine
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Placement &amp; Syllabus Hub</h1>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                Search real hiring matrices, coding rounds, and full semester syllabi across all engineering branches, IT recruiters, GATE, and competitive exams.
+            </p>
+        </div>
+
+        <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-6">
+            <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
+                <input 
+                    type="text" 
+                    name="query" 
+                    id="hub-input" 
+                    value="{{ query }}" 
+                    placeholder="e.g. GATE Civil, TCS NQT 2027, Mech 4th Sem, Amazon SDE-1..." 
+                    required
+                    class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
+                >
+                <button 
+                    type="submit" 
+                    id="hub-btn" 
+                    class="bg-sky-600 hover:bg-sky-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-sky-600/30"
+                >
+                    <span id="hub-btn-text">Generate ✦</span>
+                    <div id="hub-spinner" class="loader-spin hidden"></div>
+                </button>
+            </div>
+        </form>
+
+        <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto mb-10 text-xs">
+            <span class="text-slate-500 font-medium">Quick explore:</span>
+            <button type="button" onclick="fillQuery('TCS NQT Assessment Pattern')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">TCS NQT Pattern</button>
+            <button type="button" onclick="fillQuery('GATE Civil Engineering Core Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">GATE Civil</button>
+            <button type="button" onclick="fillQuery('B.Tech Mechanical 4th Sem Core Topics')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Mech 4th Sem</button>
+            <button type="button" onclick="fillQuery('Google SDE Technical Rounds')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Google SDE</button>
+            <button type="button" onclick="fillQuery('Core CS Interview Checklist (OS, DBMS, CN)')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3 py-1 rounded-full transition">Core CS Checklist</button>
+        </div>
+
+        {% if data %}
+        <section class="bg-slate-900 border border-slate-800/80 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-2">
+                <div>
+                    <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">Verified Blueprint</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">{{ query }}</h2>
+                </div>
+                <button onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 self-start sm:self-auto">
+                    <i class="fa-solid fa-download"></i> Save as PDF
+                </button>
+            </div>
+
+            <div class="text-slate-300 text-sm leading-relaxed space-y-4 whitespace-pre-line font-normal">
+                {{ data }}
+            </div>
+        </section>
+        {% endif %}
+    </main>
+
+    <script>
+        function fillQuery(text) {
+            document.getElementById('hub-input').value = text;
+            document.getElementById('hub-form').submit();
+        }
+
+        document.getElementById('hub-form').addEventListener('submit', function() {
+            const btn = document.getElementById('hub-btn');
+            const btnText = document.getElementById('hub-btn-text');
+            const spinner = document.getElementById('hub-spinner');
+            
+            btn.disabled = true;
+            btnText.innerText = "Analyzing...";
+            spinner.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
