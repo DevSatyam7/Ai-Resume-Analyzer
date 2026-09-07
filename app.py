@@ -45,13 +45,13 @@ def get_or_cache_syllabus(query):
         db.close()
 
 
-# home
+# Home
 @app.route("/")
 def home():
     return render_template("home.html", logged_in=("user" in session))
 
 
-# -----signup
+# Signup
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -73,7 +73,7 @@ def signup():
     return render_template("signup.html")
 
 
-# login-----
+# Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -93,7 +93,7 @@ def login():
     return render_template("login.html")
 
 
-# --dashboard
+# Dashboard
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user" not in session:
@@ -151,7 +151,7 @@ def dashboard():
     return render_template("dashboard.html", result=result)
 
 
-# history
+# History
 @app.route("/history")
 def history():
     if "user" not in session:
@@ -204,7 +204,7 @@ def delete_report(report_id):
     return redirect("/history")
 
 
-# logout
+# Logout
 @app.route("/logout")
 def logout():
     session.pop("user", None)
@@ -241,28 +241,65 @@ def forgot_password():
         db_session.close()
 
 
-@app.route('/robots.txt')
-def robots():
-    content = "User-agent: *\nAllow: /\nDisallow: /dashboard\nDisallow: /forgot-password\nDisallow: /login\nDisallow: /signup\nSitemap: https://ai-resume-analyzer-2jxj.onrender.com/sitemap.xml"
-    return Response(content, mimetype="text/plain")
+# ---------------- SEO & SEARCH CONSOLE ROUTES ----------------
 
-
+# Google Site Verification File
 @app.route('/google46e0869a1ebb8f89.html')
 def google_verify_file():
     return "google-site-verification: google46e0869a1ebb8f89.html"
 
 
+# Optimized robots.txt
+@app.route('/robots.txt')
+def robots():
+    content = """User-agent: *
+Allow: /
+Allow: /prep-hub
+Disallow: /dashboard
+Disallow: /history
+Disallow: /delete-report/
+Disallow: /forgot-password
+Disallow: /logout
+
+Sitemap: https://ai-resume-analyzer-2jxj.onrender.com/sitemap.xml
+"""
+    return Response(content, mimetype="text/plain")
+
+
+# Comprehensive XML Sitemap for Google Indexing
 @app.route('/sitemap.xml')
 def sitemap():
-    xml = """<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-       <url>
-          <loc>https://ai-resume-analyzer-2jxj.onrender.com/</loc>
-          <priority>1.0</priority>
-       </url>
-    </urlset>"""
+    base_url = "https://ai-resume-analyzer-2jxj.onrender.com"
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home Page -->
+    <url>
+        <loc>{base_url}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <!-- Placement & Syllabus Hub -->
+    <url>
+        <loc>{base_url}/prep-hub</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <!-- Auth Pages -->
+    <url>
+        <loc>{base_url}/login</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{base_url}/signup</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+</urlset>"""
     return Response(xml, mimetype="application/xml")
 
+
+# ---------------- PREP & DRILL ROUTES ----------------
 
 # Cached Topic Drill (Home Page Instant Explorer)
 @app.route("/topic-drill", methods=["POST"])
@@ -275,7 +312,7 @@ def topic_drill():
     return render_template("drill_result.html", data=drill_data, query=query)
 
 
-# --placement & syllabus hub (Dedicated Route)
+# Placement & Syllabus Hub
 @app.route("/prep-hub", methods=["GET", "POST"])
 def prep_hub():
     result_data = None
