@@ -1,5 +1,4 @@
-{
-  "name": "CareersAnalysis AI",
+name": "CareersAnalysis AI",
   "short_name": "CareersAI",
   "start_url": "/dashboard",
   "display": "standalone",
