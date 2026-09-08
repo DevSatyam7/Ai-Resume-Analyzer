@@ -1,25 +1,20 @@
 {
-  "id": "com.careersanalysis.app",
-  "name": "CareersAnalysis AI",
-  "short_name": "CareersAI",
-  "description": "AI Resume and Career Path Analyzer for Engineers",
-  "start_url": "/",
-  "display": "standalone",
   "background_color": "#020617",
+  "description": "AI Resume & Career Path Analyzer",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "CareersAnalysis AI",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "CareersAI",
+  "start_url": "/",
   "theme_color": "#2563eb",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "https://ai-resume-analyzer-2jxj.onrender.com/static/favicon.png",
+      "type": "image/jpeg",
+      "sizes": "1600x1560"
     }
-  ]
+  ],
+  "id": "com.careersanalysis.app"
 }
