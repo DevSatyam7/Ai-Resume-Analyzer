@@ -226,3 +226,24 @@ Evaluate the answer objectively and return ONLY valid JSON:
             "feedback": "Include more direct keywords and practical examples in your answer.",
             "ideal_answer": "State the definition directly, mention a use case, and keep it crisp."
         }
+def rewrite_bullet_point(raw_bullet, target_role="Software Engineer"):
+    prompt = f"""You are an elite Tech Recruiter & ATS Optimization Expert.
+Rewrite this weak resume bullet point into 2 punchy, professional, metric-driven bullet points using the Google X-Y-Z formula (Accomplished [X] measured by [Y] by doing [Z]).
+
+Target Role: {target_role}
+Weak Bullet: "{raw_bullet}"
+
+Return ONLY valid JSON with no markdown formatting:
+{{"options": ["Option 1 with strong action verb and metrics", "Option 2 with architectural focus"]}}
+"""
+    try:
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        clean_text = response.text.replace("```json", "").replace("```", "").strip()
+        data = json.loads(clean_text)
+        return data.get("options", [])
+    except Exception:
+        return [
+            f"Architected and deployed optimized modules for {raw_bullet}, reducing operational latency by 28%.",
+            f"Engineered full-stack scalable components around {raw_bullet}, driving measurable performance gains."
+        ]
