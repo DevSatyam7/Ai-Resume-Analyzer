@@ -100,12 +100,18 @@ def dashboard():
         return redirect("/login")
 
     result = None
+    searched_role = ""
+    searched_jd = ""
 
     if request.method == "POST":
         user_goal = request.form.get("goal") or request.form.get("role")
+        job_description = request.form.get("job_description", "").strip()
         resume_text = request.form.get("resume", "").strip()
         file = request.files.get("file")
         language = request.form.get("language", "en")
+
+        searched_role = user_goal or ""
+        searched_jd = job_description
 
         # File se text extract karna
         if file and file.filename != "":
@@ -132,7 +138,17 @@ def dashboard():
             result = {"error": "Kripya apna career goal likhein."}
         else:
             try:
-                result = analyze_resume(resume_text, user_goal, language=language)
+                # Agar user ne specific JD / criteria diya hai toh AI ko target ke sath jod kar bhejo
+                effective_goal = user_goal
+                if job_description:
+                    effective_goal = f"{user_goal} (Target Job Description / Criteria: {job_description})"
+
+                result = analyze_resume(resume_text, effective_goal, language=language)
+
+                # Report me target role aur JD criteria attach karo taaki dashboard me show ho
+                if isinstance(result, dict) and "error" not in result:
+                    result["target_role"] = user_goal
+                    result["job_description"] = job_description
 
                 db = SessionLocal()
                 user = db.query(models.User).filter_by(email=session["user"]).first()
@@ -148,7 +164,12 @@ def dashboard():
             except Exception as e:
                 result = {"error": f"Backend/AI Error: {str(e)}"}
 
-    return render_template("dashboard.html", result=result)
+    return render_template(
+        "dashboard.html",
+        result=result,
+        searched_role=searched_role,
+        searched_jd=searched_jd
+    )
 
 
 # History
@@ -302,14 +323,17 @@ def sitemap():
 # ---------------- PREP & DRILL ROUTES ----------------
 
 # Cached Topic Drill (Home Page Instant Explorer)
-@app.route("/topic-drill", methods=["POST"])
+@app.route("/topic-drill", methods=["GET", "POST"])
 def topic_drill():
-    query = request.form.get("query", "").strip()
-    if not query:
-        return redirect("/")
+    if request.method == "POST":
+        query = request.form.get("query", "").strip()
+        if not query:
+            return redirect("/")
+        
+        drill_data = get_or_cache_syllabus(query)
+        return render_template("drill_result.html", data=drill_data, query=query)
     
-    drill_data = get_or_cache_syllabus(query)
-    return render_template("drill_result.html", data=drill_data, query=query)
+    return redirect("/")
 
 
 # Placement & Syllabus Hub
