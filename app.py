@@ -361,6 +361,15 @@ def prep_hub():
     
     return render_template("prep_hub.html", data=result_data, query=query, logged_in=("user" in session))
 
+from flask import send_from_directory
 
+@app.route('/manifest.json')
+def serve_manifest():
+    return send_from_directory('static', 'manifest.json', mimetype='application/manifest+json')
+
+@app.route('/sw.js')
+def serve_sw():
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
+    
 if __name__ == "__main__":
     app.run(debug=True)
