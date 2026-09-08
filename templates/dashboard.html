@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-6 py-12">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
     <!-- Title -->
-    <div class="text-center mb-10 print:hidden">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-3">
+    <div class="text-center mb-8 sm:mb-10 print:hidden">
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3">
             AI Resume &amp; Career Analyzer
         </h1>
-        <p class="text-slate-400 text-sm md:text-base">
-            Analyze skill gaps, ATS fit, expected salary, and generate a personalized roadmap.
+        <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto">
+            Analyze skill gaps, ATS fit, expected salary, and generate a personalized roadmap with free video tutorials.
         </p>
     </div>
 
     <!-- Error Alert -->
     {% if result and result.error %}
-    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-6 py-4 rounded-2xl text-sm print:hidden">
+    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-5 py-4 rounded-2xl text-sm print:hidden">
         <strong>Error:</strong> {{ result.error }}
     </div>
     {% endif %}
 
     <!-- Input Form -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl mb-12 print:hidden">
+    <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden">
         <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
             
             <!-- Target Career Role -->
             <div>
-                <label class="block text-sm font-semibold text-slate-200 mb-2">Target Career Role or Examination</label>
+                <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">Target Career Role or Examination</label>
                 <input type="text" name="role" required
-                    placeholder="e.g. Backend Developer, SSC CGL Inspector, Data Analyst, RRB NTPC"
+                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT, GATE CSE"
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
 
@@ -48,28 +48,28 @@
 
             <!-- Resume Text -->
             <div>
-                <label class="block text-sm font-semibold text-slate-200 mb-2">
-                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file, or type qualifications)</span>
+                <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
+                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file)</span>
                 </label>
-                <textarea name="resume" rows="6"
-                    placeholder="Paste your resume text here, or simply write: 'B.Tech CSE 2026, Python, SQL, 7.8 CGPA'..."
+                <textarea name="resume" rows="5"
+                    placeholder="Paste your resume text here, or summarize: 'B.Tech CSE 2026, Python, Flask, SQL, 8.0 CGPA'..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
             <!-- File Upload & Action Button -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
-                        class="text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
+                        class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
                 </div>
 
-                <!-- Normal Button -->
+                <!-- Action Button -->
                 <button type="submit" id="submitBtn"
-                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 transition">
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
                     Run Analysis
                 </button>
 
-                <!-- Loading Spinner State -->
+                <!-- Loading State -->
                 <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg cursor-not-allowed">
                     <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -83,29 +83,29 @@
 
     <!-- Complete Analysis Output -->
     {% if result and not result.error %}
-    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl space-y-8">
         
         <!-- Score Header & Save PDF Button -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div>
-                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     Audit Evaluation Complete
                 </span>
-                <h2 class="text-2xl font-bold text-white mt-2">Resume Fit &amp; Career Analysis</h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-white mt-2">Resume Fit &amp; Career Analysis</h2>
             </div>
             
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 sm:gap-4">
                 {% if result.ats_score is defined %}
-                <div class="bg-blue-950/80 border border-blue-800/80 px-6 py-2.5 rounded-2xl text-center shadow-lg">
-                    <span class="text-xs text-blue-300 block font-medium">ATS Match</span>
-                    <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
+                <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
+                    <span class="text-[10px] sm:text-xs text-blue-300 block font-medium">ATS Match</span>
+                    <span class="text-2xl sm:text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
                 </div>
                 {% endif %}
 
                 <!-- Native Save as PDF Button -->
                 <button type="button" onclick="window.print()" 
-                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-xl text-sm font-semibold transition shadow-md">
+                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition shadow-md">
                     <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"></path>
                     </svg>
@@ -122,7 +122,7 @@
             {% if result.pay_scale %}
             <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale &amp; CTC</span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale &amp; CTC</span>
                     <span class="text-xs bg-slate-900 border border-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md">{{ result.pay_scale.category }}</span>
                 </div>
                 <div class="text-2xl font-black text-emerald-400 my-1">
@@ -141,7 +141,7 @@
             {% if result.eligibility %}
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Eligibility Check</span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Eligibility Check</span>
                     <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold {% if 'Eligible' in result.eligibility.status and 'Not' not in result.eligibility.status %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/30{% endif %}">
                         {{ result.eligibility.status }}
                     </span>
@@ -184,15 +184,29 @@
             </div>
         </div>
 
-        <!-- 4. Missing Critical Skills (Gaps) -->
+        <!-- 4. Missing Critical Skills with Direct YouTube Tutorial Links -->
         <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3">Missing Critical Skills (Gaps)</h3>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400">Missing Critical Skills (Gaps)</h3>
+                <span class="text-[10px] text-slate-500">Click button to watch targeted tutorials</span>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
                 {% if result.missing_skills and result.missing_skills is iterable and result.missing_skills is not string %}
                     {% for m_skill in result.missing_skills %}
-                        <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
-                            <span class="text-amber-400">⚠</span> {{ m_skill }}
-                        </span>
+                        <div class="inline-flex items-center gap-2 bg-slate-950 border border-amber-500/30 rounded-xl px-3 py-1.5 shadow-sm">
+                            <span class="text-amber-300 text-xs font-medium flex items-center gap-1.5">
+                                <span class="text-amber-400">⚠</span> {{ m_skill }}
+                            </span>
+                            <a href="https://www.youtube.com/results?search_query={{ m_skill | urlencode }}+tutorial+full+course" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white border border-red-500/30 transition">
+                                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
+                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                </svg>
+                                <span>Learn ↗</span>
+                            </a>
+                        </div>
                     {% endfor %}
                 {% else %}
                     <span class="text-slate-500 text-xs">No major skill gaps identified.</span>
@@ -200,16 +214,25 @@
             </div>
         </div>
 
-        <!-- 5. Targeted Career Roadmap -->
+        <!-- 5. Targeted Career Roadmap with Video Guides -->
         {% if result.roadmap %}
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
             <div class="space-y-3">
                 {% for step in result.roadmap %}
                 <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        <h4 class="text-sm font-bold text-emerald-400">{{ step.phase or "Milestone Phase" }}</h4>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <h4 class="text-sm font-bold text-emerald-400">{{ step.phase or "Milestone Phase" }}</h4>
+                        </div>
+                        <a href="https://www.youtube.com/results?search_query={{ (step.phase ~ ' roadmap preparation tutorial') | urlencode }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="text-[11px] text-slate-400 hover:text-emerald-300 font-medium inline-flex items-center gap-1 transition">
+                            <span>Video Guide</span>
+                            <span>↗</span>
+                        </a>
                     </div>
                     <p class="text-sm text-slate-300 leading-relaxed pl-4 border-l border-slate-800">{{ step.tasks }}</p>
                 </div>
