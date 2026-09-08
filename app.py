@@ -4,7 +4,7 @@ import models
 import PyPDF2
 import docx
 import json
-from ai import analyze_resume, get_comprehensive_drill
+from ai import analyze_resume, get_comprehensive_drill, rewrite_bullet_point
 
 app = Flask(__name__)
 app.secret_key = "secret12345678"
@@ -130,7 +130,6 @@ def dashboard():
                         resume_text = extracted.strip()
             except Exception as e:
                 result = {"error": f"File read error: {str(e)}"}
-
         # Validation
         if not resume_text:
             result = {"error": "Resume text nahi mil paya! Kripya PDF ki jagah text box me direct paste karein."}
@@ -170,7 +169,21 @@ def dashboard():
         searched_role=searched_role,
         searched_jd=searched_jd
     )
+# Micro-SaaS: Instant ATS Bullet Rewriter (AJAX)
+@app.route("/rewrite-bullet", methods=["POST"])
+def rewrite_bullet():
+    if "user" not in session:
+        return {"error": "Pehle login karein"}, 401
 
+    data = request.get_json() or {}
+    raw_bullet = data.get("bullet", "").strip()
+    role = data.get("role", "Software Engineer").strip()
+
+    if not raw_bullet:
+        return {"error": "Kripya koi bullet point likhein."}, 400
+
+    options = rewrite_bullet_point(raw_bullet, role)
+    return {"success": True, "options": options}
 
 # History
 @app.route("/history")
