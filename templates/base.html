@@ -2,32 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Primary SEO Meta Tags -->
-    <title>CareersAnalysis - AI Resume &amp; Career Fit Analyzer</title>
-    <meta name="title" content="CareersAnalysis - AI Resume &amp; Career Fit Analyzer">
-    <meta name="description" content="Free AI-powered ATS resume checker, real-world salary estimator, and targeted career roadmap generator. Analyze skill gaps and get exam practice questions.">
-    <meta name="keywords" content="AI Resume Analyzer, ATS Score Checker, Salary Estimator, Tech Career Roadmap, Exam Syllabus, Mock Interview Viva">
+    <title>CareersAnalysis — Free AI ATS Resume &amp; Career Fit Analyzer</title>
+    <meta name="title" content="CareersAnalysis — Free AI ATS Resume &amp; Career Fit Analyzer">
+    <meta name="description" content="Check your resume ATS match score, detect skill gaps, and get an industry-ready career roadmap powered by AI.">
+    <meta name="keywords" content="ATS resume checker, resume score, resume analyzer, AI resume audit, free resume review">
     <meta name="author" content="CareersAnalysis">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ai-resume-analyzer-2jxj.onrender.com/">
 
-    <!-- Open Graph / WhatsApp / Facebook Preview -->
+    <!-- Open Graph / WhatsApp / LinkedIn Preview -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
     <meta property="og:site_name" content="CareersAnalysis">
-    <meta property="og:title" content="CareersAnalysis - AI Resume &amp; Career Fit Analyzer">
-    <meta property="og:description" content="Audit your resume for free, calculate expected pay-scale, and find missing skill gaps instantly.">
+    <meta property="og:title" content="CareersAnalysis — Check Your ATS Resume Score Free">
+    <meta property="og:description" content="Instant ATS scoring, skill-gap analysis &amp; personalized interview roadmap. Get hired faster.">
     <meta property="og:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
 
-    <!-- Twitter Preview Cards -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="CareersAnalysis - AI Resume &amp; Career Fit Analyzer">
-    <meta name="twitter:description" content="Free ATS score auditor and tailored roadmap generator for engineers and competitive exams.">
-    <meta name="twitter:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="CareersAnalysis — AI Resume Analyzer">
+    <meta property="twitter:description" content="Audit your resume ATS score and get custom job roadmaps.">
+    <meta property="twitter:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
 
-    <!-- Google Search Console Verification Tag -->
+    <!-- Google Search Console -->
     <meta name="google-site-verification" content="s1dPg9Gs-TArej1vQw4ivXCgeKtU_9fvpGBeS2JmlHo" />
 
     <!-- Favicon -->
@@ -36,59 +36,118 @@
     <!-- Tailwind CSS & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-    </style>
-    <!-- Primary Meta Tags -->
-<title>CareersAnalysis — Free AI ATS Resume & Career Fit Analyzer</title>
-<meta name="title" content="CareersAnalysis — Free AI ATS Resume & Career Fit Analyzer">
-<meta name="description" content="Check your resume ATS match score, detect skill gaps, and get an industry-ready career roadmap powered by AI.">
-<meta name="keywords" content="ATS resume checker, resume score, resume analyzer, AI resume audit, free resume review">
-
-<!-- Open Graph / WhatsApp / LinkedIn Preview -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
-<meta property="og:title" content="CareersAnalysis — Check Your ATS Resume Score Free">
-<meta property="og:description" content="Instant ATS scoring, skill-gap analysis & ₹49 expert resume makeover. Get hired faster.">
-<meta property="og:image" content="https://ai-resume-analyzer-2jxj.onrender.com/static/images/og-preview.png">
-
-<!-- Twitter Card -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="CareersAnalysis — AI Resume Analyzer">
-<meta property="twitter:description" content="Audit your resume ATS score and get custom job roadmaps.">
     
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
+        /* Lock horizontal sway/wobble on mobile devices */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            position: relative;
+        }
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Single Clean Sticky Navbar -->
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800">
+    <!-- Sticky Navbar -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/85 border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             
-            <!-- Site Logo (Click to Home) -->
+            <!-- Site Brand Logo -->
             <a href="/" class="flex items-center gap-2.5 group shrink-0">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/25 group-hover:scale-105 transition duration-300 border border-slate-800">
-                <span class="text-base sm:text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/20 group-hover:scale-105 transition duration-200 border border-slate-800">
+                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
                     Careers<span class="text-blue-500">Analysis</span>
                 </span>
             </a>
 
-            <!-- Navigation Links -->
-            <div class="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm font-medium">
+            <!-- Desktop Navigation Links (Screen >= 768px) -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
                 <a href="/" class="text-slate-400 hover:text-white transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 hover:text-sky-300 transition font-semibold flex items-center gap-1">
                     <span>✦</span> Prep Hub
                 </a>
                 <a href="/history" class="text-slate-400 hover:text-white transition">History</a>
-                <a href="/dashboard" class="text-white bg-blue-600/30 border border-blue-500/40 px-3 py-1.5 rounded-xl font-semibold">Dashboard</a>
-                <a href="/logout" class="text-rose-400 bg-rose-950/30 hover:bg-rose-900/40 border border-rose-800/40 px-3 py-1.5 rounded-xl transition">Logout</a>
-            </div>
+                <a href="/dashboard" class="text-white bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/40 px-3.5 py-1.5 rounded-xl font-semibold transition">
+                    Dashboard
+                </a>
+                <a href="/logout" class="text-rose-400 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 py-1.5 rounded-xl transition">
+                    Logout
+                </a>
+            </nav>
+
+            <!-- Mobile Hamburger Button (Screen < 768px) -->
+            <button 
+                type="button" 
+                onclick="toggleMobileDrawer(true)" 
+                class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 active:scale-95 transition"
+                aria-label="Open Navigation Menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
 
         </div>
     </header>
 
-    <!-- Main Dynamic Content -->
-    <main class="flex-1 w-full">
+    <!-- Mobile Slide-Over Drawer -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
+        <div 
+            id="drawerPanel" 
+            class="fixed top-0 right-0 h-full w-72 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl">
+            
+            <div>
+                <!-- Drawer Top Header -->
+                <div class="flex items-center justify-between pb-5 border-b border-slate-800">
+                    <span class="text-sm font-bold text-slate-200 tracking-wide uppercase">Quick Menu</span>
+                    <button 
+                        type="button" 
+                        onclick="toggleMobileDrawer(false)" 
+                        class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Drawer Links -->
+                <nav class="mt-6 flex flex-col gap-2">
+                    <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
+                        <span>🏠</span> Home
+                    </a>
+                    <a href="/prep-hub" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition">
+                        <span>✦</span> Prep Hub
+                    </a>
+                    <a href="/history" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
+                        <span>🕒</span> History
+                    </a>
+                    <a href="/dashboard" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition">
+                        <span>📊</span> Dashboard
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Drawer Bottom Actions -->
+            <div class="pt-5 border-t border-slate-800 flex flex-col gap-3">
+                <a href="/logout" class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition">
+                    Logout
+                </a>
+                <span class="text-[10px] text-center text-slate-500">
+                    CareersAnalysis v2.4 • Gemini AI
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-1 w-full overflow-x-hidden">
         {% block content %}{% endblock %}
     </main>
 
@@ -96,6 +155,37 @@
     <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
         © 2026 CareersAnalysis. All rights reserved.
     </footer>
+
+    <!-- Drawer Logic Script -->
+    <script>
+        function toggleMobileDrawer(open) {
+            const overlay = document.getElementById('drawerOverlay');
+            const panel = document.getElementById('drawerPanel');
+            
+            if (open) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        // Close drawer when touching outside backdrop
+        document.getElementById('drawerOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleMobileDrawer(false);
+            }
+        });
+    </script>
 
 </body>
 </html>
