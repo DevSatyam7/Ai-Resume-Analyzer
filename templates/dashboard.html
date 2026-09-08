@@ -552,5 +552,54 @@
             }
         });
     }
+    async function runBulletRewriter() {
+        const input = document.getElementById('rawBulletInput');
+        const btn = document.getElementById('rewriteBtn');
+        const resultsBox = document.getElementById('bulletResultsBox');
+        const list = document.getElementById('bulletOptionsList');
+        const bulletText = input.value.trim();
+
+        if (!bulletText) {
+            alert('Pehle koi project ya resume line likhein!');
+            return;
+        }
+
+        btn.innerText = "Rewriting...";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/rewrite-bullet', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ bullet: bulletText, role: 'Software Engineer' })
+            });
+            const data = await res.json();
+
+            if (data.success && data.options) {
+                list.innerHTML = '';
+                data.options.forEach(opt => {
+                    const item = document.createElement('div');
+                    item.className = "p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 flex items-center justify-between gap-3 text-xs text-slate-200 cursor-pointer transition";
+                    item.innerHTML = `
+                        <span class="leading-relaxed">${opt}</span>
+                        <span class="text-[10px] text-blue-400 font-bold uppercase shrink-0">Copy 📋</span>
+                    `;
+                    item.onclick = () => {
+                        navigator.clipboard.writeText(opt);
+                        alert('Copied to clipboard!');
+                    };
+                    list.appendChild(item);
+                });
+                resultsBox.classList.remove('hidden');
+            } else {
+                alert(data.error || 'Rewriter failed. Try again.');
+            }
+        } catch (err) {
+            alert('Server request failed.');
+        } finally {
+            btn.innerText = "Enhance Line ⚡";
+            btn.disabled = false;
+        }
+    }
 </script>
 {% endblock %}
