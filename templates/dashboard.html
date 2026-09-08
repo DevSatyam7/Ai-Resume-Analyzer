@@ -106,6 +106,35 @@
             </div>
         </form>
     </div>
+    <!-- Micro-SaaS: 1-Click ATS Bullet Rewriter -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl mb-8 print:hidden">
+        <div class="flex items-center justify-between gap-2 mb-3 border-b border-slate-800/80 pb-3">
+            <div class="flex items-center gap-2">
+                <span class="text-lg">✨</span>
+                <div>
+                    <h3 class="text-sm font-bold text-white">1-Click ATS Bullet Enhancer</h3>
+                    <p class="text-[11px] text-slate-400">Transform weak project lines into recruiter-ready Google XYZ impact statements</p>
+                </div>
+            </div>
+            <span class="text-[10px] uppercase font-bold tracking-wider text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-md">Micro-SaaS Tool</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+            <input type="text" id="rawBulletInput" 
+                   placeholder="e.g. Worked on Python chatbot, made login page with Flask..." 
+                   class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+            <button type="button" onclick="runBulletRewriter()" id="rewriteBtn"
+                    class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl text-xs sm:text-sm transition active:scale-95 whitespace-nowrap shadow-lg shadow-blue-600/30">
+                Enhance Line ⚡
+            </button>
+        </div>
+
+        <!-- Dynamic Output Container -->
+        <div id="bulletResultsBox" class="hidden mt-4 space-y-2.5 pt-3 border-t border-slate-800/80">
+            <span class="text-[11px] font-semibold text-emerald-400 block">✓ ATS-Optimized Alternatives (Click to Copy):</span>
+            <div id="bulletOptionsList" class="space-y-2"></div>
+        </div>
+    </div>
 
     <!-- Complete Analysis Output Screen -->
     {% if result and not result.error %}
