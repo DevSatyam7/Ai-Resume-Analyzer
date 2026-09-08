@@ -53,8 +53,8 @@
                     </span>
                 </div>
                 <textarea name="job_description" rows="3"
-                    placeholder="Paste job posting requirements, corporate tech stack (e.g. Docker, AWS, Spring Boot, PyTorch), or drive syllabus for exact token parity matching..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
+                    placeholder="Paste job posting requirements, corporate tech stack (e.g. TCS NQT syllabus, Docker, AWS, Spring Boot, PyTorch) for exact token parity matching..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">{{ searched_jd or '' }}</textarea>
             </div>
 
             <!-- 3. Report Output Language -->
@@ -109,9 +109,9 @@
 
     <!-- Complete Analysis Output Screen -->
     {% if result and not result.error %}
-    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl space-y-8 scroll-mt-20">
+    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl space-y-6 scroll-mt-20">
         
-        <!-- Score Header & Searched Query Banner -->
+        <!-- Top Score Header Banner -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div class="space-y-1.5">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -120,15 +120,17 @@
                         Audit Evaluation Complete
                     </span>
 
-                    <!-- Displays exact searched role / exam -->
+                    <!-- Exact Role Searched -->
                     <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-full">
                         <span>🎯 Target:</span>
-                        <span class="text-white">{{ result.target_role or searched_role or "AI / Software Developer" }}</span>
+                        <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
                     </span>
 
-                    {% if result.has_jd_alignment %}
-                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-300 bg-purple-500/10 border border-purple-500/30 px-2.5 py-0.5 rounded-full">
-                        <span>⚖️</span> JD Match Engine Active
+                    <!-- Custom JD Applied Badge -->
+                    {% if result.job_description or searched_jd %}
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
+                        <span>✓ Criteria:</span>
+                        <span class="text-white">{{ result.job_description or searched_jd }}</span>
                     </span>
                     {% endif %}
                 </div>
@@ -138,7 +140,7 @@
                 </h2>
             </div>
             
-            <!-- ATS Score Badge & PDF Action -->
+            <!-- ATS Score & PDF Action -->
             <div class="flex items-center gap-3 sm:gap-4">
                 {% if result.ats_score is defined %}
                 <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
@@ -158,273 +160,312 @@
             </div>
         </div>
 
-        <!-- Dedicated Job Description (JD) Matcher Metric Card -->
-        <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-800/80 pb-3">
-                <div class="flex items-center gap-2">
-                    <span class="text-lg">🎯</span>
-                    <div>
-                        <h3 class="text-sm font-bold text-white">Target Job Description (JD) Alignment</h3>
-                        <p class="text-[11px] text-slate-400">Semantic match between your resume profile and recruiter criteria</p>
-                    </div>
-                </div>
-                <span class="text-xs px-3 py-1 rounded-full font-bold bg-sky-500/10 text-sky-300 border border-sky-500/30">
-                    Role: {{ result.target_role or searched_role or "AI / Software Developer" }}
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Target Criteria</span>
-                    <span class="text-xs font-bold text-slate-200 mt-1 block truncate">
-                        {{ result.target_role or searched_role or "Standard Engineering Fit" }}
-                    </span>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">ATS Parsing Verdict</span>
-                    <span class="text-xs font-bold {% if result.ats_score and result.ats_score >= 70 %}text-emerald-400{% else %}text-amber-400{% endif %} mt-1 block">
-                        {% if result.ats_score and result.ats_score >= 70 %}Strong Match (Shortlist Ready){% else %}Needs Optimization{% endif %}
-                    </span>
-                </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Recruiter Priority</span>
-                    <span class="text-xs font-bold text-sky-400 mt-1 block">
-                        {% if result.ats_score and result.ats_score >= 75 %}High (Tier-1 Review){% else %}Moderate (Skill Gaps Flagged){% endif %}
-                    </span>
-                </div>
-            </div>
+        <!-- Mobile & Desktop View Switcher Tabs -->
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto no-scrollbar print:hidden">
+            <button type="button" onclick="switchReportTab('overview')" id="tab-btn-overview" 
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white whitespace-nowrap shadow-md">
+                📊 Overview &amp; Pay
+            </button>
+            <button type="button" onclick="switchReportTab('skills')" id="tab-btn-skills" 
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+                ⚡ Skills &amp; Gaps
+            </button>
+            <button type="button" onclick="switchReportTab('roadmap')" id="tab-btn-roadmap" 
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+                🎯 Roadmap &amp; Viva
+            </button>
         </div>
 
-        <!-- 1. Pay-Scale & Eligibility Dual Cards -->
-        {% if result.pay_scale or result.eligibility %}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- ================= TAB 1: OVERVIEW & PAY ================= -->
+        <div id="tab-content-overview" class="space-y-6">
             
-            <!-- Pay-Scale Card -->
-            {% if result.pay_scale %}
-            <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale &amp; CTC</span>
-                    <span class="text-xs bg-slate-900 border border-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md">{{ result.pay_scale.category }}</span>
-                </div>
-                <div class="text-2xl font-black text-emerald-400 my-1">
-                    {{ result.pay_scale.salary_range }}
-                </div>
-                <p class="text-xs text-blue-300 mb-2">
-                    In-Hand Approx: <span class="font-semibold text-white">{{ result.pay_scale.in_hand_monthly }}</span>
-                </p>
-                <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2">
-                    <strong class="text-slate-300">Growth:</strong> {{ result.pay_scale.career_growth }}
-                </p>
-            </div>
-            {% endif %}
-
-            <!-- Eligibility Card -->
-            {% if result.eligibility %}
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Eligibility Check</span>
-                    <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold {% if 'Eligible' in result.eligibility.status and 'Not' not in result.eligibility.status %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/30{% endif %}">
-                        {{ result.eligibility.status }}
+            <!-- Real JD & Criteria Alignment Matrix -->
+            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-800/80 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🎯</span>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Target Criteria &amp; Recruiter Alignment</h3>
+                            <p class="text-[11px] text-slate-400">Semantic verification against evaluated corporate role</p>
+                        </div>
+                    </div>
+                    
+                    {% if result.job_description or searched_jd %}
+                    <span class="text-xs px-3 py-1 rounded-full font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                        ✓ Active Criteria: {{ result.job_description or searched_jd }}
                     </span>
-                </div>
-                <div class="text-xs text-slate-300 space-y-1.5 mt-2">
-                    <p><span class="text-slate-500">Required:</span> {{ result.eligibility.required_qualification }}</p>
-                    <p><span class="text-slate-500">Candidate:</span> {{ result.eligibility.matched_qualification }}</p>
-                </div>
-                <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2 mt-2">
-                    <strong class="text-slate-300">Criteria Fit:</strong> {{ result.eligibility.age_or_experience_fit }}
-                </p>
-            </div>
-            {% endif %}
-
-        </div>
-        {% endif %}
-
-        <!-- 2. Redesigned Executive Profile Summary (Punchy & Scannable 3-Card Matrix) -->
-        {% if result.profile_summary %}
-        <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
-                <span class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
-                    <span>⚡</span> Executive Audit Summary
-                </span>
-                <span class="text-[11px] text-slate-500 font-medium">Recruiter Perspective</span>
-            </div>
-
-            <!-- Structured 3-Card Insights -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-500/20">
-                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">✓ Core Strength</span>
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Strong educational baseline with demonstrated initiatives in verified coursework and foundational engineering concepts.
-                    </p>
-                </div>
-                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-rose-500/20">
-                    <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider block mb-1">✕ Primary Blocker</span>
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Project portfolio lacks end-to-end production scale; needs containerized microservices and deep framework implementations.
-                    </p>
-                </div>
-                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/20">
-                    <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block mb-1">💡 Priority Action</span>
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        Integrate modern API architectures, database caching, and quantifiable metrics to cross the 85%+ recruiter threshold.
-                    </p>
-                </div>
-            </div>
-
-            <p class="text-xs text-slate-400 mt-4 pt-3 border-t border-slate-900 leading-relaxed">
-                <strong class="text-slate-300">Raw AI Assessment:</strong> {{ result.profile_summary }}
-            </p>
-        </div>
-        {% endif %}
-
-        <!-- 3. Side-by-Side Profile vs Recruiter Specification Matrix -->
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
-                <div>
-                    <h3 class="text-sm font-bold text-white">Parsed Profile vs. Recruiter Specification</h3>
-                    <p class="text-[11px] text-slate-400">Direct comparison of tokens extracted from your document against target filters</p>
-                </div>
-                <span class="text-[11px] font-mono text-slate-500 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800">
-                    ATS Token Verification
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                
-                <!-- Left Column: Detected in Candidate Resume -->
-                <div class="p-4 rounded-xl bg-slate-900/50 border border-emerald-500/30">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span>📄</span> Extracted From Your Resume
-                        </span>
-                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/20 font-semibold">Verified Tokens</span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Academic / Institution:</span>
-                            <span class="text-xs text-slate-200 font-medium block mt-0.5">
-                                {{ result.eligibility.matched_qualification if result.eligibility else "B.Tech CSE (AI) Candidate" }}
-                            </span>
-                        </div>
-
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Found Skills &amp; Tools:</span>
-                            <div class="flex flex-wrap gap-1.5">
-                                {% for s in (result.matched_skills or result.skills or ['Python', 'DSA', 'OOP', 'Git/GitHub', 'SQL']) %}
-                                <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/60 text-emerald-300 border border-emerald-800/60">
-                                    ✓ {{ s }}
-                                </span>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <div class="pt-2 border-t border-slate-800/80">
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Current Project Profile:</span>
-                            <span class="text-xs text-slate-300 block mt-0.5">Undergraduate Engineering Trainee / Web Application Projects</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Missing Recruiter Tokens (JD Gaps) -->
-                <div class="p-4 rounded-xl bg-slate-900/50 border border-amber-500/30">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span>⚠</span> Missing For Target Designation
-                        </span>
-                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-semibold">JD Skill Gaps</span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Target Requirement:</span>
-                            <span class="text-xs text-slate-200 font-medium block mt-0.5">
-                                {{ result.target_role or searched_role or "AI Engineer / Software Developer" }}
-                            </span>
-                        </div>
-
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Absent Industry Tools (Click to Learn):</span>
-                            <div class="flex flex-wrap gap-1.5">
-                                {% for m in (result.missing_skills or ['PyTorch/TensorFlow', 'Vector DBs (Pinecone)', 'LLM Frameworks (LangChain)', 'FastAPI Microservices']) %}
-                                <a href="https://www.youtube.com/results?search_query={{ m | urlencode }}+tutorial+full+course" target="_blank" 
-                                   class="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-amber-950/40 text-amber-300 hover:text-white hover:bg-amber-900/60 border border-amber-700/50 transition">
-                                    <span>✕ {{ m }}</span>
-                                    <span class="text-[9px] text-amber-400">↗</span>
-                                </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                        <div class="pt-2 border-t border-slate-800/80">
-                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Action Required to Shortlist:</span>
-                            <span class="text-xs text-amber-200/90 block mt-0.5">
-                                Implement targeted skills into project bullet points to clear ATS parsing filters.
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- 4. Targeted Career Roadmap -->
-        {% if result.roadmap %}
-        <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
-            <div class="space-y-3">
-                {% for step in result.roadmap %}
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
-                    <div class="flex items-center justify-between gap-2 mb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <h4 class="text-sm font-bold text-emerald-400">{{ step.phase or "Milestone Phase" }}</h4>
-                        </div>
-                        <a href="https://www.youtube.com/results?search_query={{ (step.phase ~ ' roadmap preparation tutorial') | urlencode }}" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="text-[11px] text-slate-400 hover:text-emerald-300 font-medium inline-flex items-center gap-1 transition">
-                            <span>Video Guide</span>
-                            <span>↗</span>
-                        </a>
-                    </div>
-                    <p class="text-sm text-slate-300 leading-relaxed pl-4 border-l border-slate-800">{{ step.tasks }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- 5. Targeted Interview & Exam Questions -->
-        {% if result.interview_questions %}
-        <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical &amp; Exam Questions</h3>
-            <div class="space-y-4">
-                {% for item in result.interview_questions %}
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
-                    <div class="flex items-start gap-3">
-                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
-                            {{ loop.index }}
-                        </span>
-                        <h4 class="text-sm font-semibold text-white leading-snug">{{ item.question or item.q }}</h4>
-                    </div>
-                    {% if item.tip %}
-                    <div class="pl-9 text-xs text-slate-400 border-l border-purple-500/30 ml-3">
-                        <span class="text-purple-300 font-medium">Evaluation Focus:</span> {{ item.tip }}
-                    </div>
+                    {% else %}
+                    <span class="text-xs px-3 py-1 rounded-full font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+                        Standard Role Evaluation
+                    </span>
                     {% endif %}
                 </div>
-                {% endfor %}
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Target Role</span>
+                        <span class="text-xs font-bold text-sky-400 mt-1 block truncate">
+                            {{ result.target_role or searched_role or "Role Specified" }}
+                        </span>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Company / Exam Criteria</span>
+                        <span class="text-xs font-bold text-white mt-1 block truncate">
+                            {{ result.job_description or searched_jd or "General Industry Fit" }}
+                        </span>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">ATS Shortlist Fit</span>
+                        <span class="text-xs font-bold {% if result.ats_score and result.ats_score >= 70 %}text-emerald-400{% else %}text-amber-400{% endif %} mt-1 block">
+                            {{ result.ats_score }}% Match {% if result.ats_score and result.ats_score >= 70 %}(Tier-1 Shortlist){% else %}(Skill Gaps Flagged){% endif %}
+                        </span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Pay-Scale & Eligibility Dual Cards -->
+            {% if result.pay_scale or result.eligibility %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Pay-Scale Card -->
+                {% if result.pay_scale %}
+                <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Market Pay-Scale &amp; CTC</span>
+                        <span class="text-xs bg-slate-900 border border-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md">{{ result.pay_scale.category }}</span>
+                    </div>
+                    <div class="text-2xl font-black text-emerald-400 my-1">
+                        {{ result.pay_scale.salary_range }}
+                    </div>
+                    <p class="text-xs text-blue-300 mb-2">
+                        In-Hand Approx: <span class="font-semibold text-white">{{ result.pay_scale.in_hand_monthly }}</span>
+                    </p>
+                    <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+                        <strong class="text-slate-300">Growth:</strong> {{ result.pay_scale.career_growth }}
+                    </p>
+                </div>
+                {% endif %}
+
+                <!-- Eligibility Card -->
+                {% if result.eligibility %}
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Eligibility Check</span>
+                        <span class="text-xs px-2.5 py-0.5 rounded-md font-semibold {% if 'Eligible' in result.eligibility.status and 'Not' not in result.eligibility.status %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/30{% endif %}">
+                            {{ result.eligibility.status }}
+                        </span>
+                    </div>
+                    <div class="text-xs text-slate-300 space-y-1.5 mt-2">
+                        <p><span class="text-slate-500">Required:</span> {{ result.eligibility.required_qualification }}</p>
+                        <p><span class="text-slate-500">Candidate:</span> {{ result.eligibility.matched_qualification }}</p>
+                    </div>
+                    <p class="text-xs text-slate-400 border-t border-slate-800/80 pt-2 mt-2">
+                        <strong class="text-slate-300">Criteria Fit:</strong> {{ result.eligibility.age_or_experience_fit }}
+                    </p>
+                </div>
+                {% endif %}
+
+            </div>
+            {% endif %}
+
+            <!-- Redesigned Executive Profile Summary (3-Card Insights) -->
+            {% if result.profile_summary %}
+            <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                        <span>⚡</span> Executive Audit Summary
+                    </span>
+                    <span class="text-[11px] text-slate-500 font-medium">Recruiter Perspective</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                    <div class="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-500/20">
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">✓ Core Strength</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Strong educational baseline with demonstrated initiatives in verified coursework and foundational engineering concepts.
+                        </p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/80 border border-rose-500/20">
+                        <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider block mb-1">✕ Primary Blocker</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Project portfolio lacks end-to-end production scale; needs containerized microservices and deep framework implementations.
+                        </p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/20">
+                        <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block mb-1">💡 Priority Action</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Integrate modern API architectures, database caching, and quantifiable metrics to cross the 85%+ recruiter threshold.
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-400 mt-4 pt-3 border-t border-slate-900 leading-relaxed">
+                    <strong class="text-slate-300">Raw AI Assessment:</strong> {{ result.profile_summary }}
+                </p>
+            </div>
+            {% endif %}
+
         </div>
-        {% endif %}
+
+        <!-- ================= TAB 2: SKILLS & GAPS ================= -->
+        <div id="tab-content-skills" class="space-y-6 hidden">
+            
+            <!-- Side-by-Side Profile vs Recruiter Specification Matrix -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Parsed Profile vs. Recruiter Specification</h3>
+                        <p class="text-[11px] text-slate-400">Direct comparison of tokens extracted from your document against target filters</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-slate-500 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800">
+                        ATS Token Verification
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <!-- Left Column: Detected in Candidate Resume -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-emerald-500/30">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>📄</span> Extracted From Your Resume
+                            </span>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/20 font-semibold">Verified Tokens</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase">Academic / Institution:</span>
+                                <span class="text-xs text-slate-200 font-medium block mt-0.5">
+                                    {{ result.eligibility.matched_qualification if result.eligibility else "B.Tech CSE (AI) Candidate" }}
+                                </span>
+                            </div>
+
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Found Skills &amp; Tools:</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    {% for s in (result.matched_skills or result.skills or ['Python', 'DSA', 'OOP', 'Git/GitHub', 'SQL']) %}
+                                    <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/60 text-emerald-300 border border-emerald-800/60">
+                                        ✓ {{ s }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase">Current Project Profile:</span>
+                                <span class="text-xs text-slate-300 block mt-0.5">Undergraduate Engineering Trainee / Web Application Projects</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Missing Recruiter Tokens (JD Gaps) -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-amber-500/30">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <span>⚠</span> Missing For Target Designation
+                            </span>
+                            <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-semibold">JD Skill Gaps</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase">Target Requirement:</span>
+                                <span class="text-xs text-slate-200 font-medium block mt-0.5">
+                                    {{ result.target_role or searched_role or "AI Engineer / Software Developer" }}
+                                </span>
+                            </div>
+
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Absent Industry Tools (Click to Learn):</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    {% for m in (result.missing_skills or ['PyTorch/TensorFlow', 'Vector DBs (Pinecone)', 'LLM Frameworks (LangChain)', 'FastAPI Microservices']) %}
+                                    <a href="https://www.youtube.com/results?search_query={{ m | urlencode }}+tutorial+full+course" target="_blank" 
+                                       class="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-amber-950/40 text-amber-300 hover:text-white hover:bg-amber-900/60 border border-amber-700/50 transition">
+                                        <span>✕ {{ m }}</span>
+                                        <span class="text-[9px] text-amber-400">↗</span>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 font-semibold block uppercase">Action Required to Shortlist:</span>
+                                <span class="text-xs text-amber-200/90 block mt-0.5">
+                                    Implement targeted skills into project bullet points to clear ATS parsing filters.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= TAB 3: ROADMAP & VIVA ================= -->
+        <div id="tab-content-roadmap" class="space-y-6 hidden">
+            
+            <!-- Targeted Career Roadmap -->
+            {% if result.roadmap %}
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
+                <div class="space-y-3">
+                    {% for step in result.roadmap %}
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <h4 class="text-sm font-bold text-emerald-400">{{ step.phase or "Milestone Phase" }}</h4>
+                            </div>
+                            <a href="https://www.youtube.com/results?search_query={{ (step.phase ~ ' roadmap preparation tutorial') | urlencode }}" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="text-[11px] text-slate-400 hover:text-emerald-300 font-medium inline-flex items-center gap-1 transition">
+                                <span>Video Guide</span>
+                                <span>↗</span>
+                            </a>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed pl-4 border-l border-slate-800">{{ step.tasks }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Targeted Interview & Exam Questions -->
+            {% if result.interview_questions %}
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical &amp; Exam Questions</h3>
+                <div class="space-y-4">
+                    {% for item in result.interview_questions %}
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
+                        <div class="flex items-start gap-3">
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
+                                {{ loop.index }}
+                            </span>
+                            <h4 class="text-sm font-semibold text-white leading-snug">{{ item.question or item.q }}</h4>
+                        </div>
+                        {% if item.tip %}
+                        <div class="pl-9 text-xs text-slate-400 border-l border-purple-500/30 ml-3">
+                            <span class="text-purple-300 font-medium">Evaluation Focus:</span> {{ item.tip }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
 
     </div>
     {% endif %}
 </div>
 
-<!-- Interactive Client-side Controller -->
+<!-- Interactive Client-side Controller (Tabs, File Guard, Loader) -->
 <script>
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -462,6 +503,24 @@
                     loadingStepText.innerText = steps[currentStep];
                 }
             }, 1800);
+        });
+    }
+
+    // 3. Tab Switcher Controller
+    function switchReportTab(tabName) {
+        const tabs = ['overview', 'skills', 'roadmap'];
+        tabs.forEach(t => {
+            const content = document.getElementById(`tab-content-${t}`);
+            const btn = document.getElementById(`tab-btn-${t}`);
+            if (content && btn) {
+                if (t === tabName) {
+                    content.classList.remove('hidden');
+                    btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white whitespace-nowrap shadow-md";
+                } else {
+                    content.classList.add('hidden');
+                    btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap";
+                }
+            }
         });
     }
 </script>
