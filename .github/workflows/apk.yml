@@ -11,7 +11,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build PWA APK
-        uses: PWABuilder/pwabuilder-action@main
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          url: https://ai-resume-analyzer-2jxj.onrender.com/
+          node-version: 18
+
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli
+
+      - name: Initialize and Build Android Package
+        run: |
+          bubblewrap init --manifest=https://ai-resume-analyzer-2jxj.onrender.com/manifest.json --directory=android-app --skip-validation || true
+          cd android-app || mkdir android-app && cd android-app
+          # Fallback initialization if needed
