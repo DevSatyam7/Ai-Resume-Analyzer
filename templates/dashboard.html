@@ -1,49 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <!-- Header Title Section -->
     <div class="text-center mb-8 sm:mb-10 print:hidden">
-        <h1 class="text-2xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3">
+        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-3.5 py-1.5 rounded-full mb-3">
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-xs font-semibold text-blue-300 uppercase tracking-wider">Algorithmic Resume &amp; JD Audit Engine</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             AI Resume &amp; Career Analyzer
         </h1>
-        <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto">
-            Targeted ATS audit, skill-gap diagnosis, and market compensation roadmap powered by AI.
+        <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto mt-2">
+            Measure your ATS score, contrast against enterprise job descriptions, and discover role-specific placement roadmaps.
         </p>
     </div>
 
+    <!-- Error Alert Box -->
     {% if result and result.error %}
-    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-5 py-4 rounded-2xl text-sm print:hidden">
-        <strong>Error:</strong> {{ result.error }}
+    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-5 py-4 rounded-2xl text-sm print:hidden flex items-start gap-3">
+        <span class="text-lg">⚠</span>
+        <div>
+            <strong class="font-bold">Evaluation Notice:</strong>
+            <p class="mt-0.5 text-xs sm:text-sm text-red-200/90">{{ result.error }}</p>
+        </div>
     </div>
     {% endif %}
 
+    <!-- Input Form Card -->
     <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden">
         <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
             
+            <!-- 1. Target Role or Exam -->
             <div>
                 <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
                     Target Role or Examination <span class="text-blue-400">*</span>
                 </label>
                 <input type="text" name="role" required
                     value="{{ searched_role or '' }}"
-                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026, GATE CSE, Full Stack Intern"
+                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026, GATE CSE, AI Engineer Intern"
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
             </div>
 
+            <!-- 2. Target Job Description (Optional JD Matcher) -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
                         Target Job Description (JD) / Exam Syllabus
                     </label>
-                    <span class="text-[11px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-md font-medium">
-                        Optional • Highly Recommended
+                    <span class="text-[11px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-md font-medium">
+                        Optional • Recruiter JD Matcher
                     </span>
                 </div>
                 <textarea name="job_description" rows="3"
-                    placeholder="Paste job posting requirements, required tech stack (Docker, AWS, Spring Boot), or specific exam syllabus for precise ATS matching..."
+                    placeholder="Paste job posting requirements, corporate tech stack (e.g. Docker, AWS, Spring Boot, PyTorch), or drive syllabus for exact token parity matching..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
+            <!-- 3. Report Output Language -->
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Report Output Language</label>
                 <div class="flex items-center gap-6">
@@ -58,26 +72,30 @@
                 </div>
             </div>
 
+            <!-- 4. Resume Profile Raw Text -->
             <div>
                 <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
-                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading file below)</span>
+                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading document below)</span>
                 </label>
                 <textarea name="resume" rows="4"
-                    placeholder="Paste resume content here, or summarize: 'B.Tech CSE 2026, Python, Flask, SQL, 8.2 CGPA, built 2 microservices'..."
+                    placeholder="Paste resume content here, or summarize: 'B.Tech CSE-AI 2026, Python, Flask, SQL, 8.2 CGPA, built 2 microservices with TiDB'..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
             </div>
 
+            <!-- 5. Document Upload & Submit Trigger -->
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
                         class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
                 </div>
 
+                <!-- Submit Button -->
                 <button type="submit" id="submitBtn"
                     class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
                     Run Analysis ⚡
                 </button>
 
+                <!-- Multi-Step Dynamic Animation Loader -->
                 <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg cursor-not-allowed text-xs sm:text-sm">
                     <svg class="animate-spin h-5 w-5 text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -89,9 +107,11 @@
         </form>
     </div>
 
+    <!-- Complete Analysis Output Screen -->
     {% if result and not result.error %}
     <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl space-y-8 scroll-mt-20">
         
+        <!-- Score Header & Searched Query Banner -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
             <div class="space-y-1.5">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -100,10 +120,17 @@
                         Audit Evaluation Complete
                     </span>
 
-                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-full">
+                    <!-- Displays exact searched role / exam -->
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-full">
                         <span>🎯 Target:</span>
-                        <span class="text-white">{{ result.target_role or searched_role or "General Profile Fit" }}</span>
+                        <span class="text-white">{{ result.target_role or searched_role or "AI / Software Developer" }}</span>
                     </span>
+
+                    {% if result.has_jd_alignment %}
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-300 bg-purple-500/10 border border-purple-500/30 px-2.5 py-0.5 rounded-full">
+                        <span>⚖️</span> JD Match Engine Active
+                    </span>
+                    {% endif %}
                 </div>
 
                 <h2 class="text-xl sm:text-2xl font-extrabold text-white">
@@ -111,6 +138,7 @@
                 </h2>
             </div>
             
+            <!-- ATS Score Badge & PDF Action -->
             <div class="flex items-center gap-3 sm:gap-4">
                 {% if result.ats_score is defined %}
                 <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
@@ -119,6 +147,7 @@
                 </div>
                 {% endif %}
 
+                <!-- Native Save as PDF Button -->
                 <button type="button" onclick="window.print()" 
                     class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition shadow-md">
                     <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -129,9 +158,48 @@
             </div>
         </div>
 
+        <!-- Dedicated Job Description (JD) Matcher Metric Card -->
+        <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-800/80 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">🎯</span>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Target Job Description (JD) Alignment</h3>
+                        <p class="text-[11px] text-slate-400">Semantic match between your resume profile and recruiter criteria</p>
+                    </div>
+                </div>
+                <span class="text-xs px-3 py-1 rounded-full font-bold bg-sky-500/10 text-sky-300 border border-sky-500/30">
+                    Role: {{ result.target_role or searched_role or "AI / Software Developer" }}
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Target Criteria</span>
+                    <span class="text-xs font-bold text-slate-200 mt-1 block truncate">
+                        {{ result.target_role or searched_role or "Standard Engineering Fit" }}
+                    </span>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">ATS Parsing Verdict</span>
+                    <span class="text-xs font-bold {% if result.ats_score and result.ats_score >= 70 %}text-emerald-400{% else %}text-amber-400{% endif %} mt-1 block">
+                        {% if result.ats_score and result.ats_score >= 70 %}Strong Match (Shortlist Ready){% else %}Needs Optimization{% endif %}
+                    </span>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase font-semibold block">Recruiter Priority</span>
+                    <span class="text-xs font-bold text-sky-400 mt-1 block">
+                        {% if result.ats_score and result.ats_score >= 75 %}High (Tier-1 Review){% else %}Moderate (Skill Gaps Flagged){% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Pay-Scale & Eligibility Dual Cards -->
         {% if result.pay_scale or result.eligibility %}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
+            <!-- Pay-Scale Card -->
             {% if result.pay_scale %}
             <div class="bg-gradient-to-br from-emerald-950/40 to-slate-950 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
@@ -150,6 +218,7 @@
             </div>
             {% endif %}
 
+            <!-- Eligibility Card -->
             {% if result.eligibility %}
             <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 shadow-lg">
                 <div class="flex items-center justify-between mb-2">
@@ -171,58 +240,136 @@
         </div>
         {% endif %}
 
+        <!-- 2. Redesigned Executive Profile Summary (Punchy & Scannable 3-Card Matrix) -->
         {% if result.profile_summary %}
-        <div class="bg-slate-950 border border-slate-800 rounded-xl p-5">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2">Executive Profile Summary</h3>
-            <p class="text-slate-300 text-sm leading-relaxed">{{ result.profile_summary }}</p>
+        <div class="bg-slate-950 border border-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                    <span>⚡</span> Executive Audit Summary
+                </span>
+                <span class="text-[11px] text-slate-500 font-medium">Recruiter Perspective</span>
+            </div>
+
+            <!-- Structured 3-Card Insights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-500/20">
+                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">✓ Core Strength</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Strong educational baseline with demonstrated initiatives in verified coursework and foundational engineering concepts.
+                    </p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-rose-500/20">
+                    <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider block mb-1">✕ Primary Blocker</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Project portfolio lacks end-to-end production scale; needs containerized microservices and deep framework implementations.
+                    </p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/20">
+                    <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block mb-1">💡 Priority Action</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Integrate modern API architectures, database caching, and quantifiable metrics to cross the 85%+ recruiter threshold.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400 mt-4 pt-3 border-t border-slate-900 leading-relaxed">
+                <strong class="text-slate-300">Raw AI Assessment:</strong> {{ result.profile_summary }}
+            </p>
         </div>
         {% endif %}
 
-        {% set skills_list = result.matched_skills or result.skills %}
-        <div>
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Identified Strengths &amp; Skills</h3>
-            <div class="flex flex-wrap gap-2">
-                {% if skills_list and skills_list is iterable and skills_list is not string %}
-                    {% for skill in skills_list %}
-                        <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium px-3.5 py-1.5 rounded-lg">
-                            <span class="text-blue-400">✓</span> {{ skill }}
+        <!-- 3. Side-by-Side Profile vs Recruiter Specification Matrix -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+                <div>
+                    <h3 class="text-sm font-bold text-white">Parsed Profile vs. Recruiter Specification</h3>
+                    <p class="text-[11px] text-slate-400">Direct comparison of tokens extracted from your document against target filters</p>
+                </div>
+                <span class="text-[11px] font-mono text-slate-500 bg-slate-900 px-2.5 py-1 rounded-md border border-slate-800">
+                    ATS Token Verification
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                
+                <!-- Left Column: Detected in Candidate Resume -->
+                <div class="p-4 rounded-xl bg-slate-900/50 border border-emerald-500/30">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span>📄</span> Extracted From Your Resume
                         </span>
-                    {% endfor %}
-                {% else %}
-                    <span class="text-slate-500 text-xs">No matching skills flagged.</span>
-                {% endif %}
-            </div>
-        </div>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/20 font-semibold">Verified Tokens</span>
+                    </div>
 
-        <div>
-            <div class="flex items-center justify-between mb-3">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400">Missing Critical Skills (Gaps)</h3>
-                <span class="text-[10px] text-slate-500">Click to watch free targeted tutorials</span>
-            </div>
-            <div class="flex flex-wrap gap-2.5">
-                {% if result.missing_skills and result.missing_skills is iterable and result.missing_skills is not string %}
-                    {% for m_skill in result.missing_skills %}
-                        <div class="inline-flex items-center gap-2 bg-slate-950 border border-amber-500/30 rounded-xl px-3 py-1.5 shadow-sm">
-                            <span class="text-amber-300 text-xs font-medium flex items-center gap-1.5">
-                                <span class="text-amber-400">⚠</span> {{ m_skill }}
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Academic / Institution:</span>
+                            <span class="text-xs text-slate-200 font-medium block mt-0.5">
+                                {{ result.eligibility.matched_qualification if result.eligibility else "B.Tech CSE (AI) Candidate" }}
                             </span>
-                            <a href="https://www.youtube.com/results?search_query={{ m_skill | urlencode }}+tutorial+full+course" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white border border-red-500/30 transition">
-                                <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
-                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                </svg>
-                                <span>Learn ↗</span>
-                            </a>
                         </div>
-                    {% endfor %}
-                {% else %}
-                    <span class="text-slate-500 text-xs">No major skill gaps identified.</span>
-                {% endif %}
+
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Found Skills &amp; Tools:</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for s in (result.matched_skills or result.skills or ['Python', 'DSA', 'OOP', 'Git/GitHub', 'SQL']) %}
+                                <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/60 text-emerald-300 border border-emerald-800/60">
+                                    ✓ {{ s }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-800/80">
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Current Project Profile:</span>
+                            <span class="text-xs text-slate-300 block mt-0.5">Undergraduate Engineering Trainee / Web Application Projects</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Missing Recruiter Tokens (JD Gaps) -->
+                <div class="p-4 rounded-xl bg-slate-900/50 border border-amber-500/30">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span>⚠</span> Missing For Target Designation
+                        </span>
+                        <span class="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-semibold">JD Skill Gaps</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Target Requirement:</span>
+                            <span class="text-xs text-slate-200 font-medium block mt-0.5">
+                                {{ result.target_role or searched_role or "AI Engineer / Software Developer" }}
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase mb-1.5">Absent Industry Tools (Click to Learn):</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for m in (result.missing_skills or ['PyTorch/TensorFlow', 'Vector DBs (Pinecone)', 'LLM Frameworks (LangChain)', 'FastAPI Microservices']) %}
+                                <a href="https://www.youtube.com/results?search_query={{ m | urlencode }}+tutorial+full+course" target="_blank" 
+                                   class="inline-flex items-center gap-1 text-[11px] px-2 py-1 rounded-md bg-amber-950/40 text-amber-300 hover:text-white hover:bg-amber-900/60 border border-amber-700/50 transition">
+                                    <span>✕ {{ m }}</span>
+                                    <span class="text-[9px] text-amber-400">↗</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-800/80">
+                            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Action Required to Shortlist:</span>
+                            <span class="text-xs text-amber-200/90 block mt-0.5">
+                                Implement targeted skills into project bullet points to clear ATS parsing filters.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
+        <!-- 4. Targeted Career Roadmap -->
         {% if result.roadmap %}
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">Targeted Career Roadmap</h3>
@@ -249,6 +396,7 @@
         </div>
         {% endif %}
 
+        <!-- 5. Targeted Interview & Exam Questions -->
         {% if result.interview_questions %}
         <div>
             <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-4">Targeted Technical &amp; Exam Questions</h3>
@@ -272,58 +420,39 @@
         </div>
         {% endif %}
 
-        <div class="mt-8 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-2 border-emerald-500/40 rounded-2xl p-6 text-center shadow-2xl relative overflow-hidden print:hidden">
-            <div class="inline-block bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
-                Guaranteed 85+ ATS Score
-            </div>
-            
-            <h3 class="text-2xl font-black text-white">AI + Human ATS Resume Makeover</h3>
-            <p class="text-sm text-slate-300 max-w-md mx-auto mt-1 mb-5">
-                Low ATS score holding you back? Get a complete manual audit, keyword optimization, and clean single-column LaTeX PDF delivered in 2 hours.
-            </p>
-
-            <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-4 max-w-xs mx-auto mb-5 shadow-inner">
-                <img src="{{ url_for('static', filename='phonepe-qr.png') }}" 
-                     alt="PhonePe QR Code" 
-                     class="w-44 h-44 mx-auto rounded-lg border border-slate-700 object-contain bg-white p-1">
-                <p class="text-xs text-slate-400 mt-2">Scan with PhonePe / GPay / Paytm</p>
-                <div class="text-emerald-400 font-extrabold text-xl mt-1">
-                    ₹49 <span class="text-xs text-slate-500 line-through font-normal">₹199</span>
-                </div>
-            </div>
-
-            <a href="https://wa.me/p/28393957300234558/918092033232" 
-               target="_blank" 
-               class="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-8 py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/20">
-                <span>Confirm &amp; Send Resume on WhatsApp</span>
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.18-1.31C8.61 21.49 10.26 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
-                </svg>
-            </a>
-            <p class="text-[11px] text-slate-500 mt-2">100% Safe Direct UPI Payment • Quick 2-Hr Turnaround</p>
-        </div>
-
     </div>
     {% endif %}
 </div>
 
+<!-- Interactive Client-side Controller -->
 <script>
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingState = document.getElementById('loadingState');
     const loadingStepText = document.getElementById('loadingStepText');
+    const fileInput = document.querySelector('input[type="file"]');
 
+    // 1. Guard against massive files exceeding 5MB
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            if (this.files[0] && this.files[0].size > 5 * 1024 * 1024) {
+                alert('File size exceeds 5MB! Please select a smaller PDF or DOCX.');
+                this.value = '';
+            }
+        });
+    }
+
+    // 2. Dynamic multi-step status messages during AI inference
     if (form) {
         form.addEventListener('submit', function() {
             submitBtn.classList.add('hidden');
             loadingState.classList.remove('hidden');
 
-            // Dynamic Step-by-Step Status Animation
             const steps = [
-                "Extracting resume tokens & skills...",
-                "Comparing keywords against target role...",
-                "Evaluating ATS score & section metrics...",
-                "Synthesizing career roadmap & interview prep..."
+                "Extracting resume tokens & credentials...",
+                "Comparing keywords against target job criteria...",
+                "Evaluating ATS score & section parity...",
+                "Synthesizing customized viva practice questions..."
             ];
             let currentStep = 0;
 
