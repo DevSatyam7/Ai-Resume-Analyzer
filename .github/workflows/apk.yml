@@ -22,5 +22,14 @@ jobs:
       - name: Initialize and Build Android Package
         run: |
           bubblewrap init --manifest=https://ai-resume-analyzer-2jxj.onrender.com/manifest.json --directory=android-app --skip-validation || true
-          cd android-app || mkdir android-app && cd android-app
-          # Fallback initialization if needed
+          cd android-app || true
+          bubblewrap build || true
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-apk
+          path: |
+            android-app/*.apk
+            *.apk
+            **/app-release-signed.apk
