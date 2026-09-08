@@ -1,6 +1,9 @@
-name": "CareersAnalysis AI",
+{
+  "id": "com.careersanalysis.app",
+  "name": "CareersAnalysis AI",
   "short_name": "CareersAI",
-  "start_url": "/dashboard",
+  "description": "AI Resume and Career Path Analyzer for Engineers",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#2563eb",
@@ -9,12 +12,14 @@ name": "CareersAnalysis AI",
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
