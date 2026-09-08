@@ -1,0 +1,17 @@
+name: Generate APK
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build PWA APK
+        uses: PWABuilder/pwabuilder-action@main
+        with:
+          url: https://ai-resume-analyzer-2jxj.onrender.com/
