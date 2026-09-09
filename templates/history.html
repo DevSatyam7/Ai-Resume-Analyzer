@@ -1,128 +1,82 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-6 py-12">
-    <div class="mb-10">
-        <h1 class="text-3xl font-extrabold text-white">Analysis History</h1>
-        <p class="text-slate-400 text-sm mt-1">Review your past resume audits, ATS scores, and roadmaps.</p>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <!-- Header Title Section -->
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-3 shadow-inner">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-xs font-bold text-blue-300 uppercase tracking-widest">Audit Archive &amp; Logs</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            Past Audit History
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto mt-3">
+            Review your previous resume audits, track your progress, and download past reports anytime.
+        </p>
     </div>
 
+    <!-- Reports Grid / List -->
     {% if reports %}
-        <div class="space-y-10">
-            {% for item in reports %}
-            {% set res = item.result %}
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
-                
-                <!-- Header with ATS Score & Delete Button -->
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
-                    <div>
-                        <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Target Career Role</span>
-                        <h2 class="text-xl font-bold text-white mt-0.5">
-                            {{ res.role or res.target_role or "Career Audit Record" }}
-                        </h2>
-                    </div>
-                    
-                    <div class="flex items-center gap-3">
-                        {% if res.ats_score is defined %}
-                        <div class="bg-blue-950/80 border border-blue-800 px-4 py-2 rounded-xl text-center">
-                            <span class="text-xs text-blue-300 block font-medium">ATS Score</span>
-                            <span class="text-xl font-black text-blue-400">{{ res.ats_score }}%</span>
-                        </div>
-                        {% endif %}
-
-                        <!-- Delete Button -->
-                        <form action="/delete-report/{{ item.id }}" method="POST" onsubmit="return confirm('Kya aap sach me is report ko delete karna chahte hain?');">
-                            <button type="submit" title="Delete Report"
-                                class="p-2.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/30 rounded-xl transition">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% for rep in reports %}
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between transition hover:border-slate-700 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="space-y-4 relative z-10">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold font-mono text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-xl">
+                        Report #{{ rep.id }}
+                    </span>
+                    <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-xl">
+                        ATS Match: {{ rep.result.ats_score | default('N/A') }}%
+                    </span>
                 </div>
 
-                <!-- Profile Summary -->
-                {% if res.profile_summary %}
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">Executive Summary</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed">{{ res.profile_summary }}</p>
-                </div>
-                {% endif %}
-
-                <!-- Matched Skills -->
-                {% set s_list = res.matched_skills or res.skills %}
-                {% if s_list %}
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Identified Skills</h3>
-                    <div class="flex flex-wrap gap-2">
-                        {% for skill in s_list %}
-                            <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs px-3 py-1.5 rounded-lg">
-                                <span class="text-blue-400">✓</span> {{ skill }}
-                            </span>
-                        {% endfor %}
-                    </div>
+                    <h3 class="text-base font-extrabold text-white tracking-wide">
+                        🎯 Target: {{ rep.result.target_role or rep.result.goal or "General Role" }}
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                        {{ rep.result.file_summary | default('Audit summary and performance evaluation metrics recorded successfully.') }}
+                    </p>
                 </div>
-                {% endif %}
-
-                <!-- Missing Skills -->
-                {% if res.missing_skills %}
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-2">Missing Skills (Gaps)</h3>
-                    <div class="flex flex-wrap gap-2">
-                        {% for m_skill in res.missing_skills %}
-                            <span class="inline-flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs px-3 py-1.5 rounded-lg">
-                                <span class="text-amber-400">⚠</span> {{ m_skill }}
-                            </span>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                <!-- Roadmap -->
-                {% if res.roadmap %}
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3">Roadmap</h3>
-                    <div class="space-y-3">
-                        {% for step in res.roadmap %}
-                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
-                            <h4 class="text-xs font-bold text-emerald-400 mb-1">{{ step.phase }}</h4>
-                            <p class="text-sm text-slate-300 leading-relaxed">{{ step.tasks }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                <!-- Interview Questions -->
-                {% if res.interview_questions %}
-                <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 mb-3">Interview Questions</h3>
-                    <div class="space-y-3">
-                        {% for q in res.interview_questions %}
-                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1.5">
-                            <h4 class="text-sm font-semibold text-white">Q{{ loop.index }}: {{ q.question }}</h4>
-                            <p class="text-xs text-slate-400 pl-4 border-l border-purple-500/30">{{ q.tip }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
             </div>
-            {% endfor %}
+
+            <!-- Card Actions -->
+            <div class="flex items-center justify-between pt-6 mt-6 border-t border-slate-800/80 relative z-10">
+                <a href="/download-audit/{{ rep.id }}" 
+                    class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-md">
+                    <span>Download Report ⬇</span>
+                </a>
+
+                <form action="/delete-report/{{ rep.id }}" method="POST" onsubmit="return confirm('Kya aap sach mein is report ko delete karna chahte hain?');">
+                    <button type="submit" 
+                        class="flex items-center gap-1.5 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 border border-rose-800/40 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition">
+                        <span>Delete 🗑️</span>
+                    </button>
+                </form>
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <div class="text-center py-20 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl">
-            <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mx-auto mb-3">
-                📋
-            </div>
-            <h3 class="text-white font-semibold text-lg">No Past Analysis Found</h3>
-            <p class="text-slate-400 text-sm mt-1 mb-6">Analyze a resume to generate ATS scores and roadmaps.</p>
-            <a href="/dashboard" class="inline-block text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/30">
-                Analyze Resume Now
+    <!-- Empty State -->
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center max-w-lg mx-auto shadow-2xl space-y-4">
+        <div class="w-16 h-16 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+            📭
+        </div>
+        <h3 class="text-lg font-bold text-white">No Audit History Found</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+            Aapne abhi tak koi resume audit nahi kiya hai. Dashboard par jaakar apna pehla resume analyze karein!
+        </p>
+        <div class="pt-2">
+            <a href="/dashboard" class="inline-block bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-6 py-3 rounded-2xl shadow-lg transition">
+                Go to Dashboard ⚡
             </a>
         </div>
+    </div>
     {% endif %}
+
 </div>
 {% endblock %}
