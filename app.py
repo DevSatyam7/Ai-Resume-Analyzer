@@ -247,6 +247,8 @@ def delete_report(report_id):
             
     db.close()
     return redirect("/history")
+
+
 @app.route("/download-audit/<int:report_id>")
 def download_audit(report_id):
     if "user" not in session:
@@ -267,7 +269,7 @@ def download_audit(report_id):
     file_path = os.path.join('static', 'reports', file_name)
     os.makedirs(os.path.join('static', 'reports'), exist_ok=True)
     
-    # Parse JSON and make it human-readable
+    # Clean, professional text layout with utf-8-sig encoding to prevent odd symbols (â€™)
     formatted_text = ""
     try:
         data = json.loads(report.result)
@@ -275,42 +277,41 @@ def download_audit(report_id):
         elig = data.get('eligibility', {})
         
         formatted_text = f"""
-==================================================
-        CAREERSANALYSIS — AI AUDIT REPORT
-==================================================
-Report ID: #{report.id}
-Target Role: {data.get('target_role', 'N/A')}
-ATS Match Score: {data.get('ats_score', 'N/A')}%
---------------------------------------------------
+============================================================
+              CAREERSANALYSIS - AI AUDIT REPORT
+============================================================
+Report ID    : #{report.id}
+Target Role  : {data.get('target_role', 'N/A')}
+ATS Match    : {data.get('ats_score', 'N/A')}%
+------------------------------------------------------------
 
-1. PROFILE SUMMARY:
+1. EXECUTIVE PROFILE SUMMARY:
 {data.get('file_summary', 'N/A')}
 
 2. PAY SCALE & SALARY PROJECTION:
-- Category: {pay.get('category', 'N/A')}
-- Projected Range: {pay.get('salary_range', 'N/A')}
-- Estimated In-Hand: {pay.get('in_hand_monthly', 'N/A')}
-- Growth Path: {pay.get('career_growth', 'N/A')}
+- Category          : {pay.get('category', 'N/A')}
+- Projected Range   : {pay.get('salary_range', 'N/A')}
+- Estimated In-Hand : {pay.get('in_hand_monthly', 'N/A')}
+- Career Growth     : {pay.get('career_growth', 'N/A')}
 
 3. ELIGIBILITY & CRITERIA FIT:
-- Status: {elig.get('status', 'N/A')}
-- Required: {elig.get('required_qualification', 'N/A')}
-- Matched: {elig.get('matched_qualification', 'N/A')}
-- Experience Fit: {elig.get('age_or_experience_fit', 'N/A')}
+- Status            : {elig.get('status', 'N/A')}
+- Required Qual.    : {elig.get('required_qualification', 'N/A')}
+- Matched Qual.     : {elig.get('matched_qualification', 'N/A')}
+- Experience Fit    : {elig.get('age_or_experience_fit', 'N/A')}
 
-==================================================
-Generated via CareersAnalysis • Gemini AI Engine
-==================================================
+============================================================
+Verified & Generated via CareersAnalysis Platform • Gemini AI
+============================================================
 """
     except Exception:
         formatted_text = report.result
 
-    with open(file_path, 'w', encoding='utf-8') as f:
+    with open(file_path, 'w', encoding='utf-8-sig') as f:
         f.write(formatted_text)
         
     db.close()
     return send_file(file_path, as_attachment=True, download_name=file_name)
-
 
 
 @app.route("/logout")
@@ -433,3 +434,4 @@ def serve_sw():
 
 if __name__ == "__main__":
     app.run(debug=True)
+                
