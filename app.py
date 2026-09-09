@@ -247,8 +247,6 @@ def delete_report(report_id):
             
     db.close()
     return redirect("/history")
-
-
 @app.route("/download-audit/<int:report_id>")
 def download_audit(report_id):
     if "user" not in session:
@@ -269,34 +267,50 @@ def download_audit(report_id):
     file_path = os.path.join('static', 'reports', file_name)
     os.makedirs(os.path.join('static', 'reports'), exist_ok=True)
     
-    content_text = report.result
+    # Parse JSON and make it human-readable
+    formatted_text = ""
     try:
-        parsed_res = json.loads(report.result)
-        if isinstance(parsed_res, dict):
-            content_text = json.dumps(parsed_res, indent=2, ensure_ascii=False)
-    except Exception:
-        pass
-
-    full_content = f"""==================================================
+        data = json.loads(report.result)
+        pay = data.get('pay_scale', {})
+        elig = data.get('eligibility', {})
+        
+        formatted_text = f"""
+==================================================
         CAREERSANALYSIS — AI AUDIT REPORT
 ==================================================
 Report ID: #{report.id}
-Platform: CareersAnalysis
-Developer: Satyam Kumar (GEC Munger)
+Target Role: {data.get('target_role', 'N/A')}
+ATS Match Score: {data.get('ats_score', 'N/A')}%
 --------------------------------------------------
 
-{content_text}
+1. PROFILE SUMMARY:
+{data.get('file_summary', 'N/A')}
+
+2. PAY SCALE & SALARY PROJECTION:
+- Category: {pay.get('category', 'N/A')}
+- Projected Range: {pay.get('salary_range', 'N/A')}
+- Estimated In-Hand: {pay.get('in_hand_monthly', 'N/A')}
+- Growth Path: {pay.get('career_growth', 'N/A')}
+
+3. ELIGIBILITY & CRITERIA FIT:
+- Status: {elig.get('status', 'N/A')}
+- Required: {elig.get('required_qualification', 'N/A')}
+- Matched: {elig.get('matched_qualification', 'N/A')}
+- Experience Fit: {elig.get('age_or_experience_fit', 'N/A')}
 
 ==================================================
-End of Report • Confidential Career Assessment
+Generated via CareersAnalysis • Gemini AI Engine
 ==================================================
 """
-    
+    except Exception:
+        formatted_text = report.result
+
     with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(full_content)
+        f.write(formatted_text)
         
     db.close()
     return send_file(file_path, as_attachment=True, download_name=file_name)
+
 
 
 @app.route("/logout")
