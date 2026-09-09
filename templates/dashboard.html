@@ -3,23 +3,23 @@
 {% block content %}
 <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
     <!-- Header Title Section -->
-    <div class="text-center mb-8 sm:mb-10 print:hidden">
-        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-3.5 py-1.5 rounded-full mb-3">
-            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-            <span class="text-xs font-semibold text-blue-300 uppercase tracking-wider">Algorithmic Resume &amp; JD Audit Engine</span>
+    <div class="text-center mb-10 print:hidden">
+        <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-3 shadow-inner">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-xs font-bold text-blue-300 uppercase tracking-widest">Algorithmic Resume &amp; JD Audit Engine</span>
         </div>
-        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
             AI Resume &amp; Career Analyzer
         </h1>
-        <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto mt-2">
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto mt-3">
             Measure your ATS score, contrast against enterprise job descriptions, and discover role-specific placement roadmaps.
         </p>
     </div>
 
     <!-- Error Alert Box -->
     {% if result and result.error %}
-    <div class="mb-8 bg-red-950/40 border border-red-800 text-red-300 px-5 py-4 rounded-2xl text-sm print:hidden flex items-start gap-3">
-        <span class="text-lg">⚠</span>
+    <div class="mb-8 bg-red-950/60 border border-red-800/80 text-red-300 px-6 py-4 rounded-2xl text-sm print:hidden flex items-start gap-3 shadow-xl">
+        <span class="text-xl">⚠</span>
         <div>
             <strong class="font-bold">Evaluation Notice:</strong>
             <p class="mt-0.5 text-xs sm:text-sm text-red-200/90">{{ result.error }}</p>
@@ -28,21 +28,22 @@
     {% endif %}
 
     <!-- Input Form Card -->
-    <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden">
-        <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-2xl mb-12 print:hidden relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none"></div>
+        <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6 relative z-10">
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
                         Target Role or Examination <span class="text-blue-400">*</span>
                     </label>
-                    <button type="button" onclick="startVoiceInput('targetRoleInput', 'mic1')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                    <button type="button" onclick="startVoiceInput('targetRoleInput', 'mic1')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-xl transition cursor-pointer font-medium">
                         <span id="mic1">🎙️</span> Speak Role
                     </button>
                 </div>
                 <input type="text" id="targetRoleInput" name="role" required
                     value="{{ searched_role or '' }}"
                     placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition">
+                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition shadow-inner">
             </div>
 
             <div>
@@ -50,24 +51,24 @@
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
                         Target Job Description (JD) / Exam Syllabus
                     </label>
-                    <button type="button" onclick="startVoiceInput('jdInput', 'mic2')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                    <button type="button" onclick="startVoiceInput('jdInput', 'mic2')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-xl transition cursor-pointer font-medium">
                         <span id="mic2">🎙️</span> Speak JD
                     </button>
                 </div>
                 <textarea id="jdInput" name="job_description" rows="3"
                     placeholder="Paste job requirements or tech stack..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition">{{ searched_jd or '' }}</textarea>
+                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition shadow-inner">{{ searched_jd or '' }}</textarea>
             </div>
 
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Report Output Language</label>
                 <div class="flex items-center gap-6">
                     <label class="inline-flex items-center gap-2 text-sm text-slate-200 cursor-pointer">
-                        <input type="radio" name="language" value="en" checked class="accent-blue-500">
+                        <input type="radio" name="language" value="en" checked class="accent-blue-500 w-4 h-4">
                         <span>English</span>
                     </label>
                     <label class="inline-flex items-center gap-2 text-sm text-slate-200 cursor-pointer">
-                        <input type="radio" name="language" value="hi" class="accent-blue-500">
+                        <input type="radio" name="language" value="hi" class="accent-blue-500 w-4 h-4">
                         <span>हिंदी (Devanagari)</span>
                     </label>
                 </div>
@@ -78,25 +79,25 @@
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
                         Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading document)</span>
                     </label>
-                    <button type="button" onclick="startVoiceInput('resumeInput', 'mic3')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                    <button type="button" onclick="startVoiceInput('resumeInput', 'mic3')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-xl transition cursor-pointer font-medium">
                         <span id="mic3">🎙️</span> Speak Resume
                     </button>
                 </div>
                 <textarea id="resumeInput" name="resume" rows="4"
                     placeholder="Paste resume content here..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition"></textarea>
+                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition shadow-inner"></textarea>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-slate-800/80">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
-                        class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
+                        class="w-full text-xs text-slate-400 file:mr-4 file:py-3 file:px-5 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer transition">
                 </div>
                 <button type="submit" id="submitBtn"
-                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-2xl shadow-xl shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
                     Run Analysis ⚡
                 </button>
-                <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg cursor-not-allowed text-xs sm:text-sm">
+                <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl cursor-not-allowed text-xs sm:text-sm">
                     <svg class="animate-spin h-5 w-5 text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
@@ -109,123 +110,139 @@
 
     <!-- Complete Analysis Output Screen -->
     {% if result and not result.error %}
-    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-8 shadow-2xl space-y-6 scroll-mt-20">
+    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8 scroll-mt-20">
         
         <!-- Top Score Header Banner -->
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
-            <div class="space-y-1.5">
-                <div class="flex items-center gap-2 flex-wrap">
-                    <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <div class="space-y-2">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         Audit Evaluation Complete
                     </span>
-                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-full">
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3.5 py-1.5 rounded-xl">
                         <span>🎯 Target:</span>
                         <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
                     </span>
                 </div>
-                <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
                     ATS Audit &amp; Skill Gap Diagnosis
                 </h2>
             </div>
             
-            <div class="flex items-center gap-3 sm:gap-4">
+            <div class="flex items-center gap-3">
                 {% if result.ats_score is defined %}
-                <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
-                    <span class="text-[10px] sm:text-xs text-blue-300 block font-medium">ATS Match</span>
-                    <span class="text-2xl sm:text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
+                <div class="bg-blue-950/90 border border-blue-800/80 px-5 py-2.5 rounded-2xl text-center shadow-xl">
+                    <span class="text-[11px] text-blue-300 block font-semibold uppercase tracking-wider">ATS Match</span>
+                    <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
                 </div>
                 {% endif %}
 
                 {% if current_audit_id %}
                 <a href="/download-audit/{{ current_audit_id }}" 
-                    class="print:hidden flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30 whitespace-nowrap">
-                    <span>Download Report ⬇</span>
+                    class="print:hidden flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30 whitespace-nowrap">
+                    <span>Download ⬇</span>
                 </a>
                 {% endif %}
 
                 <button type="button" onclick="window.print()" 
-                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap">
+                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition whitespace-nowrap shadow-md">
                     <span>Save PDF</span>
                 </button>
             </div>
         </div>
 
-        <!-- View Switcher Tabs -->
-        <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto no-scrollbar print:hidden">
-            <button type="button" onclick="switchReportTab('overview')" id="tab-btn-overview" 
-                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white whitespace-nowrap shadow-md">
+        <!-- Quick Jump Navigation Bar -->
+        <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto no-scrollbar print:hidden sticky top-20 bg-slate-900/95 backdrop-blur-md z-30 py-2">
+            <button type="button" onclick="scrollToSection('section-overview')" 
+                class="px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white whitespace-nowrap">
                 📊 Overview &amp; Pay
             </button>
-            <button type="button" onclick="switchReportTab('skills')" id="tab-btn-skills" 
-                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+            <button type="button" onclick="scrollToSection('section-skills')" 
+                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
                 ⚡ Skills &amp; Gaps
             </button>
-            <button type="button" onclick="switchReportTab('roadmap')" id="tab-btn-roadmap" 
-                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+            <button type="button" onclick="scrollToSection('section-roadmap')" 
+                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
                 🎯 Roadmap &amp; Viva
             </button>
-            <button type="button" onclick="switchReportTab('resources')" id="tab-btn-resources" 
-                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
-                📺 YouTube &amp; Resources
+            <button type="button" onclick="scrollToSection('section-resources')" 
+                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                📺 YouTube Links
             </button>
-            <button type="button" onclick="switchReportTab('pitch')" id="tab-btn-pitch" 
-                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
-                ✉️ HR Pitch &amp; Cover Letter
+            <button type="button" onclick="scrollToSection('section-pitch')" 
+                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                ✉️ HR Pitch
             </button>
         </div>
 
-        <!-- ================= TAB 1: OVERVIEW & PAY ================= -->
-        <div id="tab-content-overview" class="space-y-6">
-            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2">📋 Profile Summary</h3>
+        <!-- ================= SECTION 1: OVERVIEW & PAY ================= -->
+        <div id="section-overview" class="space-y-6 pt-2">
+            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-6 shadow-xl">
+                <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2"><span>📋</span> Profile Summary</h3>
                 <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ result.file_summary }}</p>
             </div>
 
             {% if result.pay_scale %}
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5">
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl">
                     <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider">Estimated Salary Range</span>
                     <h4 class="text-lg font-black text-white mt-1">{{ result.pay_scale.salary_range }}</h4>
                     <p class="text-xs text-slate-400 mt-1">In-Hand: {{ result.pay_scale.in_hand_monthly }}</p>
                 </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5">
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl">
                     <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Career Growth Projection</span>
-                    <p class="text-xs text-slate-200 mt-1 leading-relaxed">{{ result.pay_scale.career_growth }}</p>
+                    <p class="text-xs text-slate-200 mt-1.5 leading-relaxed">{{ result.pay_scale.career_growth }}</p>
                 </div>
             </div>
             {% endif %}
         </div>
 
-        <!-- ================= TAB 2: SKILLS & GAPS ================= -->
-        <div id="tab-content-skills" class="space-y-6 hidden">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white">⚡ Skill Gap &amp; Keyword Analysis</h3>
+        <!-- ================= SECTION 2: SKILLS & GAPS ================= -->
+        <div id="section-skills" class="space-y-6 pt-4 border-t border-slate-800">
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>⚡</span> Skill Gap &amp; Keyword Analysis</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                    <div class="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-xl">
-                        <span class="text-xs font-bold text-emerald-400 block mb-2">✓ Matched Skills</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.matched_skills | default('Core technical keywords aligned with job description.') }}</p>
+                    <div class="p-5 bg-emerald-950/20 border border-emerald-800/40 rounded-2xl">
+                        <span class="text-xs font-bold text-emerald-400 block mb-3">✓ Matched Skills</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% if result.matched_skills is iterable and result.matched_skills is not string %}
+                                {% for skill in result.matched_skills %}
+                                <span class="bg-emerald-900/40 border border-emerald-700/50 text-emerald-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-xs text-slate-300">{{ result.matched_skills }}</span>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="p-4 bg-rose-950/20 border border-rose-800/40 rounded-xl">
-                        <span class="text-xs font-bold text-rose-400 block mb-2">⚠ Missing / Recommended Skills</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.missing_skills | default('Add enterprise microservice or advanced framework metrics.') }}</p>
+                    <div class="p-5 bg-rose-950/20 border border-rose-800/40 rounded-2xl">
+                        <span class="text-xs font-bold text-rose-400 block mb-3">⚠ Missing / Recommended Skills</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% if result.missing_skills is iterable and result.missing_skills is not string %}
+                                {% for skill in result.missing_skills %}
+                                <span class="bg-rose-900/40 border border-rose-700/50 text-rose-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-xs text-slate-300">{{ result.missing_skills }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TAB 3: ROADMAP & VIVA ================= -->
-        <div id="tab-content-roadmap" class="space-y-6 hidden">
+        <!-- ================= SECTION 3: ROADMAP & VIVA ================= -->
+        <div id="section-roadmap" class="space-y-6 pt-4 border-t border-slate-800">
             <div class="space-y-6">
                 <!-- Roadmap Section -->
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white">🎯 Role Placement Roadmap</h3>
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>🎯</span> Role Placement Roadmap</h3>
                     <div class="space-y-3">
                         {% if result.roadmap %}
                             {% for step in result.roadmap %}
-                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl flex items-start gap-3">
-                                <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shrink-0">Step {{ loop.index }}</span>
-                                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">{{ step }}</p>
+                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-start gap-3.5 shadow-inner">
+                                <span class="bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-xl shrink-0 shadow">Phase {{ loop.index }}</span>
+                                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">{{ step }}</p>
                             </div>
                             {% endfor %}
                         {% else %}
@@ -235,17 +252,17 @@
                 </div>
 
                 <!-- Top Interview / Viva Questions -->
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white">💡 Top Interview &amp; Viva Questions</h3>
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>💡</span> Top Interview &amp; Viva Questions</h3>
                     <div class="space-y-3">
                         {% if result.viva_questions %}
                             {% for q in result.viva_questions %}
-                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl shadow-inner">
                                 <p class="text-xs sm:text-sm font-semibold text-slate-200">Q{{ loop.index }}: {{ q }}</p>
                             </div>
                             {% endfor %}
                         {% else %}
-                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl shadow-inner">
                                 <p class="text-xs text-slate-300">1. Explain how request context works in Flask and handling multi-threading safely.<br>2. How do you optimize SQL queries and indexing in TiDB / MySQL?</p>
                             </div>
                         {% endif %}
@@ -254,25 +271,22 @@
             </div>
         </div>
 
-        <!-- ================= TAB 4: YOUTUBE & RESOURCES ================= -->
-        <div id="tab-content-resources" class="space-y-6 hidden">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white">📺 Recommended YouTube Learning Resources</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- ================= SECTION 4: YOUTUBE & RESOURCES ================= -->
+        <div id="section-resources" class="space-y-6 pt-4 border-t border-slate-800">
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>📺</span> Missing Skill YouTube Learning Links</h3>
+                <p class="text-xs text-slate-400">Targeted video tutorials curated specifically to bridge your missing skills and bridge technical gaps.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                     {% if result.youtube_links %}
                         {% for link in result.youtube_links %}
-                        <a href="{{ link.url }}" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
-                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400 truncate">{{ link.title }}</span>
-                            <span class="text-xs text-blue-400 font-bold shrink-0 ml-2">Watch ↗</span>
+                        <a href="{{ link.url }}" target="_blank" class="p-4 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
+                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400 truncate pr-2">{{ link.title }}</span>
+                            <span class="text-xs text-blue-400 font-bold shrink-0 bg-blue-500/10 px-2.5 py-1 rounded-xl border border-blue-500/20">Watch ↗</span>
                         </a>
                         {% endfor %}
                     {% else %}
-                        <a href="https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
+                        <a href="https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design" target="_blank" class="p-4 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
                             <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">Advanced Flask &amp; System Design Masterclass</span>
-                            <span class="text-xs text-blue-400 font-bold shrink-0">Watch ↗</span>
-                        </a>
-                        <a href="https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
-                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">ATS Resume Optimization &amp; Google XYZ Formula</span>
                             <span class="text-xs text-blue-400 font-bold shrink-0">Watch ↗</span>
                         </a>
                     {% endif %}
@@ -280,18 +294,23 @@
             </div>
         </div>
 
-        <!-- ================= TAB 5: HR PITCH & COVER LETTER ================= -->
-        <div id="tab-content-pitch" class="space-y-6 hidden">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-sm font-bold text-white">✉️ Instant AI Recruiter &amp; HR Referral Pitch</h3>
-                    <button type="button" onclick="copyPitchText()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-3.5 py-1.5 rounded-lg transition">
-                        Copy Pitch 📋
-                    </button>
+        <!-- ================= SECTION 5: HR PITCH & COVER LETTER ================= -->
+        <div id="section-pitch" class="space-y-6 pt-4 border-t border-slate-800">
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>✉️</span> Instant AI Recruiter &amp; HR Referral Pitch</h3>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="copyPitchText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-2 rounded-xl transition border border-slate-700">
+                            Copy Pitch 📋
+                        </button>
+                        <button type="button" onclick="downloadPitchText()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl transition shadow-md">
+                            Download Pitch ⬇
+                        </button>
+                    </div>
                 </div>
                 <p class="text-xs text-slate-400">Use this hyper-personalized outreach template on LinkedIn or Email to grab recruiter attention.</p>
-                <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono" id="pitchBox">
-                    {{ result.hr_pitch | default('Dear Hiring Manager,\n\nI am writing to express my strong interest in the position. Having audited my resume via CareersAnalysis, I achieved an ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nI would love to bring this technical rigor to your engineering team.\n\nBest regards,\nSatyam Kumar') }}
+                <div class="p-5 bg-slate-900 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono whitespace-pre-wrap shadow-inner" id="pitchBox">
+{{ result.hr_pitch | default('Dear Hiring Manager,\n\nI am writing to express my strong interest in the position. Having audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nI would love to bring this technical rigor to your engineering team.\n\nBest regards,\nSatyam Kumar') }}
                 </div>
             </div>
         </div>
@@ -306,7 +325,7 @@
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingState = document.getElementById('loadingState');
-    const loadingStepText = document.getElementById('loadingStepText');
+    const loadingStateText = document.getElementById('loadingStepText');
 
     if (form) {
         form.addEventListener('submit', function() {
@@ -321,7 +340,7 @@
             let currentStep = 0;
             setInterval(() => {
                 currentStep = (currentStep + 1) % steps.length;
-                if (loadingStepText) loadingStepText.innerText = steps[currentStep];
+                if (loadingStateText) loadingStateText.innerText = steps[currentStep];
             }, 1800);
         });
     }
@@ -343,21 +362,11 @@
         recognition.start();
     }
 
-    function switchReportTab(tabName) {
-        const tabs = ['overview', 'skills', 'roadmap', 'resources', 'pitch'];
-        tabs.forEach(t => {
-            const content = document.getElementById(`tab-content-${t}`);
-            const btn = document.getElementById(`tab-btn-${t}`);
-            if (content && btn) {
-                if (t === tabName) {
-                    content.classList.remove('hidden');
-                    btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white whitespace-nowrap shadow-md";
-                } else {
-                    content.classList.add('hidden');
-                    btn.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap";
-                }
-            }
-        });
+    function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     function copyPitchText() {
@@ -365,6 +374,22 @@
         if (pitchBox) {
             navigator.clipboard.writeText(pitchBox.innerText);
             alert('Recruiter pitch copied to clipboard!');
+        }
+    }
+
+    function downloadPitchText() {
+        const pitchBox = document.getElementById('pitchBox');
+        if (pitchBox) {
+            const text = pitchBox.innerText;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'CareersAnalysis_HRPitch.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     }
 </script>
