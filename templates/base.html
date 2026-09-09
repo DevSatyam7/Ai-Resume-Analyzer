@@ -162,7 +162,13 @@
                             <a href="/download-audit/{{ rep.id }}" class="flex items-center justify-between p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl border border-slate-800/80 text-xs transition group">
                                 <div class="truncate pr-2">
                                     <span class="text-slate-200 font-medium block truncate">Report #{{ rep.id }}</span>
-                                    <span class="text-[10px] text-slate-500">{{ rep.created_at.strftime('%d %b, %H:%M') if rep.created_at else 'Recent' }}</span>
+                                    <span class="text-[10px] text-slate-500">
+                                        {% if rep.created_at %}
+                                            {{ rep.created_at.strftime('%d %b, %H:%M') }}
+                                        {% else %}
+                                            Recent Audit
+                                        {% endif %}
+                                    </span>
                                 </div>
                                 <span class="text-blue-400 font-bold text-[10px] shrink-0 group-hover:underline">Download ⬇</span>
                             </a>
