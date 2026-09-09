@@ -1,20 +1,23 @@
 {
-  "background_color": "#020617",
-  "description": "AI Resume & Career Path Analyzer",
-  "dir": "ltr",
-  "display": "standalone",
-  "name": "CareersAnalysis AI",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "CareersAI",
+  "name": "CareersAnalysis",
+  "short_name": "CareersAnalysis",
   "start_url": "/",
-  "theme_color": "#2563eb",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://ai-resume-analyzer-2jxj.onrender.com/static/favicon.png",
-      "type": "image/jpeg",
-      "sizes": "1600x1560"
+      "src": "/static/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "id": "com.careersanalysis.app"
+  ]
 }
