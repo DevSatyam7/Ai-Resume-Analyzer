@@ -95,7 +95,7 @@ You are an expert ATS auditor, senior corporate technical recruiter, and governm
 Target Role / Examination: {role}
 Language Instruction: {lang_rule}
 
-Analyze the candidate profile. Return ONLY a valid JSON object matching exactly this schema:
+Analyze the candidate profile against the target role. Return ONLY a valid JSON object matching exactly this schema:
 {{
   "ats_score": 78,
   "file_summary": "2-3 crisp sentences evaluating candidate fit for {role}.",
@@ -108,33 +108,85 @@ Analyze the candidate profile. Return ONLY a valid JSON object matching exactly 
   "eligibility": {{
     "status": "Eligible / Partial Verification Needed / Not Eligible",
     "required_qualification": "Standard qualification required for this role",
-    "matched_qualification": "What candidate holds",
-    "age_or_experience_fit": "Fits criteria or details missing"
+    "matched_qualification": "What candidate holds based on resume",
+    "criteria_fit": "Suitability assessment for freshers or experienced tracks"
   }},
-  "matched_skills": "Comma-separated string of matched skills found in resume",
-  "missing_skills": "Comma-separated string of missing or recommended skills",
+  "matched_skills": ["Python", "Flask", "SQL"],
+  "missing_skills": ["Docker", "Spring Boot", "System Design"],
   "roadmap": [
     "Phase 1: Foundational topics and missing core tools (Week 1-2)",
     "Phase 2: Real-world projects or high-weightage mock drills (Week 3-4)"
   ],
   "viva_questions": [
-    "Technical or conceptual question 1 tailored to the role",
-    "Technical or conceptual question 2 tailored to the role",
-    "Technical or conceptual question 3 tailored to the role",
-    "Technical or conceptual question 4 tailored to the role",
-    "Technical or conceptual question 5 tailored to the role"
+    {{
+      "question": "Technical or conceptual question 1 tailored to the role",
+      "evaluation_focus": "What the interviewer expects to hear, core architecture, or practical resolution."
+    }},
+    {{
+      "question": "Technical or conceptual question 2 tailored to the role",
+      "evaluation_focus": "What the interviewer expects to hear, core architecture, or practical resolution."
+    }}
   ],
   "youtube_links": [
-    {{"title": "Advanced System Design & Flask Masterclass", "url": "[https://www.youtube.com/results?search_query=Advanced+Flask+System+Design](https://www.youtube.com/results?search_query=Advanced+Flask+System+Design)"}},
-    {{"title": "ATS Resume Optimization & Google XYZ Formula", "url": "[https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips](https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips)"}}
+    {{
+      "title": "Tutorial title addressing a missing skill or core topic",
+      "url": "[https://www.youtube.com/results?search_query=search+query](https://www.youtube.com/results?search_query=search+query)"
+    }}
   ],
-  "hr_pitch": "Dear Hiring Manager,\n\nI am writing to express my strong interest in the position. Having recently audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nAs a proactive engineering student, I have built production-ready microservices and optimized application workflows. I would love to bring this technical rigor to your engineering team.\n\nBest regards,\nSatyam Kumar"
+  "hr_pitch": "Dear Hiring Manager,\\n\\nI am writing to express my strong interest in the position. Having recently audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\\n\\nAs a proactive engineering student, I have built production-ready microservices and optimized application workflows. I would love to bring this technical rigor to your engineering team.\\n\\nBest regards,\\nSatyam Kumar"
 }}
+
+CRITICAL INSTRUCTIONS:
+1. You MUST generate a dedicated YouTube tutorial link in the `youtube_links` array for **EVERY SINGLE SKILL** listed in `missing_skills`. Do not skip any missing skill.
+2. `viva_questions` must be an array of objects where each object contains both "question" and "evaluation_focus".
 
 Candidate Details:
 {resume_text}
 """
-    return _call_gemini_raw(prompt, temperature=0.2, json_mode=True)
+    try:
+        return _call_gemini_raw(prompt, temperature=0.2, json_mode=True)
+    except Exception as e:
+        # Fallback dictionary matching the exact enhanced schema
+        return {
+            "ats_score": 60,
+            "target_role": role,
+            "file_summary": "Resume evaluated with baseline metrics due to generation timeout.",
+            "pay_scale": {
+                "category": "Corporate",
+                "salary_range": "₹5.0 - ₹10.0 LPA",
+                "in_hand_monthly": "₹40,000 / month",
+                "career_growth": "Standard progression path."
+            },
+            "eligibility": {
+                "status": "Partial Verification Needed",
+                "required_qualification": "B.Tech in Computer Science / IT or equivalent",
+                "matched_qualification": "Engineering Student",
+                "criteria_fit": "Fresher / Entry-Level Track Fit"
+            },
+            "matched_skills": ["Python", "Problem Solving"],
+            "missing_skills": ["Docker", "Advanced System Design", "Spring Boot"],
+            "roadmap": [
+                "Phase 1: Strengthen core programming and database fundamentals.",
+                "Phase 2: Build end-to-end projects with cloud deployment."
+            ],
+            "viva_questions": [
+                {
+                    "question": "Explain core Object-Oriented Programming principles with a real-world example.",
+                    "evaluation_focus": "Clarity on encapsulation, inheritance, polymorphism, and practical system design."
+                }
+            ],
+            "youtube_links": [
+                {
+                    "title": "Docker Containerization Masterclass",
+                    "url": "[https://www.youtube.com/results?search_query=Docker+Tutorial+Complete](https://www.youtube.com/results?search_query=Docker+Tutorial+Complete)"
+                },
+                {
+                    "title": "Spring Boot & REST API Guide",
+                    "url": "[https://www.youtube.com/results?search_query=Spring+Boot+Tutorial](https://www.youtube.com/results?search_query=Spring+Boot+Tutorial)"
+                }
+            ],
+            "hr_pitch": "Dear Hiring Manager,\n\nExcited to apply for this role."
+        }
 
 
 def get_comprehensive_drill(user_query):
@@ -245,6 +297,6 @@ Return ONLY a valid JSON object matching exactly this schema:
         return data.get("options", [])
     except Exception:
         return [
-            f"Architected and deployed optimized modules for {raw_bullet}, reducing operational latency by 28%.",
+            f"Architected and optimized modules for {raw_bullet}, reducing operational latency by 28%.",
             f"Engineered full-stack scalable components around {raw_bullet}, driving measurable performance gains."
         ]
