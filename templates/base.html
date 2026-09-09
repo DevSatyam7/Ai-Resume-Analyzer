@@ -114,7 +114,7 @@
         </div>
     </header>
 
-    <!-- Mobile Slide-Over Drawer with Integrated Audit History & Preview Triggers -->
+    <!-- Mobile Slide-Over Drawer with Integrated Audit History & Safe Data Triggers -->
     <div id="drawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
         <div 
             id="drawerPanel" 
@@ -150,7 +150,7 @@
                     </a>
                 </nav>
 
-                <!-- Sidebar Past Audit History Section with Phaadu View Modal Trigger -->
+                <!-- Sidebar Past Audit History Section with Safe Data Attributes -->
                 <div class="mt-6 pt-5 border-t border-slate-800">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
                         <span class="flex items-center gap-1.5">
@@ -176,8 +176,11 @@
                                     </span>
                                 </div>
                                 <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-900">
-                                    <button type="button" onclick='openPhaaduDrawer({{ rep.id }}, {{ rep.result | safe }})' 
-                                        class="flex-1 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white py-1.5 rounded-lg font-bold text-[11px] transition text-center">
+                                    <!-- 100% Safe Data Attribute Trigger -->
+                                    <button type="button" 
+                                        data-report-id="{{ rep.id }}"
+                                        data-report-result="{{ rep.result | tojson | safe }}"
+                                        class="view-audit-btn flex-1 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white py-1.5 rounded-lg font-bold text-[11px] transition text-center cursor-pointer">
                                         View Report ⚡
                                     </button>
                                     <a href="/download-audit/{{ rep.id }}" 
@@ -283,6 +286,20 @@
             }
         });
 
+        // Safe Event Listener for Preview Drawer Trigger
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-audit-btn')) {
+                const reportId = e.target.getAttribute('data-report-id');
+                const rawData = e.target.getAttribute('data-report-result');
+                try {
+                    const data = JSON.parse(rawData);
+                    openPhaaduDrawer(reportId, data);
+                } catch (err) {
+                    console.error("Audit data parse error:", err);
+                }
+            }
+        });
+
         function openPhaaduDrawer(reportId, data) {
             const drawer = document.getElementById('phaaduDrawer');
             const drawerReportId = document.getElementById('drawerReportId');
@@ -345,4 +362,20 @@
 
                 <!-- Roadmap -->
                 <div class="space-y-3">
-                    <h4 class="text-xs font-bold uppercase tracking-wider t
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">🎯 Placement Roadmap</h4>
+                    <div class="space-y-2.5">${roadmapHTML}</div>
+                </div>
+            `;
+
+            drawer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhaaduDrawer() {
+            document.getElementById('phaaduDrawer').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+
+</body>
+</html>
