@@ -162,7 +162,7 @@
                     </p>
                 </div>
 
-                <!-- Drawer Links Collection (Fixed with toggleDrawer(false) on all items) -->
+                <!-- Drawer Links Collection -->
                 <nav class="mt-6 flex flex-col gap-2">
                     <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition">
                         <span>📄</span> Resume Audit Portal
@@ -445,22 +445,98 @@
                         <span>→</span>
                     </a>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
+                    <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 hover:border-purple-500/40 transition">
+                        <div class="text-2xl mb-2">⚖️</div>
+                        <h3 class="text-sm font-bold text-slate-100">Blind Resume Redaction</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">Auto-masks applicant names, phone numbers, and college tiers before AI scoring to enforce neutral, skill-only screening.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 hover:border-purple-500/40 transition">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h3 class="text-sm font-bold text-slate-100">Job Description Alignment</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">Directly measures a candidate's project stack against targeted corporate job postings, computing keyword parity.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 hover:border-purple-500/40 transition">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h3 class="text-sm font-bold text-slate-100">Technical Viva Generator</h3>
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">Generates project-tailored interrogation questions with evaluation focus notes for campus interview panels.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Section 4: Engineered Modules (Target for menu click) -->
-        <section id="features" class="py-16 sm:py-20 px-4 max-w-6xl mx-auto scroll-mt-24">
-            <div class="text-center">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Engineered Modules</h2>
-                <p class="text-slate-400 text-sm mt-2">Maximize your interview conversion rates.</p>
+        <!-- Section 4: Engineered Modules (Restored with Full Content Cards) -->
+        <section id="features" class="py-20 sm:py-24 border-t border-slate-900 bg-slate-950/50 scroll-mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Engineered Modules</h2>
+                    <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Engineered to maximize interview conversion rates
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl font-bold mb-6">
+                            🎯
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Algorithmic ATS Scoring</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Simulates corporate parsing engines to evaluate keyword alignment, qualification fit, and action-verb strength against modern recruiters.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-bold mb-6">
+                            🔍
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Skill Gap Diagnosis</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Contrasts project experience against targeted industry positions to pinpoint absent tools, modern libraries, and core architectural concepts.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl hover:border-slate-700 transition duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-2xl font-bold mb-6">
+                            ✦
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-3">Universal Prep Engine</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Delivers structured test matrices for IT drives (TCS, Google), competitive papers (GATE), and university engineering semester courses.
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Section 5: Pipeline Workflow (Target for menu click) -->
-        <section id="how-it-works" class="py-16 sm:py-20 px-4 max-w-6xl mx-auto scroll-mt-24">
-            <div class="text-center">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Pipeline Workflow</h2>
-                <p class="text-slate-400 text-sm mt-2">Three steps from submission to actionable audit.</p>
+        <!-- Section 5: Pipeline Workflow (Restored with Full Steps) -->
+        <section id="how-it-works" class="py-20 sm:py-24 border-t border-slate-900 scroll-mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">System Pipeline</h2>
+                    <p class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Three steps from submission to actionable audit
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">01</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Input Profile &amp; Target</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Provide qualifications, paste raw resume content or upload a document, and set your target career designation.</p>
+                    </div>
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">02</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">LLM Parsing &amp; TiDB Cache</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Analyzed via Gemini system prompts with automatic TiDB database caching to ensure ultra-fast subsequent retrieval.</p>
+                    </div>
+                    <div class="bg-slate-900/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl relative">
+                        <span class="text-4xl sm:text-5xl font-black text-slate-800 absolute top-6 right-6">03</span>
+                        <h4 class="text-base sm:text-lg font-bold text-white mb-3">Inspect Roadmap &amp; PDF</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">Review salary benchmarks, missing critical skills, and customized viva practice questions with 1-click PDF download.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
