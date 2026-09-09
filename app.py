@@ -221,7 +221,6 @@ def history():
         elif isinstance(r.result, dict):
             raw_data = r.result
 
-        # Robust fallback merger for complete data display
         complete_data = {
             "ats_score": raw_data.get("ats_score", 70),
             "target_role": raw_data.get("target_role") or raw_data.get("goal") or "Software Engineer",
@@ -268,6 +267,35 @@ def delete_report(report_id):
     return redirect("/history")
 
 
+@app.route("/view-audit/<int:report_id>")
+def view_audit(report_id):
+    if "user" not in session:
+        return redirect("/login")
+    
+    db = SessionLocal()
+    user = db.query(models.User).filter_by(email=session["user"]).first()
+    if not user:
+        db.close()
+        return redirect("/login")
+        
+    report = db.query(models.Report).filter_by(id=report_id, user_id=user.id).first()
+    if not report:
+        db.close()
+        return "Report nahi mili", 404
+        
+    try:
+        raw_data = json.loads(report.result)
+    except Exception:
+        raw_data = {"error": "Could not parse saved audit data."}
+        
+    db.close()
+    return render_template('dashboard.html', 
+                           result=raw_data, 
+                           searched_role=raw_data.get("target_role", "Software Engineer"), 
+                           searched_jd=raw_data.get("job_description", ""),
+                           current_audit_id=report.id)
+
+
 @app.route("/download-audit/<int:report_id>")
 def download_audit(report_id):
     if "user" not in session:
@@ -292,7 +320,6 @@ def download_audit(report_id):
     try:
         raw_data = json.loads(report.result)
         
-        # Complete download structure including all sections
         data = {
             "ats_score": raw_data.get("ats_score", 70),
             "target_role": raw_data.get("target_role") or "Software Engineer",
@@ -313,7 +340,6 @@ def download_audit(report_id):
         pay = data.get('pay_scale', {})
         elig = data.get('eligibility', {})
         
-        # Format lists properly
         matched_str = ", ".join(data.get('matched_skills', [])) if isinstance(data.get('matched_skills'), list) else str(data.get('matched_skills'))
         missing_str = ", ".join(data.get('missing_skills', [])) if isinstance(data.get('missing_skills'), list) else str(data.get('missing_skills'))
         
@@ -491,23 +517,7 @@ def serve_manifest():
 @app.route('/sw.js')
 def serve_sw():
     return send_from_directory('static', 'sw.js', mimetype='application/javascript')
-@app.route('/view-audit/<int:audit_id>')
-def view_audit(audit_id):
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    
-    # Database se specific audit fetch karo
-    audit = Audit.query.filter_by(id=audit_id, user_id=session['user_id']).first_or_404()
-    
-    try:
-        result_data = json.loads(audit.result_json)
-    except Exception:
-        result_data = {"error": "Could not parse saved audit data."}
-        
-    return render_template('dashboard.html', 
-                           result=result_data, 
-                           searched_role=audit.target_role, 
-                           current_audit_id=audit.id)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
