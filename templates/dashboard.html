@@ -158,6 +158,10 @@
                 class="px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white whitespace-nowrap">
                 📊 Overview &amp; Pay
             </button>
+            <button type="button" onclick="scrollToSection('section-eligibility')" 
+                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                🛡️ Eligibility Check
+            </button>
             <button type="button" onclick="scrollToSection('section-skills')" 
                 class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
                 ⚡ Skills &amp; Gaps
@@ -198,6 +202,35 @@
             {% endif %}
         </div>
 
+        <!-- ================= SECTION 1.5: ELIGIBILITY CHECK BOX (Old Theme Restoration) ================= -->
+        <div id="section-eligibility" class="space-y-4 pt-4 border-t border-slate-800">
+            {% if result.eligibility %}
+            <div class="bg-slate-950 border border-amber-500/30 rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                    <span>🛡️</span> Eligibility Check &amp; Criteria Fit
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-slate-400 font-semibold block">Status:</span>
+                        <span class="text-white font-bold mt-1 block text-sm">{{ result.eligibility.status }}</span>
+                    </div>
+                    <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-slate-400 font-semibold block">Criteria Fit:</span>
+                        <span class="text-slate-200 mt-1 block text-xs">{{ result.eligibility.criteria_fit }}</span>
+                    </div>
+                    <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-slate-400 font-semibold block">Required Qualification:</span>
+                        <span class="text-slate-300 mt-1 block text-xs">{{ result.eligibility.required_qualification }}</span>
+                    </div>
+                    <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-slate-400 font-semibold block">Candidate Match:</span>
+                        <span class="text-slate-300 mt-1 block text-xs">{{ result.eligibility.matched_qualification }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
         <!-- ================= SECTION 2: SKILLS & GAPS ================= -->
         <div id="section-skills" class="space-y-6 pt-4 border-t border-slate-800">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -231,7 +264,7 @@
             </div>
         </div>
 
-        <!-- ================= SECTION 3: ROADMAP & VIVA ================= -->
+        <!-- ================= SECTION 3: ROADMAP & VIVA (With Evaluation Focus) ================= -->
         <div id="section-roadmap" class="space-y-6 pt-4 border-t border-slate-800">
             <div class="space-y-6">
                 <!-- Roadmap Section -->
@@ -251,14 +284,22 @@
                     </div>
                 </div>
 
-                <!-- Top Interview / Viva Questions -->
+                <!-- Top Interview / Viva Questions with Evaluation Focus -->
                 <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
                     <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>💡</span> Top Interview &amp; Viva Questions</h3>
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         {% if result.viva_questions %}
                             {% for q in result.viva_questions %}
-                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl shadow-inner">
-                                <p class="text-xs sm:text-sm font-semibold text-slate-200">Q{{ loop.index }}: {{ q }}</p>
+                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-2.5 shadow-inner">
+                                <p class="text-xs sm:text-sm font-bold text-slate-100">
+                                    Q{{ loop.index }}: {{ q.question if q is mapping else q }}
+                                </p>
+                                {% if q is mapping and q.evaluation_focus %}
+                                <div class="text-[11px] text-slate-300 bg-slate-950/90 p-3 rounded-xl border border-slate-800/80">
+                                    <strong class="text-sky-400 font-semibold uppercase tracking-wider block mb-0.5 text-[10px]">Evaluation Focus:</strong> 
+                                    {{ q.evaluation_focus }}
+                                </div>
+                                {% endif %}
                             </div>
                             {% endfor %}
                         {% else %}
@@ -271,11 +312,11 @@
             </div>
         </div>
 
-        <!-- ================= SECTION 4: YOUTUBE & RESOURCES ================= -->
+        <!-- ================= SECTION 4: YOUTUBE & RESOURCES (All Missing Skills Covered) ================= -->
         <div id="section-resources" class="space-y-6 pt-4 border-t border-slate-800">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
                 <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>📺</span> Missing Skill YouTube Learning Links</h3>
-                <p class="text-xs text-slate-400">Targeted video tutorials curated specifically to bridge your missing skills and bridge technical gaps.</p>
+                <p class="text-xs text-slate-400">Targeted video tutorials curated specifically for every identified missing skill to bridge your technical gaps.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                     {% if result.youtube_links %}
                         {% for link in result.youtube_links %}
