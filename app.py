@@ -491,7 +491,23 @@ def serve_manifest():
 @app.route('/sw.js')
 def serve_sw():
     return send_from_directory('static', 'sw.js', mimetype='application/javascript')
-
+@app.route('/view-audit/<int:audit_id>')
+def view_audit(audit_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    # Database se specific audit fetch karo
+    audit = Audit.query.filter_by(id=audit_id, user_id=session['user_id']).first_or_404()
+    
+    try:
+        result_data = json.loads(audit.result_json)
+    except Exception:
+        result_data = {"error": "Could not parse saved audit data."}
+        
+    return render_template('dashboard.html', 
+                           result=result_data, 
+                           searched_role=audit.target_role, 
+                           current_audit_id=audit.id)
 
 if __name__ == "__main__":
     app.run(debug=True)
