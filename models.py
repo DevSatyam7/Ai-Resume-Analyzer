@@ -18,6 +18,7 @@ class Report(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     resume_text = Column(Text)
     result = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
 class SyllabusCache(Base):
