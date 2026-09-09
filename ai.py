@@ -11,14 +11,12 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
     if not raw_keys:
         raise ValueError("GEMINI_API_KEY is not set in Render environment.")
 
-    # Newlines aur spaces remove karke keys extract karna
     api_keys = ["".join(k.split()).strip("'\"") for k in raw_keys.split(",") if k.strip()]
     api_keys = [k for k in api_keys if len(k) >= 35]
 
     if not api_keys:
         raise ValueError("No valid GEMINI_API_KEY found after cleaning.")
 
-    # Google recommended active models
     if not models_to_try:
         models_to_try = [
             "gemini-3.6-flash",
@@ -56,7 +54,6 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
                     resp_data = json.loads(resp.read().decode("utf-8"))
                     raw_text = resp_data["candidates"][0]["content"]["parts"][0]["text"].strip()
 
-                    # Clean markdown codeblocks without fragile regex
                     if raw_text.startswith("```json"):
                         raw_text = raw_text[7:]
                     elif raw_text.startswith("```"):
@@ -84,8 +81,8 @@ def _call_gemini_raw(prompt, models_to_try=None, temperature=0.2, json_mode=True
     raise Exception(f"All keys and models failed. Last error: {last_error}")
 
 
-def analyze_resume(resume_text, target_role="Software Developer", language="en", **kwargs):
-    role = kwargs.get("role", target_role) or "Software Developer"
+def analyze_resume(resume_text, target_role="Software Engineer", language="en", **kwargs):
+    role = kwargs.get("role", target_role) or "Software Engineer"
 
     lang_rule = (
         "Respond in clear Hindi (Devanagari script), keeping core technical terms in English."
@@ -101,9 +98,10 @@ Language Instruction: {lang_rule}
 Analyze the candidate profile. Return ONLY a valid JSON object matching exactly this schema:
 {{
   "ats_score": 78,
+  "file_summary": "2-3 crisp sentences evaluating candidate fit for {role}.",
   "pay_scale": {{
     "category": "Corporate / Government / PSU",
-    "salary_range": "e.g. ₹6.5 - ₹10.0 LPA or 7th CPC Level 7 (₹44,900 - ₹1,42,400)",
+    "salary_range": "e.g. ₹6.5 - ₹10.0 LPA",
     "in_hand_monthly": "e.g. ₹50,000 - ₹72,000 / month",
     "career_growth": "Next level promotion or salary jump in 2-3 years"
   }},
@@ -113,20 +111,24 @@ Analyze the candidate profile. Return ONLY a valid JSON object matching exactly 
     "matched_qualification": "What candidate holds",
     "age_or_experience_fit": "Fits criteria or details missing"
   }},
-  "profile_summary": "2-3 crisp sentences evaluating candidate fit for {role}.",
-  "matched_skills": ["Skill1", "Skill2", "Skill3"],
-  "missing_skills": ["SkillA", "SkillB"],
+  "matched_skills": "Comma-separated string of matched skills found in resume",
+  "missing_skills": "Comma-separated string of missing or recommended skills",
   "roadmap": [
-    {{"phase": "Phase 1 (Week 1-2)", "tasks": "Foundational topics and missing core tools"}},
-    {{"phase": "Phase 2 (Week 3-4)", "tasks": "Real-world projects or high-weightage mock drills"}}
+    "Phase 1: Foundational topics and missing core tools (Week 1-2)",
+    "Phase 2: Real-world projects or high-weightage mock drills (Week 3-4)"
   ],
-  "interview_questions": [
-    {{"q": "Technical / CBT Question 1", "tip": "What interviewer looks for"}},
-    {{"q": "Technical / CBT Question 2", "tip": "What interviewer looks for"}},
-    {{"q": "Technical / CBT Question 3", "tip": "What interviewer looks for"}},
-    {{"q": "Technical / CBT Question 4", "tip": "What interviewer looks for"}},
-    {{"q": "Technical / CBT Question 5", "tip": "What interviewer looks for"}}
-  ]
+  "viva_questions": [
+    "Technical or conceptual question 1 tailored to the role",
+    "Technical or conceptual question 2 tailored to the role",
+    "Technical or conceptual question 3 tailored to the role",
+    "Technical or conceptual question 4 tailored to the role",
+    "Technical or conceptual question 5 tailored to the role"
+  ],
+  "youtube_links": [
+    {{"title": "Advanced System Design & Flask Masterclass", "url": "[https://www.youtube.com/results?search_query=Advanced+Flask+System+Design](https://www.youtube.com/results?search_query=Advanced+Flask+System+Design)"}},
+    {{"title": "ATS Resume Optimization & Google XYZ Formula", "url": "[https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips](https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips)"}}
+  ],
+  "hr_pitch": "Dear Hiring Manager,\n\nI am writing to express my strong interest in the position. Having recently audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nAs a proactive engineering student, I have built production-ready microservices and optimized application workflows. I would love to bring this technical rigor to your engineering team.\n\nBest regards,\nSatyam Kumar"
 }}
 
 Candidate Details:
@@ -245,4 +247,4 @@ Return ONLY a valid JSON object matching exactly this schema:
         return [
             f"Architected and deployed optimized modules for {raw_bullet}, reducing operational latency by 28%.",
             f"Engineered full-stack scalable components around {raw_bullet}, driving measurable performance gains."
-]
+        ]
