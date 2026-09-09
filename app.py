@@ -370,6 +370,18 @@ def serve_manifest():
 @app.route('/sw.js')
 def serve_sw():
     return send_from_directory('static', 'sw.js', mimetype='application/javascript')
-    
+from flask_login import current_user
+
+# Yeh function automatically saare templates mein user ki history bhej dega
+@app.context_processor
+def inject_user_reports():
+    if current_user.is_authenticated:
+        try:
+            # Apne model (Report) ke hisaab se query fetch karo
+            reports = Report.query.filter_by(user_id=current_user.id).order_by(Report.id.desc()).all()
+            return dict(user_reports=reports)
+        except Exception:
+            return dict(user_reports=[])
+    return dict(user_reports=[])    
 if __name__ == "__main__":
     app.run(debug=True)
