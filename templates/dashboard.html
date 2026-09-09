@@ -27,43 +27,39 @@
     </div>
     {% endif %}
 
-    <!-- Input Form Card with Voice Input (Microphone) Integration -->
+    <!-- Input Form Card with Universal Voice Input on all fields -->
     <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden">
         <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
             
-            <!-- 1. Target Role or Exam with Voice Input (Mic) -->
+            <!-- 1. Target Role or Exam -->
             <div>
-                <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
-                    Target Role or Examination <span class="text-blue-400">*</span>
-                </label>
-                <div class="relative">
-                    <input type="text" id="targetRoleInput" name="role" required
-                        value="{{ searched_role or '' }}"
-                        placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026, GATE CSE, AI Engineer Intern"
-                        class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-4 pr-12 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">
-                    
-                    <!-- Microphone Trigger Button -->
-                    <button type="button" onclick="startVoiceInput('targetRoleInput', 'micIcon')" 
-                        class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition cursor-pointer"
-                        title="Voice Input">
-                        <span id="micIcon" class="text-sm">🎙️</span>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs sm:text-sm font-semibold text-slate-200">
+                        Target Role or Examination <span class="text-blue-400">*</span>
+                    </label>
+                    <button type="button" onclick="startVoiceInput('targetRoleInput', 'mic1')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                        <span id="mic1">🎙️</span> Speak Role
                     </button>
                 </div>
+                <input type="text" id="targetRoleInput" name="role" required
+                    value="{{ searched_role or '' }}"
+                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026, GATE CSE..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition">
             </div>
 
-            <!-- 2. Target Job Description (Optional JD Matcher) -->
+            <!-- 2. Target Job Description (JD) -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
                         Target Job Description (JD) / Exam Syllabus
                     </label>
-                    <span class="text-[11px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-md font-medium">
-                        Optional • Recruiter JD Matcher
-                    </span>
+                    <button type="button" onclick="startVoiceInput('jdInput', 'mic2')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                        <span id="mic2">🎙️</span> Speak JD
+                    </button>
                 </div>
-                <textarea name="job_description" rows="3"
-                    placeholder="Paste job posting requirements, corporate tech stack (e.g. TCS NQT syllabus, Docker, AWS, Spring Boot, PyTorch) for exact token parity matching..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition">{{ searched_jd or '' }}</textarea>
+                <textarea id="jdInput" name="job_description" rows="3"
+                    placeholder="Paste job posting requirements, corporate tech stack (e.g. Docker, AWS, PyTorch)..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition">{{ searched_jd or '' }}</textarea>
             </div>
 
             <!-- 3. Report Output Language -->
@@ -83,12 +79,17 @@
 
             <!-- 4. Resume Profile Raw Text -->
             <div>
-                <label class="block text-xs sm:text-sm font-semibold text-slate-200 mb-2">
-                    Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading document below)</span>
-                </label>
-                <textarea name="resume" rows="4"
-                    placeholder="Paste resume content here, or summarize: 'B.Tech CSE-AI 2026, Python, Flask, SQL, 8.2 CGPA, built 2 microservices with TiDB'..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"></textarea>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs sm:text-sm font-semibold text-slate-200">
+                        Resume / Profile Text <span class="text-xs text-slate-400 font-normal">(Optional if uploading document)</span>
+                    </label>
+                    <button type="button" onclick="startVoiceInput('resumeInput', 'mic3')" class="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg transition cursor-pointer">
+                        <span id="mic3">🎙️</span> Speak Resume
+                    </button>
+                </div>
+                <textarea id="resumeInput" name="resume" rows="4"
+                    placeholder="Paste resume content here, or summarize your degree, tech stack, and experience..."
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition"></textarea>
             </div>
 
             <!-- 5. Document Upload & Submit Trigger -->
@@ -116,7 +117,7 @@
         </form>
     </div>
 
-    <!-- Micro-SaaS: 1-Click ATS Bullet Rewriter -->
+    <!-- Micro-SaaS: 1-Click ATS Bullet Enhancer -->
     <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl mb-8 print:hidden">
         <div class="flex items-center justify-between gap-2 mb-3 border-b border-slate-800/80 pb-3">
             <div class="flex items-center gap-2">
@@ -130,9 +131,14 @@
         </div>
 
         <div class="flex flex-col sm:flex-row gap-3">
-            <input type="text" id="rawBulletInput" 
-                   placeholder="e.g. Worked on Python chatbot, made login page with Flask..." 
-                   class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+            <div class="flex-1 relative flex items-center">
+                <input type="text" id="rawBulletInput" 
+                       placeholder="e.g. Worked on Python chatbot, made login page with Flask..." 
+                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
+            </div>
+            <button type="button" onclick="startVoiceInput('rawBulletInput', 'mic4')" class="text-xs bg-slate-800 hover:bg-slate-700 text-blue-400 px-3 py-3 rounded-xl border border-slate-700 transition flex items-center gap-1 cursor-pointer">
+                <span id="mic4">🎙️</span> Speak
+            </button>
             <button type="button" onclick="runBulletRewriter()" id="rewriteBtn"
                     class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl text-xs sm:text-sm transition active:scale-95 whitespace-nowrap shadow-lg shadow-blue-600/30">
                 Enhance Line ⚡
@@ -163,13 +169,6 @@
                         <span>🎯 Target:</span>
                         <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
                     </span>
-
-                    {% if result.job_description or searched_jd %}
-                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
-                        <span>✓ Criteria:</span>
-                        <span class="text-white">{{ result.job_description or searched_jd }}</span>
-                    </span>
-                    {% endif %}
                 </div>
 
                 <h2 class="text-xl sm:text-2xl font-extrabold text-white">
@@ -177,7 +176,7 @@
                 </h2>
             </div>
             
-            <!-- ATS Score & Report Download Actions -->
+            <!-- Download & PDF Actions -->
             <div class="flex items-center gap-3 sm:gap-4">
                 {% if result.ats_score is defined %}
                 <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
@@ -186,25 +185,21 @@
                 </div>
                 {% endif %}
 
-                <!-- Download Full Report Button -->
                 {% if current_audit_id %}
                 <a href="/download-audit/{{ current_audit_id }}" 
                     class="print:hidden flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30 whitespace-nowrap">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"></path>
-                    </svg>
                     <span>Download Report ⬇</span>
                 </a>
                 {% endif %}
 
                 <button type="button" onclick="window.print()" 
-                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition shadow-md whitespace-nowrap">
+                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap">
                     <span>Save PDF</span>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile & Desktop View Switcher Tabs -->
+        <!-- View Switcher Tabs -->
         <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto no-scrollbar print:hidden">
             <button type="button" onclick="switchReportTab('overview')" id="tab-btn-overview" 
                 class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-blue-600 text-white whitespace-nowrap shadow-md">
@@ -220,99 +215,30 @@
             </button>
         </div>
 
-        <!-- ================= TAB 1: OVERVIEW & PAY ================= -->
+        <!-- TAB CONTENT -->
         <div id="tab-content-overview" class="space-y-6">
-            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
-                <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-slate-800/80 pb-3">
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg">🎯</span>
-                        <div>
-                            <h3 class="text-sm font-bold text-white">Target Criteria &amp; Recruiter Alignment</h3>
-                            <p class="text-[11px] text-slate-400">Semantic verification against evaluated corporate role</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Target Role</span>
-                        <span class="text-xs font-bold text-sky-400 mt-1 block truncate">{{ result.target_role or searched_role or "Role Specified" }}</span>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">Criteria</span>
-                        <span class="text-xs font-bold text-white mt-1 block truncate">{{ result.job_description or searched_jd or "General Fit" }}</span>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold block">ATS Shortlist Fit</span>
-                        <span class="text-xs font-bold text-emerald-400 mt-1 block">{{ result.ats_score }}% Match</span>
-                    </div>
-                </div>
+            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
+                <h3 class="text-sm font-bold text-white mb-2">Target Role Alignment</h3>
+                <p class="text-xs text-slate-400">Evaluated against target designation: {{ result.target_role or searched_role }}</p>
             </div>
         </div>
-
-        <!-- ================= TAB 2: SKILLS & GAPS ================= -->
         <div id="tab-content-skills" class="space-y-6 hidden">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2">Parsed Skills &amp; Missing Requirements</h3>
-                <p class="text-xs text-slate-400">Review your extracted profile keywords and missing tech stack.</p>
+                <h3 class="text-sm font-bold text-white mb-2">Parsed Skills &amp; Missing Gaps</h3>
             </div>
         </div>
-
-        <!-- ================= TAB 3: ROADMAP & VIVA ================= -->
         <div id="tab-content-roadmap" class="space-y-6 hidden">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
                 <h3 class="text-sm font-bold text-white mb-2">Career Roadmap &amp; Preparation</h3>
-                <p class="text-xs text-slate-400">Follow the structured milestones to clear interviews.</p>
             </div>
         </div>
 
     </div>
     {% endif %}
 
-    <!-- ================= USER AUDIT & SEARCH HISTORY SECTION ================= -->
-    <div class="mt-12 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl print:hidden">
-        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-            <div>
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    <span>📜</span> Recent Audit &amp; Search History
-                </h3>
-                <p class="text-xs text-slate-400 mt-0.5">Access and download your past AI career reports instantly from TiDB Cloud.</p>
-            </div>
-            <span class="text-[11px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-semibold">
-                TiDB Cloud Synced
-            </span>
-        </div>
-
-        <div class="space-y-3">
-            {% if user_reports %}
-                {% for rep in user_reports %}
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-950 border border-slate-800/80 rounded-xl gap-4 hover:border-blue-500/30 transition">
-                    <div class="space-y-1">
-                        <div class="text-sm font-semibold text-white flex items-center gap-2">
-                            <span>🎯</span> Report #{{ rep.id }} • <span class="text-blue-400 font-mono text-xs">Evaluated Resume</span>
-                        </div>
-                        <div class="text-[11px] text-slate-400 flex items-center gap-3">
-                            <span>🕒 {{ rep.created_at.strftime('%d %b %Y, %H:%M') if rep.created_at else 'Recent' }}</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <a href="/download-audit/{{ rep.id }}" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 active:scale-95 transition whitespace-nowrap">
-                            <span>Download Full Report ⬇</span>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <div class="text-center py-8 bg-slate-950/50 rounded-xl border border-slate-800/50">
-                    <p class="text-xs text-slate-400">No past audit history found yet. Run your first analysis above!</p>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-
 </div>
 
-<!-- Client-side Scripts including Speech Recognition / Microphone Support -->
+<!-- Client-side Scripts -->
 <script>
     const form = document.getElementById('analyzeForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -341,12 +267,12 @@
         });
     }
 
-    // Native Web Speech API for Voice/Microphone Input
+    // Universal Speech Recognition function for all inputs
     function startVoiceInput(inputId, iconId) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         
         if (!SpeechRecognition) {
-            alert("Aapka browser voice input support nahi karta. Chrome ya Edge use karein!");
+            alert("Aapka browser voice input support nahi karta!");
             return;
         }
 
@@ -359,19 +285,15 @@
         const micIcon = document.getElementById(iconId);
 
         micIcon.innerText = "🔴";
-        inputField.placeholder = "Listening... Speak now!";
 
         recognition.onresult = function(event) {
             const speechText = event.results[0][0].transcript;
             inputField.value = speechText;
             micIcon.innerText = "🎙️";
-            inputField.placeholder = "e.g. Backend Developer, Data Analyst...";
         };
 
         recognition.onerror = function(event) {
-            console.error("Speech recognition error", event.error);
             micIcon.innerText = "🎙️";
-            inputField.placeholder = "Error hearing voice. Try again.";
         };
 
         recognition.onend = function() {
