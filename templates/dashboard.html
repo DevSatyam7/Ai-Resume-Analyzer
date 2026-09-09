@@ -215,21 +215,63 @@
             </button>
         </div>
 
-        <!-- TAB CONTENT -->
+        <!-- ================= TAB 1: OVERVIEW & PAY ================= -->
         <div id="tab-content-overview" class="space-y-6">
             <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2">Target Role Alignment</h3>
-                <p class="text-xs text-slate-400">Evaluated against target designation: {{ result.target_role or searched_role }}</p>
+                <h3 class="text-sm font-bold text-white mb-2">📋 Profile Summary</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ result.file_summary }}</p>
             </div>
+
+            {% if result.pay_scale %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5">
+                    <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider">Estimated Salary Range</span>
+                    <h4 class="text-lg font-black text-white mt-1">{{ result.pay_scale.salary_range }}</h4>
+                    <p class="text-xs text-slate-400 mt-1">In-Hand: {{ result.pay_scale.in_hand_monthly }}</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5">
+                    <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Career Growth Projection</span>
+                    <p class="text-xs text-slate-200 mt-1 leading-relaxed">{{ result.pay_scale.career_growth }}</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
+
+        <!-- ================= TAB 2: SKILLS & GAPS ================= -->
         <div id="tab-content-skills" class="space-y-6 hidden">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2">Parsed Skills &amp; Missing Gaps</h3>
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                <h3 class="text-sm font-bold text-white">⚡ Skill Gap Analysis</h3>
+                <p class="text-xs text-slate-400">Comparing your extracted profile keywords against market expectations.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-xl">
+                        <span class="text-xs font-bold text-emerald-400 block mb-2">✓ Strong Matches Found</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.matched_skills | default('Core technical keywords matched successfully.') }}</p>
+                    </div>
+                    <div class="p-4 bg-rose-950/20 border border-rose-800/40 rounded-xl">
+                        <span class="text-xs font-bold text-rose-400 block mb-2">⚠ Missing / Recommended Skills</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.missing_skills | default('Focus on building enterprise project microservices.') }}</p>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- ================= TAB 3: ROADMAP & VIVA ================= -->
         <div id="tab-content-roadmap" class="space-y-6 hidden">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2">Career Roadmap &amp; Preparation</h3>
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                <h3 class="text-sm font-bold text-white">🎯 Role Placement Roadmap</h3>
+                <div class="space-y-3">
+                    {% if result.roadmap %}
+                        {% for step in result.roadmap %}
+                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl flex items-start gap-3">
+                            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shrink-0">Step {{ loop.index }}</span>
+                            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">{{ step }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-xs text-slate-400">Follow core data structures, system design, and project deployment milestones to clear interviews.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
