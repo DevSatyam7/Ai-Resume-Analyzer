@@ -27,11 +27,9 @@
     </div>
     {% endif %}
 
-    <!-- Input Form Card with Universal Voice Input on all fields -->
+    <!-- Input Form Card -->
     <div class="bg-slate-900/90 backdrop-blur-md border border-slate-800 rounded-2xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden">
         <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6">
-            
-            <!-- 1. Target Role or Exam -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
@@ -43,11 +41,10 @@
                 </div>
                 <input type="text" id="targetRoleInput" name="role" required
                     value="{{ searched_role or '' }}"
-                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026, GATE CSE..."
+                    placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition">
             </div>
 
-            <!-- 2. Target Job Description (JD) -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
@@ -58,11 +55,10 @@
                     </button>
                 </div>
                 <textarea id="jdInput" name="job_description" rows="3"
-                    placeholder="Paste job posting requirements, corporate tech stack (e.g. Docker, AWS, PyTorch)..."
+                    placeholder="Paste job requirements or tech stack..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition">{{ searched_jd or '' }}</textarea>
             </div>
 
-            <!-- 3. Report Output Language -->
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Report Output Language</label>
                 <div class="flex items-center gap-6">
@@ -77,7 +73,6 @@
                 </div>
             </div>
 
-            <!-- 4. Resume Profile Raw Text -->
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
@@ -88,24 +83,19 @@
                     </button>
                 </div>
                 <textarea id="resumeInput" name="resume" rows="4"
-                    placeholder="Paste resume content here, or summarize your degree, tech stack, and experience..."
+                    placeholder="Paste resume content here..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition"></textarea>
             </div>
 
-            <!-- 5. Document Upload & Submit Trigger -->
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
                 <div class="w-full sm:w-auto">
                     <input type="file" name="file" accept=".pdf,.docx,.txt"
                         class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
                 </div>
-
-                <!-- Submit Button -->
                 <button type="submit" id="submitBtn"
                     class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
                     Run Analysis ⚡
                 </button>
-
-                <!-- Multi-Step Dynamic Animation Loader -->
                 <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg cursor-not-allowed text-xs sm:text-sm">
                     <svg class="animate-spin h-5 w-5 text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -115,41 +105,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <!-- Micro-SaaS: 1-Click ATS Bullet Enhancer -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl mb-8 print:hidden">
-        <div class="flex items-center justify-between gap-2 mb-3 border-b border-slate-800/80 pb-3">
-            <div class="flex items-center gap-2">
-                <span class="text-lg">✨</span>
-                <div>
-                    <h3 class="text-sm font-bold text-white">1-Click ATS Bullet Enhancer</h3>
-                    <p class="text-[11px] text-slate-400">Transform weak project lines into recruiter-ready Google XYZ impact statements</p>
-                </div>
-            </div>
-            <span class="text-[10px] uppercase font-bold tracking-wider text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-md">Micro-SaaS Tool</span>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-3">
-            <div class="flex-1 relative flex items-center">
-                <input type="text" id="rawBulletInput" 
-                       placeholder="e.g. Worked on Python chatbot, made login page with Flask..." 
-                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition">
-            </div>
-            <button type="button" onclick="startVoiceInput('rawBulletInput', 'mic4')" class="text-xs bg-slate-800 hover:bg-slate-700 text-blue-400 px-3 py-3 rounded-xl border border-slate-700 transition flex items-center gap-1 cursor-pointer">
-                <span id="mic4">🎙️</span> Speak
-            </button>
-            <button type="button" onclick="runBulletRewriter()" id="rewriteBtn"
-                    class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl text-xs sm:text-sm transition active:scale-95 whitespace-nowrap shadow-lg shadow-blue-600/30">
-                Enhance Line ⚡
-            </button>
-        </div>
-
-        <!-- Dynamic Output Container -->
-        <div id="bulletResultsBox" class="hidden mt-4 space-y-2.5 pt-3 border-t border-slate-800/80">
-            <span class="text-[11px] font-semibold text-emerald-400 block">✓ ATS-Optimized Alternatives (Click to Copy):</span>
-            <div id="bulletOptionsList" class="space-y-2"></div>
-        </div>
     </div>
 
     <!-- Complete Analysis Output Screen -->
@@ -164,19 +119,16 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         Audit Evaluation Complete
                     </span>
-
                     <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-full">
                         <span>🎯 Target:</span>
                         <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
                     </span>
                 </div>
-
                 <h2 class="text-xl sm:text-2xl font-extrabold text-white">
                     ATS Audit &amp; Skill Gap Diagnosis
                 </h2>
             </div>
             
-            <!-- Download & PDF Actions -->
             <div class="flex items-center gap-3 sm:gap-4">
                 {% if result.ats_score is defined %}
                 <div class="bg-blue-950/80 border border-blue-800/80 px-4 sm:px-6 py-2 rounded-2xl text-center shadow-lg">
@@ -213,6 +165,14 @@
                 class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
                 🎯 Roadmap &amp; Viva
             </button>
+            <button type="button" onclick="switchReportTab('resources')" id="tab-btn-resources" 
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+                📺 YouTube &amp; Resources
+            </button>
+            <button type="button" onclick="switchReportTab('pitch')" id="tab-btn-pitch" 
+                class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition bg-slate-950 text-slate-400 hover:text-white border border-slate-800 whitespace-nowrap">
+                ✉️ HR Pitch &amp; Cover Letter
+            </button>
         </div>
 
         <!-- ================= TAB 1: OVERVIEW & PAY ================= -->
@@ -240,17 +200,15 @@
         <!-- ================= TAB 2: SKILLS & GAPS ================= -->
         <div id="tab-content-skills" class="space-y-6 hidden">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white">⚡ Skill Gap Analysis</h3>
-                <p class="text-xs text-slate-400">Comparing your extracted profile keywords against market expectations.</p>
-                
+                <h3 class="text-sm font-bold text-white">⚡ Skill Gap &amp; Keyword Analysis</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div class="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-xl">
-                        <span class="text-xs font-bold text-emerald-400 block mb-2">✓ Strong Matches Found</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.matched_skills | default('Core technical keywords matched successfully.') }}</p>
+                        <span class="text-xs font-bold text-emerald-400 block mb-2">✓ Matched Skills</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.matched_skills | default('Core technical keywords aligned with job description.') }}</p>
                     </div>
                     <div class="p-4 bg-rose-950/20 border border-rose-800/40 rounded-xl">
                         <span class="text-xs font-bold text-rose-400 block mb-2">⚠ Missing / Recommended Skills</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.missing_skills | default('Focus on building enterprise project microservices.') }}</p>
+                        <p class="text-xs text-slate-300 leading-relaxed">{{ result.missing_skills | default('Add enterprise microservice or advanced framework metrics.') }}</p>
                     </div>
                 </div>
             </div>
@@ -258,19 +216,82 @@
 
         <!-- ================= TAB 3: ROADMAP & VIVA ================= -->
         <div id="tab-content-roadmap" class="space-y-6 hidden">
+            <div class="space-y-6">
+                <!-- Roadmap Section -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white">🎯 Role Placement Roadmap</h3>
+                    <div class="space-y-3">
+                        {% if result.roadmap %}
+                            {% for step in result.roadmap %}
+                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl flex items-start gap-3">
+                                <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shrink-0">Step {{ loop.index }}</span>
+                                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">{{ step }}</p>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-xs text-slate-400">Follow core data structures, system design, and deployment milestones.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Top Interview / Viva Questions -->
+                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white">💡 Top Interview &amp; Viva Questions</h3>
+                    <div class="space-y-3">
+                        {% if result.viva_questions %}
+                            {% for q in result.viva_questions %}
+                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                                <p class="text-xs sm:text-sm font-semibold text-slate-200">Q{{ loop.index }}: {{ q }}</p>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl">
+                                <p class="text-xs text-slate-300">1. Explain how request context works in Flask and handling multi-threading safely.<br>2. How do you optimize SQL queries and indexing in TiDB / MySQL?</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: YOUTUBE & RESOURCES ================= -->
+        <div id="tab-content-resources" class="space-y-6 hidden">
             <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white">🎯 Role Placement Roadmap</h3>
-                <div class="space-y-3">
-                    {% if result.roadmap %}
-                        {% for step in result.roadmap %}
-                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl flex items-start gap-3">
-                            <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg shrink-0">Step {{ loop.index }}</span>
-                            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">{{ step }}</p>
-                        </div>
+                <h3 class="text-sm font-bold text-white">📺 Recommended YouTube Learning Resources</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {% if result.youtube_links %}
+                        {% for link in result.youtube_links %}
+                        <a href="{{ link.url }}" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
+                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400 truncate">{{ link.title }}</span>
+                            <span class="text-xs text-blue-400 font-bold shrink-0 ml-2">Watch ↗</span>
+                        </a>
                         {% endfor %}
                     {% else %}
-                        <p class="text-xs text-slate-400">Follow core data structures, system design, and project deployment milestones to clear interviews.</p>
+                        <a href="https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
+                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">Advanced Flask &amp; System Design Masterclass</span>
+                            <span class="text-xs text-blue-400 font-bold shrink-0">Watch ↗</span>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=ATS+Resume+Optimization+Tips" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl flex items-center justify-between transition group">
+                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">ATS Resume Optimization &amp; Google XYZ Formula</span>
+                            <span class="text-xs text-blue-400 font-bold shrink-0">Watch ↗</span>
+                        </a>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 5: HR PITCH & COVER LETTER ================= -->
+        <div id="tab-content-pitch" class="space-y-6 hidden">
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold text-white">✉️ Instant AI Recruiter &amp; HR Referral Pitch</h3>
+                    <button type="button" onclick="copyPitchText()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-3.5 py-1.5 rounded-lg transition">
+                        Copy Pitch 📋
+                    </button>
+                </div>
+                <p class="text-xs text-slate-400">Use this hyper-personalized outreach template on LinkedIn or Email to grab recruiter attention.</p>
+                <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono" id="pitchBox">
+                    {{ result.hr_pitch | default('Dear Hiring Manager,\n\nI am writing to express my strong interest in the position. Having audited my resume via CareersAnalysis, I achieved an ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nI would love to bring this technical rigor to your engineering team.\n\nBest regards,\nSatyam Kumar') }}
                 </div>
             </div>
         </div>
@@ -291,7 +312,6 @@
         form.addEventListener('submit', function() {
             submitBtn.classList.add('hidden');
             loadingState.classList.remove('hidden');
-
             const steps = [
                 "Extracting resume tokens & credentials...",
                 "Comparing keywords against target job criteria...",
@@ -299,54 +319,32 @@
                 "Synthesizing customized viva practice questions..."
             ];
             let currentStep = 0;
-
             setInterval(() => {
                 currentStep = (currentStep + 1) % steps.length;
-                if (loadingStepText) {
-                    loadingStepText.innerText = steps[currentStep];
-                }
+                if (loadingStepText) loadingStepText.innerText = steps[currentStep];
             }, 1800);
         });
     }
 
-    // Universal Speech Recognition function for all inputs
     function startVoiceInput(inputId, iconId) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        
         if (!SpeechRecognition) {
             alert("Aapka browser voice input support nahi karta!");
             return;
         }
-
         const recognition = new SpeechRecognition();
         recognition.lang = 'en-IN';
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
-
         const inputField = document.getElementById(inputId);
         const micIcon = document.getElementById(iconId);
-
         micIcon.innerText = "🔴";
-
-        recognition.onresult = function(event) {
-            const speechText = event.results[0][0].transcript;
-            inputField.value = speechText;
-            micIcon.innerText = "🎙️";
-        };
-
-        recognition.onerror = function(event) {
-            micIcon.innerText = "🎙️";
-        };
-
-        recognition.onend = function() {
-            micIcon.innerText = "🎙️";
-        };
-
+        recognition.onresult = (e) => { inputField.value = e.results[0][0].transcript; micIcon.innerText = "🎙️"; };
+        recognition.onerror = () => { micIcon.innerText = "🎙️"; };
+        recognition.onend = () => { micIcon.innerText = "🎙️"; };
         recognition.start();
     }
 
     function switchReportTab(tabName) {
-        const tabs = ['overview', 'skills', 'roadmap'];
+        const tabs = ['overview', 'skills', 'roadmap', 'resources', 'pitch'];
         tabs.forEach(t => {
             const content = document.getElementById(`tab-content-${t}`);
             const btn = document.getElementById(`tab-btn-${t}`);
@@ -362,53 +360,11 @@
         });
     }
 
-    async function runBulletRewriter() {
-        const input = document.getElementById('rawBulletInput');
-        const btn = document.getElementById('rewriteBtn');
-        const resultsBox = document.getElementById('bulletResultsBox');
-        const list = document.getElementById('bulletOptionsList');
-        const bulletText = input.value.trim();
-
-        if (!bulletText) {
-            alert('Pehle koi project ya resume line likhein!');
-            return;
-        }
-
-        btn.innerText = "Rewriting...";
-        btn.disabled = true;
-
-        try {
-            const res = await fetch('/rewrite-bullet', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ bullet: bulletText, role: 'Software Engineer' })
-            });
-            const data = await res.json();
-
-            if (data.success && data.options) {
-                list.innerHTML = '';
-                data.options.forEach(opt => {
-                    const item = document.createElement('div');
-                    item.className = "p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 flex items-center justify-between gap-3 text-xs text-slate-200 cursor-pointer transition";
-                    item.innerHTML = `
-                        <span class="leading-relaxed">${opt}</span>
-                        <span class="text-[10px] text-blue-400 font-bold uppercase shrink-0">Copy 📋</span>
-                    `;
-                    item.onclick = () => {
-                        navigator.clipboard.writeText(opt);
-                        alert('Copied to clipboard!');
-                    };
-                    list.appendChild(item);
-                });
-                resultsBox.classList.remove('hidden');
-            } else {
-                alert(data.error || 'Rewriter failed. Try again.');
-            }
-        } catch (err) {
-            alert('Server request failed.');
-        } finally {
-            btn.innerText = "Enhance Line ⚡";
-            btn.disabled = false;
+    function copyPitchText() {
+        const pitchBox = document.getElementById('pitchBox');
+        if (pitchBox) {
+            navigator.clipboard.writeText(pitchBox.innerText);
+            alert('Recruiter pitch copied to clipboard!');
         }
     }
 </script>
