@@ -64,6 +64,11 @@ def home():
     return render_template("home.html", logged_in=("user" in session))
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html", logged_in=("user" in session))
+
+
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
