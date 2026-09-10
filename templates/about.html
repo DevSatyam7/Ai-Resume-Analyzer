@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Creator | CareersAnalysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; }
+    </style>
+</head>
+<body class="text-slate-100 antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <!-- Navbar / Header -->
+    <header class="border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+            <a href="/" class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                <span>⚡ CareersAnalysis</span>
+            </a>
+            <a href="/" class="text-xs text-slate-400 hover:text-white transition px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800">
+                ← Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-12 flex-grow w-full">
+        
+        <!-- Profile Hero Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md mb-8 text-center md:text-left flex flex-col md:flex-row items-center gap-8">
+            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-3xl p-1.5 bg-gradient-to-tr from-blue-500 to-indigo-600 shadow-xl flex-shrink-0">
+                <img src="{{ url_for('static', filename='satyam-profile.jpg') }}" alt="Satyam Kumar" class="w-full h-full object-cover rounded-[20px]">
+            </div>
+            <div>
+                <span class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 mb-2">
+                    🟢 Open to SDE Roles (Bangalore)
+                </span>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Satyam Kumar</h1>
+                <p class="text-sm sm:text-base text-blue-400 font-semibold mt-1">B.Tech in Computer Science & Engineering (Artificial Intelligence)</p>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Government Engineering College (GEC), Munger • Bihar Engineering University (BEU)</p>
+            </div>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- About the Developer -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md flex flex-col justify-between">
+                <div>
+                    <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                        <span>👨‍💻</span> Developer Background
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+                        Passionate full-stack developer and AI enthusiast currently pursuing undergraduate engineering. Focused on building scalable enterprise-grade web architectures, integrating large language models, and preparing for software engineering roles in Bangalore alongside GATE preparation.
+                    </p>
+                </div>
+                <div class="text-xs text-slate-400 space-y-1 pt-3 border-t border-slate-800/80">
+                    <p>• <strong class="text-slate-200">Focus:</strong> Full-Stack SaaS &amp; DSA</p>
+                    <p>• <strong class="text-slate-200">Goal:</strong> Software Development Engineer (SDE)</p>
+                </div>
+            </div>
+
+            <!-- Tech Stack & Arsenal -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md flex flex-col justify-between">
+                <div>
+                    <h2 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                        <span>🛠️</span> Tech Arsenal
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+                        Hands-on experience with modern backend frameworks, relational databases, cloud deployments, and generative AI integrations.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-800/80">
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-blue-300 border border-slate-700">Python / Flask</span>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-purple-300 border border-slate-700">Gemini API</span>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-emerald-300 border border-slate-700">TiDB Cloud SQL</span>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-amber-300 border border-slate-700">C / C++ / SQL</span>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-indigo-300 border border-slate-700">Git &amp; GitHub</span>
+                    <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-pink-300 border border-slate-700">Tailwind CSS</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Direct Connect Channels -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-md text-center">
+            <h2 class="text-base sm:text-lg font-bold text-white mb-2">Connect &amp; Collaborate 🌐</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mb-6">Feel free to reach out for professional opportunities, collaborations, or discussions.</p>
+            
+            <div class="flex justify-center gap-3 sm:gap-4 flex-wrap">
+                <a href="https://github.com/" target="_blank" class="px-5 py-2.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition flex items-center gap-2 border border-slate-700 shadow-md">
+                    🐙 GitHub
+                </a>
+                <a href="https://linkedin.com/" target="_blank" class="px-5 py-2.5 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white transition flex items-center gap-2 shadow-lg shadow-blue-600/20">
+                    💼 LinkedIn
+                </a>
+                <a href="mailto:satyam62kumar02@gmail.com" class="px-5 py-2.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 transition flex items-center gap-2 border border-slate-700 shadow-md">
+                    ✉️ Email Me
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500 bg-slate-950">
+        <p>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar (GEC Munger).</p>
+    </footer>
+
+</body>
+</html>
