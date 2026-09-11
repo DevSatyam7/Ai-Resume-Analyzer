@@ -1,3 +1,17 @@
+<div align="center">
+
+# CareersAnalysis 🚀
+### AI-Powered ATS Resume Auditor & Career Readiness Engine
+
+[![GitHub Pro](https://img.shields.io/badge/GitHub-Pro-blue.svg?style=for-the-badge&logo=github)](https://github.com/DevSatyam7)
+[![GitHub Student Pack](https://img.shields.io/badge/GitHub-Student%20Developer%20Pack-brightgreen.svg?style=for-the-badge&logo=github)](https://education.github.com)
+[![Python](https://img.shields.io/badge/Backend-Python%20%7C%20Flask-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://flask.palletsprojects.com/)
+[![Gemini AI](https://img.shields.io/badge/AI%20Engine-Google%20Gemini-8E75B2?style=for-the-badge&logo=google)](https://ai.google.dev/)
+[![Website](https://img.shields.io/badge/Live%20Demo-careersanalysis.me-success?style=for-the-badge&logo=googlechrome&logoColor=white)](https://careersanalysis.me)
+
+</div>
+
+---
 # 🚀 CareersAnalysis — AI ATS Resume Auditor & Career Roadmap Generator
 
 An end-to-end web application that audits resumes against ATS screening parameters, identifies missing technical competencies, calculates expected pay scales, and builds targeted weekly career roadmaps using Google Gemini models.
