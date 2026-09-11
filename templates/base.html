@@ -169,47 +169,55 @@
 <body
     class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-blue-600 selection:text-white"
 >
-<!-- Holographic Orbiting Ring Splash Animation -->
-<div id="appSplash" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center overflow-hidden transition-opacity duration-700">
-    <div class="relative flex items-center justify-center w-44 h-44">
-        
-        <!-- Outer Static Glowing Ring -->
-        <div class="absolute inset-0 rounded-full border border-blue-500/30 shadow-[0_0_40px_rgba(59,130,246,0.25)]"></div>
-        
-        <!-- Rotating Outer Orbit with Glowing Particle -->
-        <div class="absolute inset-2 rounded-full border border-purple-500/40 animate-[spin_4s_linear_infinite] flex items-center justify-center">
-            <div class="w-3.5 h-3.5 bg-blue-400 rounded-full shadow-[0_0_15px_#60a5fa] absolute -top-1.5"></div>
-        </div>
 
-        <!-- Crossing Elliptical Ring (Like your image) -->
-        <div class="absolute w-16 h-32 rounded-[100%] border-2 border-pink-500/70 shadow-[0_0_20px_rgba(236,72,153,0.4)] animate-[spin_3s_linear_infinite]" style="transform: rotate(35deg);"></div>
+    <!-- =====================================================
+         HOLOGRAPHIC ORBITING RING SPLASH ANIMATION
+         ===================================================== -->
+    <div id="appSplash" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center overflow-hidden transition-opacity duration-700">
+        <div class="relative flex items-center justify-center w-44 h-44">
+            
+            <!-- Outer Static Glowing Ring -->
+            <div class="absolute inset-0 rounded-full border border-blue-500/30 shadow-[0_0_40px_rgba(59,130,246,0.25)]"></div>
+            
+            <!-- Rotating Outer Orbit with Glowing Particle -->
+            <div class="absolute inset-2 rounded-full border border-purple-500/40 animate-[spin_4s_linear_infinite] flex items-center justify-center">
+                <div class="w-3.5 h-3.5 bg-blue-400 rounded-full shadow-[0_0_15px_#60a5fa] absolute -top-1.5"></div>
+            </div>
 
-        <!-- Center Logo Core -->
-        <div class="relative z-10 flex flex-col items-center justify-center">
-            <span class="text-white font-black text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">CA</span>
+            <!-- Crossing Elliptical Ring -->
+            <div class="absolute w-16 h-32 rounded-[100%] border-2 border-pink-500/70 shadow-[0_0_20px_rgba(236,72,153,0.4)] animate-[spin_3s_linear_infinite]" style="transform: rotate(35deg);"></div>
+
+            <!-- Center Logo Core -->
+            <div class="relative z-10 flex flex-col items-center justify-center">
+                <span class="text-white font-black text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">CA</span>
+            </div>
         </div>
     </div>
-</div>
 
-<style>
-    /* Smooth fade out when page fully loads */
-    .splash-fade {
-        opacity: 0;
-        pointer-events: none;
-    }
-</style>
-
-<script>
-    window.addEventListener("load", function () {
-        const splash = document.getElementById("appSplash");
-        if (splash) {
-            setTimeout(() => {
-                splash.classList.add("splash-fade");
-                setTimeout(() => splash.remove(), 700);
-            }, 800); // 0.8 second smooth display time
+    <style>
+        .splash-fade {
+            opacity: 0;
+            pointer-events: none;
         }
-    });
-</script>
+    </style>
+
+    <script>
+        function removeSplash() {
+            const splash = document.getElementById("appSplash");
+            if (splash) {
+                setTimeout(() => {
+                    splash.classList.add("splash-fade");
+                    setTimeout(() => splash.remove(), 700);
+                }, 800);
+            }
+        }
+
+        if (document.readyState === "complete") {
+            removeSplash();
+        } else {
+            window.addEventListener("load", removeSplash);
+        }
+    </script>
 
     <!-- =====================================================
          STICKY NAVBAR
