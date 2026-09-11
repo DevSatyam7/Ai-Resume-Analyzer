@@ -1,220 +1,1474 @@
-* {
-    margin: 0;
-    padding: 0;
+/* =========================================================
+   CareersAnalysis - Advanced Global Styling
+   Yah poori website ka base style aur common behaviour handle karta hai.
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. Global Reset
+   --------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    background: #020617;
 }
 
 body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    width: 100%;
     min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+
+    font-family:
+        "Plus Jakarta Sans",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(37, 99, 235, 0.12),
+            transparent 35%
+        ),
+        #020617;
+
+    color: #f8fafc;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Header Navbar */
-.navbar {
-    background-color: #0b1120;
-    width: 100%;
-    padding: 1rem 0;
-}
 
-.nav-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+/* ---------------------------------------------------------
+   2. Selection aur Text Behaviour
+   --------------------------------------------------------- */
 
-.logo {
+::selection {
+    background: #2563eb;
     color: #ffffff;
-    font-size: 1.05rem;
-    font-weight: 700;
-    text-decoration: none;
 }
 
-.nav-links a {
-    color: #94a3b8;
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-size: 0.85rem;
-    transition: color 0.2s;
-}
-
-.nav-links a:hover {
+::-moz-selection {
+    background: #2563eb;
     color: #ffffff;
 }
 
-/* Page Layout */
-.content-container {
-    max-width: 750px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-/* Auth Pages (Login & Signup Cards) */
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2rem;
-}
-
-.auth-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    text-align: center;
-}
-
-.auth-card h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    color: #0f172a;
-}
-
-.sub-text {
-    font-size: 0.88rem;
-    color: #64748b;
-    margin-bottom: 1.5rem;
-}
-
-/* Form Inputs */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: left;
-}
-
-input[type="email"],
-input[type="password"],
-input[type="text"],
-textarea {
-    width: 100%;
-    padding: 0.75rem 0.85rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    color: #1e293b;
-    background-color: #ffffff;
-    outline: none;
-}
-
-input:focus,
-textarea:focus {
-    border-color: #2563eb;
-}
-
-textarea {
-    min-height: 140px;
-    resize: vertical;
-}
-
-.file-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #475569;
-}
-
-input[type="file"] {
-    font-size: 0.85rem;
-    color: #475569;
+img {
+    max-width: 100%;
+    display: block;
 }
 
 button,
-.btn-analyze {
-    background-color: #000000;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.65rem 1.4rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    user-select: none;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* ---------------------------------------------------------
+   3. Smooth Scrollbar
+   Yah browser scrollbar ko website ke dark theme ke saath match karta hai.
+   --------------------------------------------------------- */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 999px;
+    border: 2px solid #020617;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1e293b #020617;
+}
+
+
+/* ---------------------------------------------------------
+   4. Scrollbar Hide Utility
+   --------------------------------------------------------- */
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+/* ---------------------------------------------------------
+   5. Navbar
+   Existing Tailwind navbar ko thoda premium glass effect deta hai.
+   --------------------------------------------------------- */
+
+header.sticky {
+    background: rgba(2, 6, 23, 0.78) !important;
+    border-bottom-color: rgba(51, 65, 85, 0.55) !important;
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+header.sticky::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(59, 130, 246, 0.45),
+        transparent
+    );
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   6. Logo Hover
+   --------------------------------------------------------- */
+
+header a[href="/"] img {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+header a[href="/"]:hover img {
+    transform: scale(1.06) rotate(1deg);
+    box-shadow:
+        0 10px 30px rgba(37, 99, 235, 0.25),
+        0 0 0 1px rgba(59, 130, 246, 0.25);
+}
+
+
+/* ---------------------------------------------------------
+   7. Navigation Links
+   --------------------------------------------------------- */
+
+nav a {
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+nav a:active {
+    transform: scale(0.97);
+}
+
+
+/* ---------------------------------------------------------
+   8. General Buttons
+   Website ke buttons ko better depth aur interaction deta hai.
+   --------------------------------------------------------- */
+
+button,
+a.bg-blue-600,
+a.bg-gradient-to-r,
+button.bg-blue-600,
+button.bg-gradient-to-r {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
 }
 
 button:hover,
-.btn-analyze:hover {
-    background-color: #1f2937;
+a.bg-blue-600:hover,
+a.bg-gradient-to-r:hover,
+button.bg-blue-600:hover {
+    transform: translateY(-1px);
 }
 
-.auth-card button {
-    width: 100%;
-    margin-top: 0.5rem;
+button:active,
+a.bg-blue-600:active,
+a.bg-gradient-to-r:active {
+    transform: translateY(0) scale(0.98);
 }
 
-.auth-links,
-.switch-auth {
-    margin-top: 1.2rem;
-    font-size: 0.85rem;
+
+/* ---------------------------------------------------------
+   9. Primary Blue Buttons
+   --------------------------------------------------------- */
+
+.bg-blue-600 {
+    box-shadow:
+        0 8px 25px rgba(37, 99, 235, 0.18);
+}
+
+.bg-blue-600:hover {
+    box-shadow:
+        0 12px 32px rgba(37, 99, 235, 0.28);
+}
+
+
+/* ---------------------------------------------------------
+   10. Hero Section
+   --------------------------------------------------------- */
+
+main section:first-child {
+    position: relative;
+}
+
+main section:first-child::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: rgba(37, 99, 235, 0.09);
+    filter: blur(100px);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+main section:first-child::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    right: -120px;
+    top: 180px;
+
+    background: rgba(79, 70, 229, 0.07);
+    filter: blur(90px);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   11. Hero Heading
+   --------------------------------------------------------- */
+
+h1 {
+    text-wrap: balance;
+}
+
+h1 .text-transparent {
+    filter: drop-shadow(0 0 28px rgba(59, 130, 246, 0.15));
+}
+
+
+/* ---------------------------------------------------------
+   12. Hero Badge
+   --------------------------------------------------------- */
+
+main section:first-child .rounded-full {
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+main section:first-child .rounded-full:hover {
+    border-color: rgba(59, 130, 246, 0.45);
+    background-color: rgba(15, 23, 42, 0.9);
+    transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   13. Announcement Bar
+   --------------------------------------------------------- */
+
+.animate-marquee {
+    will-change: transform;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+
+/* ---------------------------------------------------------
+   14. Marquee Animation
+   --------------------------------------------------------- */
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+        animation: none !important;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   15. Common Card Polish
+   Existing cards ko subtle glass appearance deta hai.
+   --------------------------------------------------------- */
+
+.bg-slate-900\/60,
+.bg-slate-900\/70,
+.bg-slate-900\/75,
+.bg-slate-900\/80,
+.bg-slate-900\/90 {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* ---------------------------------------------------------
+   16. Topic Explorer Card
+   --------------------------------------------------------- */
+
+#topic-search-card {
+    position: relative;
+    isolation: isolate;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 23, 42, 0.90),
+            rgba(2, 6, 23, 0.94)
+        ) !important;
+
+    border-color: rgba(51, 65, 85, 0.8) !important;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#topic-search-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(59, 130, 246, 0.12),
+            transparent 55%
+        );
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+#topic-search-card:hover {
+    border-color: rgba(59, 130, 246, 0.38) !important;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.42),
+        0 0 45px rgba(37, 99, 235, 0.06);
+}
+
+
+/* ---------------------------------------------------------
+   17. Search Input
+   --------------------------------------------------------- */
+
+#topicSearchForm > div:first-child {
+    background: rgba(2, 6, 23, 0.85) !important;
+    border-color: rgba(51, 65, 85, 0.8) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+#topicSearchInput {
+    caret-color: #60a5fa;
+}
+
+#topicSearchInput::placeholder {
     color: #64748b;
-    text-align: center;
+    opacity: 1;
 }
 
-.auth-links a,
-.switch-auth a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 500;
+#topicSearchInput:focus {
+    outline: none;
 }
 
-.auth-links a:hover,
-.switch-auth a:hover {
-    text-decoration: underline;
+
+/* ---------------------------------------------------------
+   18. Voice Search Button
+   --------------------------------------------------------- */
+
+#micBtn {
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-/* Dashboard Styling */
-.welcome-text {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 1.25rem;
+#micBtn:hover {
+    transform: scale(1.04);
 }
 
-.card {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1.8rem 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
+#micBtn:active {
+    transform: scale(0.94);
 }
 
-.card-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 1.25rem;
+
+/* ---------------------------------------------------------
+   19. Quick Topic Buttons
+   --------------------------------------------------------- */
+
+#topic-search-card button:not(#micBtn):not(#exploreBtn) {
+    transition:
+        transform 0.18s ease,
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
 }
 
-.result-card h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #000000;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
+#topic-search-card button:not(#micBtn):not(#exploreBtn):hover {
+    transform: translateY(-1px);
+    border-color: rgba(100, 116, 139, 0.7);
 }
 
-.result-card h3:first-child {
-    margin-top: 0;
+
+/* ---------------------------------------------------------
+   20. Explore Button
+   --------------------------------------------------------- */
+
+#exploreBtn {
+    min-height: 44px;
+    position: relative;
+    overflow: hidden;
 }
 
-.result-card ul {
-    list-style-type: disc;
-    padding-left: 1.3rem;
+#exploreBtn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.12),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
 }
 
-.result-card li {
-    font-size: 0.9rem;
-    color: #334155;
-    margin-bottom: 0.4rem;
-    line-height: 1.5;
+#exploreBtn:hover::before {
+    left: 150%;
+}
+
+#exploreBtn:disabled {
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* ---------------------------------------------------------
+   21. APK Download Card
+   --------------------------------------------------------- */
+
+a[href*="app-release-signed.apk"] {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+a[href*="app-release-signed.apk"]:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 8px 22px rgba(16, 185, 129, 0.18);
+}
+
+
+/* ---------------------------------------------------------
+   22. Platform Metrics
+   --------------------------------------------------------- */
+
+main section:first-child .border-t {
+    position: relative;
+}
+
+main section:first-child .border-t > div {
+    transition: transform 0.2s ease;
+}
+
+main section:first-child .border-t > div:hover {
+    transform: translateY(-2px);
+}
+
+main section:first-child .border-t .text-2xl,
+main section:first-child .border-t .text-3xl {
+    letter-spacing: -0.04em;
+}
+
+
+/* ---------------------------------------------------------
+   23. Before / After Section
+   --------------------------------------------------------- */
+
+section .border-rose-500\/30,
+section .border-emerald-500\/40 {
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+section .border-rose-500\/30:hover,
+section .border-emerald-500\/40:hover {
+    transform: translateY(-3px);
+}
+
+section .border-rose-500\/30:hover {
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.28),
+        0 0 25px rgba(244, 63, 94, 0.04);
+}
+
+section .border-emerald-500\/40:hover {
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.28),
+        0 0 30px rgba(16, 185, 129, 0.06);
+}
+
+
+/* ---------------------------------------------------------
+   24. Code / Resume Preview Boxes
+   --------------------------------------------------------- */
+
+.font-mono {
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        Menlo,
+        monospace;
+}
+
+.font-mono p {
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   25. Recruiter Suite
+   --------------------------------------------------------- */
+
+#pro-features > div {
+    position: relative;
+    isolation: isolate;
+}
+
+#pro-features > div::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    right: -100px;
+    top: -100px;
+
+    background: rgba(168, 85, 247, 0.08);
+    filter: blur(80px);
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+#pro-features > div > div > div {
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        background-color 0.22s ease;
+}
+
+#pro-features > div > div > div:hover {
+    transform: translateY(-4px);
+    border-color: rgba(148, 163, 184, 0.28);
+    background-color: rgba(2, 6, 23, 0.85);
+}
+
+
+/* ---------------------------------------------------------
+   26. Engineered Modules
+   --------------------------------------------------------- */
+
+#features .grid > div {
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#features .grid > div::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(59, 130, 246, 0.45),
+        transparent
+    );
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+#features .grid > div:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(59, 130, 246, 0.28);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.25),
+        0 0 35px rgba(37, 99, 235, 0.05);
+}
+
+#features .grid > div:hover::before {
+    opacity: 1;
+}
+
+
+/* ---------------------------------------------------------
+   27. Workflow Cards
+   --------------------------------------------------------- */
+
+#how-it-works .grid > div {
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease;
+}
+
+#how-it-works .grid > div:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.25);
+    background-color: rgba(15, 23, 42, 0.62);
+}
+
+#how-it-works .grid > div > span {
+    user-select: none;
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+#how-it-works .grid > div:hover > span {
+    color: rgba(59, 130, 246, 0.22);
+    transform: scale(1.05);
+}
+
+
+/* ---------------------------------------------------------
+   28. Architect / Developer Profile
+   --------------------------------------------------------- */
+
+#architect .rounded-3xl {
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+#architect .rounded-3xl::before {
+    content: "";
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    left: -120px;
+    top: -130px;
+
+    background: rgba(37, 99, 235, 0.07);
+    filter: blur(70px);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+#architect img {
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+#architect .group:hover img,
+#architect .rounded-full:hover img {
+    transform: scale(1.04);
+}
+
+#architect a[href="/about"] {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#architect a[href="/about"]:hover {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ---------------------------------------------------------
+   29. Footer
+   --------------------------------------------------------- */
+
+footer {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(2, 6, 23, 0.6),
+            #020617
+        );
+}
+
+footer a {
+    transition: color 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   30. Mobile Drawer
+   --------------------------------------------------------- */
+
+#drawerOverlay,
+#mobileDrawerOverlay,
+#phaaduDrawer {
+    overscroll-behavior: contain;
+}
+
+#drawerPanel,
+#mobileDrawerPanel {
+    box-shadow:
+        -20px 0 70px rgba(0, 0, 0, 0.42);
+}
+
+#drawerPanel nav a,
+#mobileDrawerPanel nav a {
+    position: relative;
+}
+
+#drawerPanel nav a::before,
+#mobileDrawerPanel nav a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0;
+
+    background: #3b82f6;
+    border-radius: 999px;
+
+    transform: translateY(-50%);
+    transition: height 0.2s ease;
+}
+
+#drawerPanel nav a:hover::before,
+#mobileDrawerPanel nav a:hover::before {
+    height: 55%;
+}
+
+
+/* ---------------------------------------------------------
+   31. Drawer Scrollbar
+   --------------------------------------------------------- */
+
+#drawerPanel::-webkit-scrollbar,
+#mobileDrawerPanel::-webkit-scrollbar,
+#drawerBody::-webkit-scrollbar {
+    width: 5px;
+}
+
+#drawerPanel::-webkit-scrollbar-thumb,
+#mobileDrawerPanel::-webkit-scrollbar-thumb,
+#drawerBody::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 999px;
+}
+
+
+/* ---------------------------------------------------------
+   32. Phaadu Report Drawer
+   --------------------------------------------------------- */
+
+#phaaduDrawer {
+    isolation: isolate;
+}
+
+#phaaduDrawer > div:last-child {
+    box-shadow:
+        -25px 0 80px rgba(0, 0, 0, 0.45);
+}
+
+#drawerBody {
+    scroll-behavior: smooth;
+}
+
+#drawerBody > div {
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   33. Report Skill Tags
+   Dynamic report ke skill tags ko clean appearance deta hai.
+   --------------------------------------------------------- */
+
+#drawerBody span {
+    overflow-wrap: anywhere;
+}
+
+#drawerBody .bg-emerald-950\/60,
+#drawerBody .bg-rose-950\/60 {
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease;
+}
+
+#drawerBody .bg-emerald-950\/60:hover,
+#drawerBody .bg-rose-950\/60:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   34. Report Download Button
+   --------------------------------------------------------- */
+
+#drawerDownloadLink {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+#drawerDownloadLink:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.28);
+}
+
+
+/* ---------------------------------------------------------
+   35. Focus Accessibility
+   Keyboard user ko clear focus state milega.
+   --------------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   36. Input aur Textarea Global Polish
+   --------------------------------------------------------- */
+
+input,
+textarea,
+select {
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* ---------------------------------------------------------
+   37. Disabled Controls
+   --------------------------------------------------------- */
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+
+/* ---------------------------------------------------------
+   38. Loading Spinner
+   --------------------------------------------------------- */
+
+#btnSpinner {
+    transform-origin: center;
+}
+
+
+/* ---------------------------------------------------------
+   39. Pulse Animation
+   --------------------------------------------------------- */
+
+@keyframes softPulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.55;
+        transform: scale(0.92);
+    }
+}
+
+.animate-pulse {
+    animation:
+        softPulse 2s ease-in-out infinite;
+}
+
+
+/* ---------------------------------------------------------
+   40. Subtle Fade-In Animation
+   Page ke important blocks ko smooth entry effect deta hai.
+   --------------------------------------------------------- */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#topic-search-card,
+#pro-features > div,
+#architect .rounded-3xl {
+    animation:
+        fadeUp 0.65s ease both;
+}
+
+
+/* ---------------------------------------------------------
+   41. Gradient Text Rendering
+   --------------------------------------------------------- */
+
+.text-transparent.bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+
+/* ---------------------------------------------------------
+   42. Mobile Layout
+   --------------------------------------------------------- */
+
+@media (max-width: 767px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    header.sticky {
+        min-height: 64px;
+    }
+
+    h1 {
+        letter-spacing: -0.035em;
+    }
+
+    main section {
+        max-width: 100%;
+    }
+
+    #topic-search-card {
+        border-radius: 20px !important;
+    }
+
+    #pro-features > div {
+        border-radius: 22px !important;
+    }
+
+    #architect .rounded-3xl {
+        border-radius: 22px !important;
+    }
+
+    #drawerPanel,
+    #mobileDrawerPanel {
+        width: min(88vw, 380px);
+    }
+
+    #phaaduDrawer > div:last-child {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #drawerBody {
+        padding: 1rem;
+    }
+
+    #drawerBody .grid {
+        gap: 0.75rem;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   43. Very Small Mobile Devices
+   --------------------------------------------------------- */
+
+@media (max-width: 380px) {
+
+    header .max-w-7xl {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    header a[href="/"] span {
+        font-size: 0.9rem;
+    }
+
+    #topic-search-card {
+        padding: 1rem !important;
+    }
+
+    #topicSearchInput {
+        font-size: 0.82rem;
+    }
+
+    #topicSearchForm {
+        gap: 0.55rem;
+    }
+
+    #micBtn {
+        padding: 0.45rem;
+    }
+
+    #exploreBtn {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   44. Tablet Adjustment
+   --------------------------------------------------------- */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .max-w-7xl {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    #features .grid,
+    #how-it-works .grid {
+        gap: 1.1rem;
+    }
+
+    #pro-features > div {
+        padding: 2.5rem;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   45. Large Desktop
+   --------------------------------------------------------- */
+
+@media (min-width: 1280px) {
+
+    body {
+        background:
+            radial-gradient(
+                circle at 50% -5%,
+                rgba(37, 99, 235, 0.13),
+                transparent 34%
+            ),
+            radial-gradient(
+                circle at 100% 50%,
+                rgba(79, 70, 229, 0.06),
+                transparent 30%
+            ),
+            #020617;
+    }
+
+    main section:first-child::before {
+        width: 600px;
+        height: 600px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   46. Reduced Motion
+   Agar user ke device mein animation disabled hai to
+   unnecessary movement band ho jayega.
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   47. Dark Background Layer
+   Sections ke beech harsh colour transition ko smooth karta hai.
+   --------------------------------------------------------- */
+
+section {
+    position: relative;
+}
+
+section.border-t {
+    border-top-color: rgba(30, 41, 59, 0.65) !important;
+}
+
+
+/* ---------------------------------------------------------
+   48. Heading Typography
+   --------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-rendering: optimizeLegibility;
+}
+
+h2 {
+    letter-spacing: -0.025em;
+}
+
+h3,
+h4 {
+    letter-spacing: -0.015em;
+}
+
+
+/* ---------------------------------------------------------
+   49. Better Paragraph Reading
+   --------------------------------------------------------- */
+
+p {
+    text-wrap: pretty;
+}
+
+
+/* ---------------------------------------------------------
+   50. Prevent Accidental Horizontal Overflow
+   --------------------------------------------------------- */
+
+main,
+section,
+footer,
+header,
+nav,
+div {
+    max-width: 100%;
+}
+
+pre,
+code {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+/* ---------------------------------------------------------
+   51. Touch Device Improvements
+   --------------------------------------------------------- */
+
+@media (hover: none) {
+
+    button:hover,
+    a:hover {
+        transform: none;
+    }
+
+    #features .grid > div:hover,
+    #how-it-works .grid > div:hover,
+    #pro-features > div > div > div:hover {
+        transform: none;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   52. Safe Area Support
+   Notch wale phones ke liye extra space.
+   --------------------------------------------------------- */
+
+@supports (padding: max(0px)) {
+
+    header {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+
+    footer {
+        padding-bottom:
+            max(1.5rem, env(safe-area-inset-bottom));
+    }
+}
+
+
+/* ---------------------------------------------------------
+   53. Mobile Drawer Body Lock Support
+   --------------------------------------------------------- */
+
+body.drawer-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
+
+/* ---------------------------------------------------------
+   54. Image Loading Polish
+   --------------------------------------------------------- */
+
+img {
+    image-rendering: auto;
+}
+
+
+/* ---------------------------------------------------------
+   55. Links ke liye Better Rendering
+   --------------------------------------------------------- */
+
+a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+
+/* ---------------------------------------------------------
+   56. Button Text ko Select hone se rokna
+   --------------------------------------------------------- */
+
+button {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+/* ---------------------------------------------------------
+   57. Form Controls ka Browser Default Remove
+   --------------------------------------------------------- */
+
+input,
+textarea,
+select,
+button {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+
+/* ---------------------------------------------------------
+   58. File Input
+   Resume upload wale pages ke liye better appearance.
+   --------------------------------------------------------- */
+
+input[type="file"] {
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    margin-right: 0.75rem;
+    padding: 0.5rem 0.8rem;
+
+    border: 1px solid #334155;
+    border-radius: 0.65rem;
+
+    background: #0f172a;
+    color: #cbd5e1;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #1e293b;
+    border-color: #475569;
+}
+
+
+/* ---------------------------------------------------------
+   59. Textarea
+   --------------------------------------------------------- */
+
+textarea {
+    line-height: 1.65;
+}
+
+textarea::placeholder {
+    color: #64748b;
+}
+
+
+/* ---------------------------------------------------------
+   60. Final Premium Glow
+   Important CTA area ko subtle premium depth deta hai.
+   --------------------------------------------------------- */
+
+#topic-search-card,
+#pro-features > div,
+#architect .rounded-3xl {
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+
+/* ---------------------------------------------------------
+   61. Print Mode
+   Report/history pages print karte waqt dark background
+   ki jagah readable layout use hoga.
+   --------------------------------------------------------- */
+
+@media print {
+
+    html,
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    header,
+    footer,
+    button,
+    .animate-marquee {
+        display: none !important;
+    }
+
+    main,
+    section {
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+    }
+
+    p,
+    span,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #000000 !important;
+    }
 }
