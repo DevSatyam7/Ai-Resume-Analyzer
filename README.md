@@ -16,7 +16,7 @@
 
 An end-to-end web application that audits resumes against ATS screening parameters, identifies missing technical competencies, calculates expected pay scales, and builds targeted weekly career roadmaps using Google Gemini models.
 
-🔗 **Live Application:** [ai-resume-analyzer-2jxj.onrender.com](https://ai-resume-analyzer-2jxj.onrender.com/)
+🔗 **Live Application:** [https://careersanalysis.me](https://careersanalysis.me)
 
 ---
 
