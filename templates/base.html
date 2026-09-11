@@ -2,383 +2,1251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- Primary SEO Meta Tags -->
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <!-- =====================================================
+         SEO
+         ===================================================== -->
+
     <title>CareersAnalysis — Free AI ATS Resume &amp; Career Fit Analyzer</title>
-    <meta name="title" content="CareersAnalysis — Free AI ATS Resume &amp; Career Fit Analyzer">
-    <meta name="description" content="Check your resume ATS match score, detect skill gaps, and get an industry-ready career roadmap powered by AI.">
-    <meta name="keywords" content="ATS resume checker, resume score, resume analyzer, AI resume audit, free resume review">
+
+    <meta
+        name="title"
+        content="CareersAnalysis — Free AI ATS Resume &amp; Career Fit Analyzer"
+    >
+
+    <meta
+        name="description"
+        content="Check your resume ATS match score, detect skill gaps, and get an industry-ready career roadmap powered by AI."
+    >
+
+    <meta
+        name="keywords"
+        content="ATS resume checker, resume score, resume analyzer, AI resume audit, free resume review"
+    >
+
     <meta name="author" content="CareersAnalysis">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://ai-resume-analyzer-2jxj.onrender.com/">
 
-    <!-- Open Graph / WhatsApp / LinkedIn Preview -->
+    <link
+        rel="canonical"
+        href="https://ai-resume-analyzer-2jxj.onrender.com/"
+    >
+
+    <!-- =====================================================
+         OPEN GRAPH
+         ===================================================== -->
+
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
+    <meta
+        property="og:url"
+        content="https://ai-resume-analyzer-2jxj.onrender.com/"
+    >
     <meta property="og:site_name" content="CareersAnalysis">
-    <meta property="og:title" content="CareersAnalysis — Check Your ATS Resume Score Free">
-    <meta property="og:description" content="Instant ATS scoring, skill-gap analysis &amp; personalized interview roadmap. Get hired faster.">
-    <meta property="og:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
 
-    <!-- Twitter Card -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="CareersAnalysis — AI Resume Analyzer">
-    <meta property="twitter:description" content="Audit your resume ATS score and get custom job roadmaps.">
-    <meta property="twitter:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
+    <meta
+        property="og:title"
+        content="CareersAnalysis — Check Your ATS Resume Score Free"
+    >
 
-    <!-- Google Search Console -->
-    <meta name="google-site-verification" content="s1dPg9Gs-TArej1vQw4ivXCgeKtU_9fvpGBeS2JmlHo" />
+    <meta
+        property="og:description"
+        content="Instant ATS scoring, skill-gap analysis &amp; personalized interview roadmap. Get hired faster."
+    >
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    
-    <!-- Tailwind CSS & Fonts -->
+    <meta
+        property="og:image"
+        content="{{ url_for('static', filename='favicon.png', _external=True) }}"
+    >
+
+    <!-- =====================================================
+         TWITTER
+         ===================================================== -->
+
+    <meta
+        property="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        property="twitter:title"
+        content="CareersAnalysis — AI Resume Analyzer"
+    >
+
+    <meta
+        property="twitter:description"
+        content="Audit your resume ATS score and get custom job roadmaps."
+    >
+
+    <meta
+        property="twitter:image"
+        content="{{ url_for('static', filename='favicon.png', _external=True) }}"
+    >
+
+    <!-- =====================================================
+         GOOGLE SEARCH CONSOLE
+         ===================================================== -->
+
+    <meta
+        name="google-site-verification"
+        content="s1dPg9Gs-TArej1vQw4ivXCgeKtU_9fvpGBeS2JmlHo"
+    >
+
+    <!-- =====================================================
+         FAVICON
+         ===================================================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ url_for('static', filename='favicon.png') }}"
+    >
+
+    <!-- =====================================================
+         TAILWIND + FONT
+         ===================================================== -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!--  Custom CSS -->
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
->
-    <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-        }
-        /* Lock horizontal sway/wobble on mobile devices */
-        html, body {
-            overflow-x: hidden !important;
-            max-width: 100vw !important;
-            width: 100% !important;
-            position: relative;
-        }
-        * {
-            box-sizing: border-box;
-        }
-        /* Utility to hide scrollbar if needed */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
-    
-    <!-- PWA Web App Meta Tags & Service Worker -->
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-    <meta name="theme-color" content="#2563eb">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =====================================================
+         CUSTOM CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <!-- =====================================================
+         PWA
+         ===================================================== -->
+
+    <link
+        rel="manifest"
+        href="{{ url_for('static', filename='manifest.json') }}"
+    >
+
+    <meta
+        name="theme-color"
+        content="#020617"
+    >
+
+    <!-- =====================================================
+         SERVICE WORKER
+         ===================================================== -->
 
     <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}")
-          .then(reg => console.log('Service Worker Registered!', reg))
-          .catch(err => console.log('Service Worker Failed!', err));
-      });
-    }
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("{{ url_for('static', filename='sw.js') }}")
+                    .then(reg => {
+                        console.log(
+                            "Service Worker Registered!",
+                            reg
+                        );
+                    })
+                    .catch(err => {
+                        console.log(
+                            "Service Worker Failed!",
+                            err
+                        );
+                    });
+            });
+        }
     </script>
-    
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Sticky Navbar -->
-    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/85 border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            
-            <!-- Site Brand Logo -->
-            <a href="/" class="flex items-center gap-2.5 group shrink-0">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/20 group-hover:scale-105 transition duration-200 border border-slate-800">
-                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
+<body
+    class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-blue-600 selection:text-white"
+>
+
+    <!-- =====================================================
+         STICKY NAVBAR
+         ===================================================== -->
+
+    <header
+        class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/85 border-b border-slate-800/80"
+    >
+
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between"
+        >
+
+            <!-- BRAND -->
+
+            <a
+                href="/"
+                class="flex items-center gap-2.5 group shrink-0"
+            >
+
+                <img
+                    src="{{ url_for('static', filename='favicon.png') }}"
+                    alt="CareersAnalysis Logo"
+                    class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/20 border border-slate-800"
+                >
+
+                <span
+                    class="text-lg sm:text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition"
+                >
                     Careers<span class="text-blue-500">Analysis</span>
                 </span>
+
             </a>
 
-            <!-- Desktop Navigation Links (Screen >= 768px) -->
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-                <a href="/" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="/prep-hub" class="text-sky-400 hover:text-sky-300 transition font-semibold flex items-center gap-1">
-                    <span>✦</span> Prep Hub
+            <!-- DESKTOP NAV -->
+
+            <nav
+                class="hidden md:flex items-center gap-2 text-sm font-medium"
+            >
+
+                <a
+                    href="/"
+                    class="text-slate-400 hover:text-white hover:bg-slate-900/70 px-3 py-2 rounded-xl transition"
+                >
+                    Home
                 </a>
-                <a href="/history" class="text-slate-400 hover:text-white transition">History</a>
-                <a href="/dashboard" class="text-white bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/40 px-3.5 py-1.5 rounded-xl font-semibold transition">
+
+                <a
+                    href="/prep-hub"
+                    class="text-sky-400 hover:text-sky-300 hover:bg-sky-950/30 px-3 py-2 rounded-xl transition font-semibold flex items-center gap-1"
+                >
+                    <span>✦</span>
+                    Prep Hub
+                </a>
+
+                <a
+                    href="/history"
+                    class="text-slate-400 hover:text-white hover:bg-slate-900/70 px-3 py-2 rounded-xl transition"
+                >
+                    History
+                </a>
+
+                <a
+                    href="/dashboard"
+                    class="text-white bg-blue-600/25 hover:bg-blue-600/45 border border-blue-500/40 px-3.5 py-2 rounded-xl font-semibold transition"
+                >
                     Dashboard
                 </a>
-                <a href="/logout" class="text-rose-400 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 py-1.5 rounded-xl transition">
+
+                <a
+                    href="/logout"
+                    class="text-rose-400 bg-rose-950/25 hover:bg-rose-900/45 border border-rose-800/40 px-3.5 py-2 rounded-xl transition"
+                >
                     Logout
                 </a>
+
             </nav>
 
-            <!-- Mobile Hamburger Button (Screen < 768px) -->
-            <button 
-                type="button" 
-                onclick="toggleMobileDrawer(true)" 
-                class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 active:scale-95 transition"
-                aria-label="Open Navigation Menu">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <!-- MOBILE MENU BUTTON -->
+
+            <button
+                type="button"
+                onclick="toggleMobileDrawer(true)"
+                class="md:hidden p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-900/90 border border-slate-800 hover:border-slate-700 active:scale-95 transition"
+                aria-label="Open Navigation Menu"
+                aria-controls="drawerOverlay"
+                aria-expanded="false"
+            >
+
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                    />
+
                 </svg>
+
             </button>
 
         </div>
+
     </header>
 
-    <!-- Mobile Slide-Over Drawer with Integrated Audit History & Safe Data Triggers -->
-    <div id="drawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
-        <div 
-            id="drawerPanel" 
-            class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto overscroll-contain">
-            
+    <!-- =====================================================
+         MOBILE DRAWER
+         ===================================================== -->
+
+    <div
+        id="drawerOverlay"
+        class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"
+    >
+
+        <div
+            id="drawerPanel"
+            class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto overscroll-contain"
+        >
+
             <div>
-                <!-- Drawer Top Header -->
-                <div class="flex items-center justify-between pb-5 border-b border-slate-800">
-                    <span class="text-sm font-bold text-slate-200 tracking-wide uppercase">Quick Menu &amp; History</span>
-                    <button 
-                        type="button" 
-                        onclick="toggleMobileDrawer(false)" 
-                        class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+
+                <!-- DRAWER HEADER -->
+
+                <div
+                    class="flex items-center justify-between pb-5 border-b border-slate-800"
+                >
+
+                    <div>
+                        <span
+                            class="text-sm font-bold text-slate-200 tracking-wide uppercase"
+                        >
+                            Quick Menu
+                        </span>
+
+                        <p
+                            class="text-[10px] text-slate-500 mt-1"
+                        >
+                            CareersAnalysis navigation
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        onclick="toggleMobileDrawer(false)"
+                        class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                        aria-label="Close Navigation Menu"
+                    >
+
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+
                         </svg>
+
                     </button>
+
                 </div>
 
-                <!-- Drawer Links -->
+                <!-- DRAWER LINKS -->
+
                 <nav class="mt-5 flex flex-col gap-1.5">
-                    <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
-                        <span>🏠</span> Home
+
+                    <a
+                        href="/"
+                        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition"
+                    >
+                        <span>🏠</span>
+                        Home
                     </a>
-                    <a href="/prep-hub" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition">
-                        <span>✦</span> Prep Hub
+
+                    <a
+                        href="/prep-hub"
+                        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"
+                    >
+                        <span>✦</span>
+                        Prep Hub
                     </a>
-                    <a href="/history" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
-                        <span>🕒</span> History Page
+
+                    <a
+                        href="/history"
+                        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition"
+                    >
+                        <span>🕒</span>
+                        History Page
                     </a>
-                    <a href="/dashboard" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition">
-                        <span>📊</span> Dashboard
+
+                    <a
+                        href="/dashboard"
+                        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"
+                    >
+                        <span>📊</span>
+                        Dashboard
                     </a>
+
                 </nav>
 
-                <!-- Sidebar Past Audit History Section with Safe Data Attributes -->
-                <div class="mt-6 pt-5 border-t border-slate-800">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
+                <!-- PAST AUDITS -->
+
+                <div
+                    class="mt-6 pt-5 border-t border-slate-800"
+                >
+
+                    <h4
+                        class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between"
+                    >
+
                         <span class="flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+
+                            <svg
+                                class="w-3.5 h-3.5 text-blue-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+
                             </svg>
+
                             Past Audits
+
                         </span>
-                        <span class="text-[10px] text-blue-400 font-mono">TiDB Sync</span>
+
+                        <span
+                            class="text-[10px] text-blue-400 font-mono"
+                        >
+                            TiDB Sync
+                        </span>
+
                     </h4>
-                    <div class="space-y-2.5 max-h-56 overflow-y-auto no-scrollbar">
+
+                    <div
+                        class="space-y-2.5 max-h-56 overflow-y-auto no-scrollbar"
+                    >
+
                         {% if user_reports %}
+
                             {% for rep in user_reports %}
-                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800/80 text-xs transition group">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-slate-200 font-bold">Report #{{ rep.id }}</span>
-                                    <span class="text-[10px] text-slate-400">
+
+                            <div
+                                class="p-3 bg-slate-950/80 rounded-xl border border-slate-800/80 text-xs transition group"
+                            >
+
+                                <div
+                                    class="flex items-center justify-between mb-1.5"
+                                >
+
+                                    <span
+                                        class="text-slate-200 font-bold"
+                                    >
+                                        Report #{{ rep.id }}
+                                    </span>
+
+                                    <span
+                                        class="text-[10px] text-slate-400"
+                                    >
+
                                         {% if rep.created_at %}
                                             {{ rep.created_at.strftime('%d %b, %H:%M') }}
                                         {% else %}
                                             Recent
                                         {% endif %}
+
                                     </span>
+
                                 </div>
-                                <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-900">
-                                    <!-- 100% Safe Data Attribute Trigger -->
-                                    <button type="button" 
+
+                                <div
+                                    class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-900"
+                                >
+
+                                    <button
+                                        type="button"
                                         data-report-id="{{ rep.id }}"
                                         data-report-result="{{ rep.result | tojson | safe }}"
-                                        class="view-audit-btn flex-1 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white py-1.5 rounded-lg font-bold text-[11px] transition text-center cursor-pointer">
+                                        class="view-audit-btn flex-1 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white py-1.5 rounded-lg font-bold text-[11px] transition text-center cursor-pointer"
+                                    >
                                         View Report ⚡
                                     </button>
-                                    <a href="/download-audit/{{ rep.id }}" 
-                                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition">
+
+                                    <a
+                                        href="/download-audit/{{ rep.id }}"
+                                        class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition"
+                                        aria-label="Download Report {{ rep.id }}"
+                                    >
                                         ⬇
                                     </a>
+
                                 </div>
+
                             </div>
+
                             {% endfor %}
+
                         {% else %}
-                            <div class="p-3 text-center bg-slate-950/50 rounded-xl border border-slate-800/50">
-                                <p class="text-[11px] text-slate-500">No past audit history found yet.</p>
+
+                            <div
+                                class="p-3 text-center bg-slate-950/50 rounded-xl border border-slate-800/50"
+                            >
+
+                                <p
+                                    class="text-[11px] text-slate-500"
+                                >
+                                    No past audit history found yet.
+                                </p>
+
                             </div>
+
                         {% endif %}
+
                     </div>
+
                 </div>
+
             </div>
 
-            <!-- Drawer Bottom Actions -->
-            <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-3">
-                <a href="/logout" class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition">
+            <!-- DRAWER FOOTER -->
+
+            <div
+                class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-3"
+            >
+
+                <a
+                    href="/logout"
+                    class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition"
+                >
                     Logout
                 </a>
-                <span class="text-[10px] text-center text-slate-500">
+
+                <span
+                    class="text-[10px] text-center text-slate-500"
+                >
                     CareersAnalysis v2.4 • Gemini AI
                 </span>
+
             </div>
 
         </div>
+
     </div>
 
-    <!-- ================= PHAADU SLIDE-OVER PREVIEW DRAWER (RIGHT PANEL) ================= -->
-    <div id="phaaduDrawer" class="fixed inset-0 z-50 hidden">
-        <!-- Backdrop Blur -->
-        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity" onclick="closePhaaduDrawer()"></div>
-        
-        <!-- Drawer Panel -->
-        <div class="absolute inset-y-0 right-0 max-w-xl w-full bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out">
-            
-            <!-- Drawer Header -->
-            <div class="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950">
-                <div>
-                    <span id="drawerReportId" class="text-xs font-mono font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-xl border border-blue-500/20">Report #000</span>
-                    <h3 id="drawerTargetRole" class="text-lg font-black text-white mt-2">Target Role Title</h3>
+    <!-- =====================================================
+         PHAADU REPORT DRAWER
+         ===================================================== -->
+
+    <div
+        id="phaaduDrawer"
+        class="fixed inset-0 z-50 hidden"
+    >
+
+        <!-- BACKDROP -->
+
+        <div
+            class="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+            onclick="closePhaaduDrawer()"
+        ></div>
+
+        <!-- REPORT PANEL -->
+
+        <div
+            class="absolute inset-y-0 right-0 max-w-xl w-full bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out"
+        >
+
+            <!-- HEADER -->
+
+            <div
+                class="p-5 sm:p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950"
+            >
+
+                <div class="min-w-0">
+
+                    <span
+                        id="drawerReportId"
+                        class="text-xs font-mono font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-xl border border-blue-500/20"
+                    >
+                        Report #000
+                    </span>
+
+                    <h3
+                        id="drawerTargetRole"
+                        class="text-lg font-black text-white mt-2 truncate"
+                    >
+                        Target Role Title
+                    </h3>
+
                 </div>
-                <button type="button" onclick="closePhaaduDrawer()" class="bg-slate-800 hover:bg-slate-700 text-white w-9 h-9 rounded-2xl flex items-center justify-center font-bold text-sm transition">✕</button>
+
+                <button
+                    type="button"
+                    onclick="closePhaaduDrawer()"
+                    class="bg-slate-800 hover:bg-slate-700 text-white w-9 h-9 rounded-2xl flex items-center justify-center font-bold text-sm transition shrink-0 ml-3"
+                    aria-label="Close Report"
+                >
+                    ✕
+                </button>
+
             </div>
 
-            <!-- Drawer Scrollable Content -->
-            <div id="drawerBody" class="flex-1 overflow-y-auto overscroll-contain p-6 space-y-6 text-xs sm:text-sm text-slate-300">
+            <!-- CONTENT -->
+
+            <div
+                id="drawerBody"
+                class="flex-1 overflow-y-auto overscroll-contain p-5 sm:p-6 space-y-6 text-xs sm:text-sm text-slate-300"
+            >
                 <!-- Dynamic Injection via JavaScript -->
             </div>
 
-            <!-- Drawer Footer -->
-            <div class="p-5 border-t border-slate-800 bg-slate-950 flex items-center justify-between gap-4">
-                <a id="drawerDownloadLink" href="#" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-2xl text-center transition shadow-lg shadow-blue-600/30 text-xs sm:text-sm">
+            <!-- FOOTER -->
+
+            <div
+                class="p-4 sm:p-5 border-t border-slate-800 bg-slate-950 flex items-center justify-between gap-3"
+            >
+
+                <a
+                    id="drawerDownloadLink"
+                    href="#"
+                    class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-2xl text-center transition shadow-lg shadow-blue-600/30 text-xs sm:text-sm"
+                >
                     Download Full Report (.txt) ⬇
                 </a>
-                <button type="button" onclick="closePhaaduDrawer()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-2xl text-xs transition">
+
+                <button
+                    type="button"
+                    onclick="closePhaaduDrawer()"
+                    class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-5 py-3 rounded-2xl text-xs transition"
+                >
                     Close
                 </button>
+
             </div>
 
         </div>
+
     </div>
 
-    <!-- Main Dynamic Content Container -->
-    <main class="flex-1 w-full overflow-x-hidden">
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main
+        class="flex-1 w-full overflow-x-hidden"
+    >
+
         {% block content %}{% endblock %}
+
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer
+        class="border-t border-slate-900 py-7 text-center text-xs text-slate-600"
+    >
         © 2026 CareersAnalysis. All rights reserved.
     </footer>
 
-    <!-- Scripts Logic -->
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
     <script>
+
+        /* =================================================
+           MOBILE DRAWER
+           ================================================= */
+
         function toggleMobileDrawer(open) {
-            const overlay = document.getElementById('drawerOverlay');
-            const panel = document.getElementById('drawerPanel');
-            
+
+            const overlay =
+                document.getElementById("drawerOverlay");
+
+            const panel =
+                document.getElementById("drawerPanel");
+
+            const menuButton =
+                document.querySelector(
+                    'button[aria-controls="drawerOverlay"]'
+                );
+
+            if (!overlay || !panel) return;
+
             if (open) {
-                overlay.classList.remove('hidden');
+
+                overlay.classList.remove("hidden");
+
+                if (menuButton) {
+                    menuButton.setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+                }
+
                 setTimeout(() => {
-                    overlay.classList.remove('opacity-0');
-                    panel.classList.remove('translate-x-full');
+
+                    overlay.classList.remove(
+                        "opacity-0"
+                    );
+
+                    panel.classList.remove(
+                        "translate-x-full"
+                    );
+
                 }, 10);
-                document.body.style.overflow = 'hidden';
+
+                document.body.style.overflow = "hidden";
+
             } else {
-                overlay.classList.add('opacity-0');
-                panel.classList.add('translate-x-full');
+
+                overlay.classList.add(
+                    "opacity-0"
+                );
+
+                panel.classList.add(
+                    "translate-x-full"
+                );
+
+                if (menuButton) {
+                    menuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                }
+
                 setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    document.body.style.overflow = '';
+
+                    overlay.classList.add(
+                        "hidden"
+                    );
+
+                    document.body.style.overflow = "";
+
                 }, 300);
             }
         }
 
-        document.getElementById('drawerOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                toggleMobileDrawer(false);
-            }
-        });
+        /* Close drawer when clicking backdrop */
 
-        // Safe Event Listener for Preview Drawer Trigger
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('view-audit-btn')) {
-                const reportId = e.target.getAttribute('data-report-id');
-                const rawData = e.target.getAttribute('data-report-result');
-                try {
-                    const data = JSON.parse(rawData);
-                    openPhaaduDrawer(reportId, data);
-                } catch (err) {
-                    console.error("Audit data parse error:", err);
+        const drawerOverlay =
+            document.getElementById(
+                "drawerOverlay"
+            );
+
+        if (drawerOverlay) {
+
+            drawerOverlay.addEventListener(
+                "click",
+                function (e) {
+
+                    if (e.target === this) {
+                        toggleMobileDrawer(false);
+                    }
+
                 }
+            );
+
+        }
+
+        /* ESC closes drawers */
+
+        document.addEventListener(
+            "keydown",
+            function (e) {
+
+                if (e.key !== "Escape") return;
+
+                const mobileDrawer =
+                    document.getElementById(
+                        "drawerOverlay"
+                    );
+
+                const reportDrawer =
+                    document.getElementById(
+                        "phaaduDrawer"
+                    );
+
+                if (
+                    mobileDrawer &&
+                    !mobileDrawer.classList.contains(
+                        "hidden"
+                    )
+                ) {
+                    toggleMobileDrawer(false);
+                }
+
+                if (
+                    reportDrawer &&
+                    !reportDrawer.classList.contains(
+                        "hidden"
+                    )
+                ) {
+                    closePhaaduDrawer();
+                }
+
             }
-        });
+        );
 
-        function openPhaaduDrawer(reportId, data) {
-            const drawer = document.getElementById('phaaduDrawer');
-            const drawerReportId = document.getElementById('drawerReportId');
-            const drawerTargetRole = document.getElementById('drawerTargetRole');
-            const drawerBody = document.getElementById('drawerBody');
-            const drawerDownloadLink = document.getElementById('drawerDownloadLink');
+        /* =================================================
+           REPORT VIEW
+           ================================================= */
 
-            drawerReportId.innerText = `Report #${reportId}`;
-            drawerTargetRole.innerText = `🎯 Target: ${data.target_role || 'Software Engineer'}`;
-            drawerDownloadLink.href = `/download-audit/${reportId}`;
+        document.addEventListener(
+            "click",
+            function (e) {
 
-            let ats = data.ats_score || 'N/A';
-            let summary = data.file_summary || 'No summary recorded.';
-            let pay = data.pay_scale || {};
-            let matched = data.matched_skills || [];
-            let missing = data.missing_skills || [];
-            let roadmap = data.roadmap || [];
+                const button =
+                    e.target.closest(
+                        ".view-audit-btn"
+                    );
 
-            let matchedHTML = Array.isArray(matched) ? matched.map(m => `<span class="bg-emerald-950/60 border border-emerald-800/50 text-emerald-300 px-3 py-1 rounded-xl text-xs font-medium inline-block mr-1.5 mb-1.5">✓ ${m}</span>`).join('') : `<span class="text-slate-300">${matched}</span>`;
-            
-            let missingHTML = Array.isArray(missing) ? missing.map(m => `<span class="bg-rose-950/60 border border-rose-800/50 text-rose-300 px-3 py-1 rounded-xl text-xs font-medium inline-block mr-1.5 mb-1.5">⚠ ${m}</span>`).join('') : `<span class="text-slate-300">${missing}</span>`;
+                if (!button) return;
 
-            let roadmapHTML = Array.isArray(roadmap) ? roadmap.map((r, idx) => `
-                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-2xl flex items-start gap-3">
-                    <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shrink-0">Phase ${idx+1}</span>
-                    <p class="text-xs text-slate-200">${r}</p>
-                </div>
-            `).join('') : `<p class="text-xs text-slate-400">Roadmap details unavailable.</p>`;
+                const reportId =
+                    button.getAttribute(
+                        "data-report-id"
+                    );
+
+                const rawData =
+                    button.getAttribute(
+                        "data-report-result"
+                    );
+
+                try {
+
+                    const data =
+                        JSON.parse(rawData);
+
+                    openPhaaduDrawer(
+                        reportId,
+                        data
+                    );
+
+                } catch (err) {
+
+                    console.error(
+                        "Audit data parse error:",
+                        err
+                    );
+
+                }
+
+            }
+        );
+
+        /* =================================================
+           OPEN REPORT DRAWER
+           ================================================= */
+
+        function openPhaaduDrawer(
+            reportId,
+            data
+        ) {
+
+            const drawer =
+                document.getElementById(
+                    "phaaduDrawer"
+                );
+
+            const drawerReportId =
+                document.getElementById(
+                    "drawerReportId"
+                );
+
+            const drawerTargetRole =
+                document.getElementById(
+                    "drawerTargetRole"
+                );
+
+            const drawerBody =
+                document.getElementById(
+                    "drawerBody"
+                );
+
+            const drawerDownloadLink =
+                document.getElementById(
+                    "drawerDownloadLink"
+                );
+
+            if (!drawer || !drawerBody) {
+                return;
+            }
+
+            drawerReportId.innerText =
+                `Report #${reportId}`;
+
+            drawerTargetRole.innerText =
+                `🎯 Target: ${
+                    data.target_role ||
+                    "Software Engineer"
+                }`;
+
+            drawerDownloadLink.href =
+                `/download-audit/${reportId}`;
+
+            const ats =
+                data.ats_score || "N/A";
+
+            const summary =
+                data.file_summary ||
+                "No summary recorded.";
+
+            const pay =
+                data.pay_scale || {};
+
+            const matched =
+                data.matched_skills || [];
+
+            const missing =
+                data.missing_skills || [];
+
+            const roadmap =
+                data.roadmap || [];
+
+            const matchedHTML =
+                Array.isArray(matched)
+                    ? matched.map(
+                        m => `
+                        <span class="
+                            bg-emerald-950/60
+                            border
+                            border-emerald-800/50
+                            text-emerald-300
+                            px-3
+                            py-1
+                            rounded-xl
+                            text-xs
+                            font-medium
+                            inline-block
+                            mr-1.5
+                            mb-1.5
+                        ">
+                            ✓ ${m}
+                        </span>
+                    `
+                    ).join("")
+                    : `
+                        <span class="text-slate-300">
+                            ${matched}
+                        </span>
+                    `;
+
+            const missingHTML =
+                Array.isArray(missing)
+                    ? missing.map(
+                        m => `
+                        <span class="
+                            bg-rose-950/60
+                            border
+                            border-rose-800/50
+                            text-rose-300
+                            px-3
+                            py-1
+                            rounded-xl
+                            text-xs
+                            font-medium
+                            inline-block
+                            mr-1.5
+                            mb-1.5
+                        ">
+                            ⚠ ${m}
+                        </span>
+                    `
+                    ).join("")
+                    : `
+                        <span class="text-slate-300">
+                            ${missing}
+                        </span>
+                    `;
+
+            const roadmapHTML =
+                Array.isArray(roadmap)
+                    ? roadmap.map(
+                        (r, idx) => `
+                        <div class="
+                            p-3.5
+                            bg-slate-950
+                            border
+                            border-slate-800
+                            rounded-2xl
+                            flex
+                            items-start
+                            gap-3
+                        ">
+
+                            <span class="
+                                bg-blue-600
+                                text-white
+                                text-[10px]
+                                font-bold
+                                px-2
+                                py-0.5
+                                rounded-lg
+                                shrink-0
+                            ">
+                                Phase ${idx + 1}
+                            </span>
+
+                            <p class="
+                                text-xs
+                                text-slate-200
+                            ">
+                                ${r}
+                            </p>
+
+                        </div>
+                    `
+                    ).join("")
+                    : `
+                        <p class="
+                            text-xs
+                            text-slate-400
+                        ">
+                            Roadmap details unavailable.
+                        </p>
+                    `;
 
             drawerBody.innerHTML = `
-                <!-- Top Stats Box -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-950 border border-blue-500/30 p-4 rounded-2xl">
-                        <span class="text-[10px] uppercase font-bold text-blue-400 block tracking-wider">ATS Score Match</span>
-                        <span class="text-3xl font-black text-white mt-1 block">${ats}%</span>
+
+                <!-- ATS + SALARY -->
+
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+
+                    <div
+                        class="
+                            bg-slate-950
+                            border
+                            border-blue-500/30
+                            p-4
+                            rounded-2xl
+                        "
+                    >
+
+                        <span
+                            class="
+                                text-[10px]
+                                uppercase
+                                font-bold
+                                text-blue-400
+                                block
+                                tracking-wider
+                            "
+                        >
+                            ATS Score Match
+                        </span>
+
+                        <span
+                            class="
+                                text-3xl
+                                font-black
+                                text-white
+                                mt-1
+                                block
+                            "
+                        >
+                            ${ats}%
+                        </span>
+
                     </div>
-                    <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl">
-                        <span class="text-[10px] uppercase font-bold text-emerald-400 block tracking-wider">Projected Salary</span>
-                        <span class="text-xs font-bold text-white mt-1.5 block truncate">${pay.salary_range || 'Competitive'}</span>
+
+                    <div
+                        class="
+                            bg-slate-950
+                            border
+                            border-slate-800
+                            p-4
+                            rounded-2xl
+                        "
+                    >
+
+                        <span
+                            class="
+                                text-[10px]
+                                uppercase
+                                font-bold
+                                text-emerald-400
+                                block
+                                tracking-wider
+                            "
+                        >
+                            Projected Salary
+                        </span>
+
+                        <span
+                            class="
+                                text-xs
+                                font-bold
+                                text-white
+                                mt-1.5
+                                block
+                                truncate
+                            "
+                        >
+                            ${
+                                pay.salary_range ||
+                                "Competitive"
+                            }
+                        </span>
+
                     </div>
+
                 </div>
 
-                <!-- Profile Summary -->
-                <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-2">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">📋 Profile Summary</h4>
-                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">${summary}</p>
+                <!-- SUMMARY -->
+
+                <div
+                    class="
+                        bg-slate-950
+                        border
+                        border-slate-800
+                        p-5
+                        rounded-2xl
+                        space-y-2
+                    "
+                >
+
+                    <h4
+                        class="
+                            text-xs
+                            font-bold
+                            uppercase
+                            tracking-wider
+                            text-slate-400
+                        "
+                    >
+                        📋 Profile Summary
+                    </h4>
+
+                    <p
+                        class="
+                            text-xs
+                            sm:text-sm
+                            text-slate-200
+                            leading-relaxed
+                        "
+                    >
+                        ${summary}
+                    </p>
+
                 </div>
 
-                <!-- Skills Breakdown -->
+                <!-- SKILLS -->
+
                 <div class="space-y-4">
-                    <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Matched Technical Skills</h4>
-                        <div>${matchedHTML}</div>
+
+                    <div
+                        class="
+                            bg-slate-950
+                            border
+                            border-slate-800
+                            p-5
+                            rounded-2xl
+                        "
+                    >
+
+                        <h4
+                            class="
+                                text-xs
+                                font-bold
+                                uppercase
+                                tracking-wider
+                                text-emerald-400
+                                mb-2
+                            "
+                        >
+                            Matched Technical Skills
+                        </h4>
+
+                        <div>
+                            ${matchedHTML}
+                        </div>
+
                     </div>
-                    <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-2">Missing / Recommended Skills</h4>
-                        <div>${missingHTML}</div>
+
+                    <div
+                        class="
+                            bg-slate-950
+                            border
+                            border-slate-800
+                            p-5
+                            rounded-2xl
+                        "
+                    >
+
+                        <h4
+                            class="
+                                text-xs
+                                font-bold
+                                uppercase
+                                tracking-wider
+                                text-rose-400
+                                mb-2
+                            "
+                        >
+                            Missing / Recommended Skills
+                        </h4>
+
+                        <div>
+                            ${missingHTML}
+                        </div>
+
                     </div>
+
                 </div>
 
-                <!-- Roadmap -->
+                <!-- ROADMAP -->
+
                 <div class="space-y-3">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">🎯 Placement Roadmap</h4>
-                    <div class="space-y-2.5">${roadmapHTML}</div>
+
+                    <h4
+                        class="
+                            text-xs
+                            font-bold
+                            uppercase
+                            tracking-wider
+                            text-slate-400
+                            px-1
+                        "
+                    >
+                        🎯 Placement Roadmap
+                    </h4>
+
+                    <div class="space-y-2.5">
+                        ${roadmapHTML}
+                    </div>
+
                 </div>
             `;
 
-            drawer.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            drawer.classList.remove(
+                "hidden"
+            );
+
+            document.body.style.overflow =
+                "hidden";
         }
 
+        /* =================================================
+           CLOSE REPORT DRAWER
+           ================================================= */
+
         function closePhaaduDrawer() {
-            document.getElementById('phaaduDrawer').classList.add('hidden');
-            document.body.style.overflow = 'auto';
+
+            const drawer =
+                document.getElementById(
+                    "phaaduDrawer"
+                );
+
+            if (!drawer) return;
+
+            drawer.classList.add(
+                "hidden"
+            );
+
+            document.body.style.overflow =
+                "";
         }
+
     </script>
 
 </body>
