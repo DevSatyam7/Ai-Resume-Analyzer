@@ -4,209 +4,251 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- SEO -->
-    <title>CareersAnalysis — AI Resume Audit & Career Navigator</title>
-    <meta name="title" content="CareersAnalysis — AI Resume Audit & Career Navigator">
-    <meta name="description" content="Analyze your resume, discover skill gaps, improve ATS readiness, and build a clearer engineering career roadmap with CareersAnalysis.">
-    <meta name="keywords" content="CareersAnalysis, AI Resume Analyzer, ATS Resume Checker, Resume ATS Score, Career Roadmap, GATE CSE, TCS NQT">
+    <!-- Primary Metadata & SEO Configuration -->
+    <title>CareersAnalysis — AI Resume Analysis & Career Readiness Platform</title>
+    <meta name="title" content="CareersAnalysis — AI Resume Analysis & Career Readiness Platform">
+    <meta name="description" content="CareersAnalysis helps students and job seekers analyze resumes, understand ATS alignment, identify skill gaps, and build focused career preparation roadmaps.">
+    <meta name="keywords" content="CareersAnalysis, AI Resume Analyzer, ATS Resume Checker, Resume Analysis, Skill Gap Analysis, Career Roadmap, GATE CSE, TCS NQT">
     <meta name="author" content="Satyam Kumar">
     <meta name="robots" content="index, follow">
-
     <link rel="canonical" href="https://ai-resume-analyzer-2jxj.onrender.com/">
 
-    <!-- Open Graph -->
+    <!-- Social Graph Meta -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
-    <meta property="og:title" content="CareersAnalysis — AI Resume Audit & Career Navigator">
-    <meta property="og:description" content="Resume ATS analysis, skill-gap insights and engineering career preparation tools.">
+    <meta property="og:title" content="CareersAnalysis — AI Resume Analysis & Career Readiness">
+    <meta property="og:description" content="Analyze your resume, identify skill gaps, and build a focused career preparation roadmap.">
     <meta property="og:image" content="{{ url_for('static', filename='favicon.png') }}">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 
-    <!-- Tailwind -->
+    <!-- Core Styling & Typography -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        :root { color-scheme: dark; }
+        body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; position: relative; background: #020617; }
         * { box-sizing: border-box; }
-        html, body { width: 100%; max-width: 100vw; overflow-x: hidden !important; background: #020617; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        h1, h2, h3, h4, .brand { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
-        ::selection { background: #2563eb; color: white; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .page-grid {
-            background-image: linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
-            background-size: 48px 48px;
+
+        /* Splash Screen */
+        #appSplash {
+            position: fixed; inset: 0; z-index: 9999;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.12), rgba(2, 6, 23, 0.98) 48%, #020617 100%);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
         }
-        .hero-glow {
-            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.16), transparent 35%), radial-gradient(circle at 15% 30%, rgba(79, 70, 229, 0.08), transparent 25%), radial-gradient(circle at 85% 35%, rgba(14, 165, 233, 0.07), transparent 25%);
+        #appSplash.splash-fade { opacity: 0; visibility: hidden; transform: scale(1.04); pointer-events: none; }
+        .splash-container { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; }
+        .splash-glow { position: absolute; width: 170px; height: 170px; border-radius: 50%; background: rgba(37, 99, 235, 0.12); filter: blur(35px); animation: splashGlow 2s ease-in-out infinite; }
+        @keyframes splashGlow { 0%, 100% { transform: scale(0.85); opacity: 0.45; } 50% { transform: scale(1.15); opacity: 0.9; } }
+        .splash-ring-outer { position: absolute; width: 210px; height: 210px; border-radius: 50%; border: 1px solid rgba(59, 130, 246, 0.22); border-top-color: rgba(96, 165, 250, 0.9); border-right-color: rgba(129, 140, 248, 0.45); animation: splashRotate 5s linear infinite; }
+        .splash-ring-middle { position: absolute; width: 174px; height: 174px; border-radius: 50%; border: 2px dashed rgba(99, 102, 241, 0.35); animation: splashRotateReverse 7s linear infinite; }
+        .splash-orbit { position: absolute; width: 225px; height: 225px; border-radius: 50%; animation: splashRotate 4s linear infinite; }
+        .splash-dot { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 12px rgba(96, 165, 250, 0.9), 0 0 25px rgba(59, 130, 246, 0.5); top: 5px; left: 50%; transform: translateX(-50%); }
+        .splash-dot-two { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #a78bfa; box-shadow: 0 0 12px rgba(167, 139, 250, 0.9); bottom: 25px; left: 25px; }
+        @keyframes splashRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes splashRotateReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        .splash-logo {
+            position: relative; z-index: 10; width: 82px; height: 82px; border-radius: 22px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.28), rgba(79, 70, 229, 0.22), rgba(124, 58, 237, 0.18));
+            border: 1px solid rgba(96, 165, 250, 0.45);
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.35), inset 0 0 25px rgba(99, 102, 241, 0.12);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            animation: logoAppear 1s ease-out forwards, logoPulse 2s ease-in-out 1s infinite;
         }
-        .glass { background: rgba(15, 23, 42, 0.68); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-        .soft-border { border: 1px solid rgba(51, 65, 85, 0.72); }
-        .card-hover { transition: transform 220ms ease, border-color 220ms ease, background 220ms ease, box-shadow 220ms ease; }
-        .card-hover:hover { transform: translateY(-3px); border-color: rgba(59, 130, 246, 0.35); box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22); }
+        .splash-logo span { font-size: 28px; font-weight: 900; letter-spacing: -1px; background: linear-gradient(90deg, #60a5fa, #a5b4fc, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        @keyframes logoAppear { 0% { opacity: 0; transform: scale(0.55) rotate(-8deg); } 70% { opacity: 1; transform: scale(1.08) rotate(2deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        @keyframes logoPulse { 0%, 100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.28), inset 0 0 25px rgba(99, 102, 241, 0.1); } 50% { box-shadow: 0 0 50px rgba(59, 130, 246, 0.55), inset 0 0 30px rgba(99, 102, 241, 0.18); } }
+        .splash-brand { position: absolute; top: calc(50% + 72px); left: 50%; transform: translateX(-50%); width: max-content; text-align: center; animation: brandReveal 1.2s ease-out 0.2s both; }
+        .splash-brand-title { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; color: white; white-space: nowrap; }
+        .splash-brand-title span { background: linear-gradient(90deg, #60a5fa, #818cf8, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .splash-subtitle { margin-top: 6px; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #64748b; }
+        @keyframes brandReveal { 0% { opacity: 0; transform: translate(-50%, 12px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+        .splash-loader { position: absolute; bottom: calc(50% - 125px); left: 50%; transform: translateX(-50%); width: 110px; height: 2px; background: rgba(51, 65, 85, 0.8); border-radius: 99px; overflow: hidden; }
+        .splash-loader::after { content: ""; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, #60a5fa, #818cf8, transparent); animation: splashLoading 1.5s ease-in-out infinite; }
+        @keyframes splashLoading { 0% { left: -100%; } 100% { left: 100%; } }
+
+        /* Site Styles */
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .animate-marquee { display: inline-flex; min-width: max-content; animation: marquee 32s linear infinite; }
+        .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
-        .number-watermark { font-family: 'Plus Jakarta Sans', sans-serif; color: rgba(148, 163, 184, 0.08); }
-        #mobileDrawerOverlay { transition: opacity 260ms ease; }
-        #mobileDrawerPanel { transition: transform 300ms cubic-bezier(.2,.8,.2,1); }
-        .splash-fade { opacity: 0; pointer-events: none; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        .float-card { animation: float 5s ease-in-out infinite; }
+        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+        .hero-grid {
+            background-image: linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 85%);
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+        }
+        .premium-border { position: relative; }
+        .premium-border::before {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+            background: linear-gradient(135deg, rgba(59,130,246,.5), rgba(99,102,241,.15), rgba(14,165,233,.35));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+        }
     </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
 
-    <!-- =====================================================
-         APP OPENING SPLASH ANIMATION WITH BRAND TEXT
-         ===================================================== -->
-    <div id="appSplash" class="fixed inset-0 z-[100] bg-slate-950 flex flex-col items-center justify-center overflow-hidden transition-opacity duration-700">
-        <div class="relative flex items-center justify-center w-40 h-40 mb-6">
-            <div class="absolute inset-0 rounded-full border border-blue-500/30 shadow-[0_0_40px_rgba(59,130,246,0.25)]"></div>
-            <div class="absolute inset-2 rounded-full border border-purple-500/40 animate-[spin_4s_linear_infinite] flex items-center justify-center">
-                <div class="w-3.5 h-3.5 bg-blue-400 rounded-full shadow-[0_0_15px_#60a5fa] absolute -top-1.5"></div>
+    <!-- App Splash -->
+    <div id="appSplash">
+        <div class="splash-container">
+            <div class="splash-glow"></div>
+            <div class="splash-ring-outer"></div>
+            <div class="splash-ring-middle"></div>
+            <div class="splash-orbit">
+                <div class="splash-dot"></div>
+                <div class="splash-dot-two"></div>
             </div>
-            <div class="absolute w-16 h-32 rounded-[100%] border-2 border-pink-500/70 shadow-[0_0_20px_rgba(236,72,153,0.4)] animate-[spin_3s_linear_infinite]" style="transform: rotate(35deg);"></div>
-            <div class="relative z-10 flex flex-col items-center justify-center">
-                <span class="text-white font-black text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">CA</span>
+            <div class="splash-logo"><span>CA</span></div>
+            <div class="splash-brand">
+                <div class="splash-brand-title">Careers<span>Analysis</span></div>
+                <div class="splash-subtitle">AI Career Intelligence</div>
             </div>
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white brand z-10">
-            Careers<span class="text-blue-500">Analysis</span>
-        </h1>
-        <p class="text-[11px] text-slate-400 mt-2 tracking-widest uppercase z-10 font-medium">AI Career Readiness Platform</p>
-    </div>
-
-    <!-- Announcement -->
-    <div class="bg-slate-900 border-b border-slate-800/80 text-slate-300 text-[11px] sm:text-xs overflow-hidden whitespace-nowrap relative z-[60]">
-        <div class="animate-marquee items-center gap-8 py-2 px-4">
-            <span class="text-blue-400 font-semibold">🚀 CareersAnalysis</span>
-            <span>AI-powered resume analysis & career preparation</span>
-            <span>•</span>
-            <span>ATS readiness</span>
-            <span>•</span>
-            <span>Skill-gap analysis</span>
-            <span>•</span>
-            <span>Career roadmaps</span>
-            <span>•</span>
-            <span>Built by Satyam Kumar</span>
+            <div class="splash-loader"></div>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/70">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-[76px] flex items-center justify-between gap-4">
-            <a href="/" class="flex items-center gap-2.5 shrink-0 group">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="CareersAnalysis" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-slate-700 shadow-lg shadow-blue-500/10 group-hover:scale-105 transition">
-                <span class="brand text-lg sm:text-xl font-extrabold tracking-tight text-white">
-                    Careers<span class="text-blue-500">Analysis</span>
-                </span>
+    <!-- Top Announcement -->
+    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg shadow-blue-950/20">
+        <div class="animate-marquee tracking-wide flex items-center gap-8">
+            <span>🚀 CareersAnalysis • AI-powered Resume & Career Analysis</span>
+            <span>⚡ 15+ API Key Multi-Rotation Active</span>
+            <span>🎯 Built by Satyam Kumar for Engineering Students</span>
+            <span>🔥 ATS Analysis • Skill Gaps • Career Roadmaps</span>
+        </div>
+    </div>
+
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+            <a href="/" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="CareersAnalysis Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/20 group-hover:scale-105 transition duration-200 border border-slate-800">
+                <span class="text-base sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
 
-            <nav class="hidden lg:flex items-center gap-6 xl:gap-7 text-sm font-medium text-slate-400">
-                <a href="/prep-hub" class="text-sky-400 hover:text-sky-300 transition">✦ Prep Hub</a>
-                <a href="/#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
-                <a href="/#pro-features" class="hover:text-white transition">Recruiter Suite</a>
-                <a href="/#features" class="hover:text-white transition">Modules</a>
-                <button type="button" onclick="toggleDrawer(true)" class="hover:text-blue-400 transition cursor-pointer">About</button>
+            <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-400">
+                <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
+                <a href="#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
+                <a href="#pro-features" class="text-purple-300 hover:text-purple-200 transition font-medium">Recruiter Suite</a>
+                <a href="#features" class="hover:text-white transition">Modules</a>
+                <a href="#how-it-works" class="hover:text-white transition">Workflow</a>
+                <a href="#architect" class="hover:text-white transition">Architect</a>
             </nav>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2 sm:gap-4 shrink-0">
                 {% if logged_in %}
-                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/20 active:scale-95 transition">Dashboard</a>
+                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition">Dashboard</a>
                 {% else %}
-                    <a href="/login" class="hidden sm:inline-flex text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 transition">Log In</a>
-                    <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/25 active:scale-95 transition whitespace-nowrap">Get Started</a>
+                    <a href="/login" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">Log In</a>
+                    <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">Get Started Free</a>
                 {% endif %}
-
-                <button type="button" onclick="toggleDrawer(true)" class="lg:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition" aria-label="Open navigation menu">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                <button type="button" onclick="toggleDrawer(true)" class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 active:scale-95 transition cursor-pointer" aria-label="Open Navigation Menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile drawer -->
-    <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-[70] pointer-events-none opacity-0">
-        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-[min(88vw,390px)] bg-slate-900 border-l border-slate-800 p-5 sm:p-6 flex flex-col justify-between translate-x-full shadow-2xl overflow-y-auto">
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
             <div>
                 <div class="flex items-center justify-between pb-5 border-b border-slate-800">
-                    <div class="flex items-center gap-2.5">
+                    <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
-                        <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">CareersAnalysis</span>
+                        <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">Quick Menu &amp; History</span>
                     </div>
-                    <button type="button" onclick="toggleDrawer(false)" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Close menu">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
+                    <button type="button" onclick="toggleDrawer(false)" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close Menu">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
-                <nav class="mt-6 flex flex-col gap-1.5">
-                    <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition">📄 Resume Audit</a>
-                    <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition">✦ Prep Hub</a>
+
+                <nav class="mt-5 flex flex-col gap-2">
+                    <a href="/" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🏠</span> Home</a>
+                    <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"><span>✦</span> Prep Hub</a>
+                    <a href="/history" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🕒</span> History Page</a>
+                    <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard</a>
                 </nav>
+
+                <!-- Past Audit History in Mobile Drawer -->
+                <div class="mt-6 pt-5 border-t border-slate-800">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5">📜 Past Audit History</span>
+                        <span class="text-[10px] text-blue-400 font-mono">TiDB Sync</span>
+                    </h4>
+                    <div class="space-y-2.5 max-h-52 overflow-y-auto no-scrollbar">
+                        {% if user_reports %}
+                            {% for rep in user_reports %}
+                            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs flex items-center justify-between">
+                                <div>
+                                    <span class="text-slate-200 font-bold block">Report #{{ rep.id }}</span>
+                                    <span class="text-[10px] text-slate-400">Recent Audit</span>
+                                </div>
+                                <a href="/download-audit/{{ rep.id }}" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition">Download ↓</a>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="p-3 text-center bg-slate-950/50 rounded-xl border border-slate-800/50">
+                                <p class="text-[11px] text-slate-500">No past audits found.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+
             <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
                 {% if logged_in %}
-                    <a href="/logout" class="w-full text-center py-3 rounded-xl text-sm font-semibold text-rose-400 bg-rose-950/30 border border-rose-900/50 hover:bg-rose-950/60 transition">Log Out</a>
+                    <a href="/logout" class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition">Logout</a>
                 {% else %}
-                    <a href="/login" class="w-full text-center py-3 rounded-xl text-sm font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 transition">Log In</a>
-                    <a href="/signup" class="w-full text-center py-3 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 transition">Get Started Free</a>
+                    <a href="/login" class="w-full text-center py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl">Log In</a>
+                    <a href="/signup" class="w-full text-center py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/25">Get Started Free</a>
                 {% endif %}
+                <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.4 • Gemini AI</span>
             </div>
         </div>
     </div>
 
-    <!-- MAIN BLOCK -->
-    <main class="flex-1 page-grid">
+    <!-- Main -->
+    <main class="w-full overflow-x-hidden flex-1">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-slate-900 bg-slate-950 py-8 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p class="text-xs text-slate-600 text-center sm:text-left">
-                © 2026 CareersAnalysis. Built &amp; maintained by Satyam Kumar.
-            </p>
-            <div class="flex items-center gap-4 text-xs text-slate-600">
-                <a href="/about" class="hover:text-slate-300 transition">About</a>
-                <a href="/prep-hub" class="hover:text-slate-300 transition">Prep Hub</a>
-            </div>
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar.</span>
+            <span class="text-slate-600">AI-powered career readiness platform</span>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Scripts -->
     <script>
         function removeSplash() {
             const splash = document.getElementById("appSplash");
-            if (splash) {
-                setTimeout(() => {
-                    splash.classList.add("splash-fade");
-                    setTimeout(() => splash.remove(), 700);
-                }, 900);
-            }
+            if (!splash) return;
+            setTimeout(function () {
+                splash.classList.add("splash-fade");
+                setTimeout(function () { if (splash) splash.remove(); }, 850);
+            }, 1400);
         }
-
-        if (document.readyState === "complete") {
-            removeSplash();
-        } else {
-            window.addEventListener("load", removeSplash);
-        }
+        if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
 
         function toggleDrawer(open) {
             const overlay = document.getElementById('mobileDrawerOverlay');
             const panel = document.getElementById('mobileDrawerPanel');
             if (!overlay || !panel) return;
-
             if (open) {
                 overlay.classList.remove('pointer-events-none', 'opacity-0');
                 overlay.classList.add('pointer-events-auto', 'opacity-100');
@@ -221,11 +263,22 @@
                 document.body.style.overflow = '';
             }
         }
+        document.getElementById('mobileDrawerOverlay').addEventListener('click', function(e) { if (e.target === this) toggleDrawer(false); });
 
-        const drawerOverlay = document.getElementById('mobileDrawerOverlay');
-        if (drawerOverlay) {
-            drawerOverlay.addEventListener('click', function (event) {
-                if (event.target === this) toggleDrawer(false);
+        function setFastTopic(topicText) {
+            const inputField = document.getElementById('topicSearchInput');
+            if (inputField) { inputField.value = topicText; inputField.focus(); }
+        }
+
+        const topicForm = document.getElementById('topicSearchForm');
+        if (topicForm) {
+            topicForm.addEventListener('submit', function() {
+                const btn = document.getElementById('exploreBtn');
+                const btnText = document.getElementById('btnText');
+                const spinner = document.getElementById('btnSpinner');
+                if (btn) { btn.disabled = true; btn.classList.add('opacity-80', 'cursor-not-allowed'); }
+                if (btnText) btnText.textContent = 'Generating...';
+                if (spinner) spinner.classList.remove('hidden');
             });
         }
     </script>
