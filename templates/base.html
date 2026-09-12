@@ -36,15 +36,15 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Ultra Premium Splash Screen Animation */
+        /* Universal App Splash & Action Overlay Animation */
         #appSplash {
             position: fixed; inset: 0; z-index: 9999;
             background: radial-gradient(circle at center, rgba(37, 99, 235, 0.18), rgba(2, 6, 23, 0.98) 50%, #020617 100%);
             display: flex; align-items: center; justify-content: center; overflow: hidden;
             opacity: 1; visibility: visible;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        #appSplash.splash-fade { opacity: 0; visibility: hidden; transform: scale(1.06); pointer-events: none; }
+        #appSplash.splash-fade { opacity: 0; visibility: hidden; pointer-events: none; }
         .splash-container { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
         .splash-glow { position: absolute; width: 190px; height: 190px; border-radius: 50%; background: rgba(37, 99, 235, 0.22); filter: blur(45px); animation: splashGlow 2.5s ease-in-out infinite; }
         @keyframes splashGlow { 0%, 100% { transform: scale(0.8); opacity: 0.4; } 50% { transform: scale(1.25); opacity: 0.95; } }
@@ -99,7 +99,7 @@
 
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
 
-    <!-- App Splash -->
+    <!-- Universal App Splash / Loading Overlay (Triggers on Page Load & Any Click/Action) -->
     <div id="appSplash">
         <div class="splash-container">
             <div class="splash-glow"></div>
@@ -112,7 +112,7 @@
             <div class="splash-logo"><span>CA</span></div>
             <div class="splash-brand">
                 <div class="splash-brand-title">Careers<span>Analysis</span></div>
-                <div class="splash-subtitle">AI Career Intelligence</div>
+                <div class="splash-subtitle" id="splashStatusText">AI Career Intelligence</div>
             </div>
             <div class="splash-loader"></div>
         </div>
@@ -136,23 +136,23 @@
                 <span class="text-base sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
 
-            <!-- Desktop Navigation Links -->
+            <!-- Desktop Navigation Links (Showing Home, Prep Hub, History, Dashboard for both mobile & PC consistently) -->
             <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-400">
                 <a href="/" class="hover:text-white transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
                 <a href="/history" class="hover:text-white transition">History</a>
                 {% if logged_in %}
-                    <a href="/dashboard" class="text-blue-400 hover:text-blue-300 transition">Dashboard</a>
+                    <a href="/dashboard" class="text-blue-400 font-semibold hover:text-blue-300 transition">Dashboard</a>
                 {% endif %}
                 <a href="/#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
                 <a href="/#features" class="hover:text-white transition">Modules</a>
             </nav>
 
-            <!-- Authentication Actions -->
+            <!-- PC & Desktop Authentication Actions -->
             <div class="flex items-center gap-2 sm:gap-4 shrink-0">
                 {% if logged_in %}
                     <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition">Dashboard</a>
-                    <a href="/logout" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 py-2.5 rounded-xl transition">Logout</a>
+                    <a href="/logout" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 sm:px-2.5 py-2.5 rounded-xl transition">Logout</a>
                 {% else %}
                     <a href="/login" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">Log In</a>
                     <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">Get Started Free</a>
@@ -164,7 +164,7 @@
         </div>
     </header>
 
-    <!-- Mobile Drawer -->
+    <!-- Mobile Drawer (Background Fixed & Scroll Locked so entire screen doesn't slide) -->
     <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
         <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
             <div>
@@ -211,12 +211,13 @@
                 </div>
             </div>
 
+            <!-- Mobile Drawer Bottom Auth Buttons (Properly reflecting Logout vs Login/Signup) -->
             <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
                 {% if logged_in %}
-                    <a href="/logout" class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition">Logout</a>
+                    <a href="/logout" class="w-full text-center py-3 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition shadow-lg">Logout</a>
                 {% else %}
-                    <a href="/login" class="w-full text-center py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl">Log In</a>
-                    <a href="/signup" class="w-full text-center py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/25">Get Started Free</a>
+                    <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition">Log In</a>
+                    <a href="/signup" class="w-full text-center py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/25 transition">Get Started Free</a>
                 {% endif %}
                 <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.4 • Gemini AI</span>
             </div>
@@ -243,10 +244,48 @@
             if (!splash) return;
             setTimeout(function () {
                 splash.classList.add("splash-fade");
-                setTimeout(function () { if (splash) splash.remove(); }, 850);
-            }, 1200);
+                setTimeout(function () { if (splash) splash.remove(); }, 600);
+            }, 1000);
         }
         if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
+
+        // Universal Action Trigger: Displays the exact custom animation on ANY interaction (clicks, downloads, form analyzes)
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a, button, input[type="submit"]');
+            if (!target) return;
+            
+            const href = target.getAttribute('href');
+            // Skip external links, anchors, or download toggles if needed, but show for core navigation & analysis actions
+            if (href && (href.startsWith('#') || href.startsWith('javascript:'))) return;
+
+            // Trigger splash animation on click
+            showActionSplash(target.textContent.trim() || "Processing...");
+        });
+
+        function showActionSplash(actionName) {
+            if (document.getElementById('appSplash')) return; // Already visible
+
+            const splashDiv = document.createElement('div');
+            splashDiv.id = 'appSplash';
+            splashDiv.innerHTML = `
+                <div class="splash-container">
+                    <div class="splash-glow"></div>
+                    <div class="splash-ring-outer"></div>
+                    <div class="splash-ring-middle"></div>
+                    <div class="splash-orbit">
+                        <div class="splash-dot"></div>
+                        <div class="splash-dot-two"></div>
+                    </div>
+                    <div class="splash-logo"><span>CA</span></div>
+                    <div class="splash-brand">
+                        <div class="splash-brand-title">Careers<span>Analysis</span></div>
+                        <div class="splash-subtitle">${actionName ? actionName.substring(0, 20) + '...' : 'AI Processing'}</div>
+                    </div>
+                    <div class="splash-loader"></div>
+                </div>
+            `;
+            document.body.appendChild(splashDiv);
+        }
 
         function toggleDrawer(open) {
             const overlay = document.getElementById('mobileDrawerOverlay');
@@ -257,13 +296,17 @@
                 overlay.classList.add('pointer-events-auto', 'opacity-100');
                 panel.classList.remove('translate-x-full');
                 panel.classList.add('translate-x-0');
+                // Lock background perfectly so it doesn't move or shake when drawer is open
                 document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
             } else {
                 overlay.classList.remove('pointer-events-auto', 'opacity-100');
                 overlay.classList.add('pointer-events-none', 'opacity-0');
                 panel.classList.remove('translate-x-0');
                 panel.classList.add('translate-x-full');
+                // Restore normal scroll
                 document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
             }
         }
         document.getElementById('mobileDrawerOverlay').addEventListener('click', function(e) { if (e.target === this) toggleDrawer(false); });
