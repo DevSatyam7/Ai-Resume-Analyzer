@@ -77,12 +77,6 @@
         .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
         .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-        .hero-grid {
-            background-image: linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
-            background-size: 42px 42px;
-            mask-image: linear-gradient(to bottom, black, transparent 85%);
-            -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
-        }
     </style>
 </head>
 
@@ -126,16 +120,13 @@
                 <a href="/" class="hover:text-white transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
                 <a href="/history" class="hover:text-white transition">History</a>
-                <a href="/#resume-upload-section" class="text-emerald-400 font-semibold hover:text-emerald-300 transition flex items-center gap-1"><span>✨</span> Analyze New</a>
-                {% if logged_in %}
+                {% if session.get('user_id') or logged_in %}
                     <a href="/dashboard" class="text-blue-400 font-semibold hover:text-blue-300 transition">Dashboard</a>
                 {% endif %}
             </nav>
 
             <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-                <a href="/#resume-upload-section" class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-600/30 transition"><span>✨</span> New Analysis</a>
-                
-                {% if logged_in %}
+                {% if session.get('user_id') or logged_in %}
                     <a href="/dashboard" class="hidden sm:inline-block text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition">Dashboard</a>
                     <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg transition">Logout</a>
                 {% else %}
@@ -164,10 +155,11 @@
 
                 <nav class="mt-5 flex flex-col gap-2">
                     <a href="/" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🏠</span> Home</a>
-                    <a href="/#resume-upload-section" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-emerald-400 bg-emerald-950/30 hover:bg-emerald-950/50 border border-emerald-800/40 transition"><span>✨</span> Analyze New Resume</a>
                     <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"><span>✦</span> Prep Hub</a>
                     <a href="/history" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🕒</span> History Page</a>
-                    <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard</a>
+                    {% if session.get('user_id') or logged_in %}
+                        <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard</a>
+                    {% endif %}
                 </nav>
 
                 <div class="mt-6 pt-5 border-t border-slate-800">
@@ -196,7 +188,7 @@
             </div>
 
             <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
-                {% if logged_in %}
+                {% if session.get('user_id') or logged_in %}
                     <a href="/logout" class="w-full text-center py-3 text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 rounded-xl transition shadow-lg">Logout Account</a>
                 {% else %}
                     <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">Log In</a>
@@ -228,23 +220,17 @@
         }
         if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
 
-        // Universal Action Trigger (Explicitly excludes drawer toggle button so menu opens without processing overlay)
         document.addEventListener('click', function(e) {
             const target = e.target.closest('a, button, input[type="submit"]');
             if (!target) return;
-            
-            // Skip drawer toggle button clicks
             if (target.getAttribute('onclick') && target.getAttribute('onclick').includes('toggleDrawer')) return;
-
             const href = target.getAttribute('href');
             if (href && href.startsWith('javascript:')) return;
-
             showActionSplash(target.textContent.trim() || "Processing...");
         });
 
         function showActionSplash(actionName) {
             if (document.getElementById('appSplash')) return;
-
             const splashDiv = document.createElement('div');
             splashDiv.id = 'appSplash';
             splashDiv.innerHTML = `
