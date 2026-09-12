@@ -36,52 +36,50 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Splash Screen */
+        /* Ultra Premium Splash Screen Animation */
         #appSplash {
             position: fixed; inset: 0; z-index: 9999;
-            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.12), rgba(2, 6, 23, 0.98) 48%, #020617 100%);
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.18), rgba(2, 6, 23, 0.98) 50%, #020617 100%);
             display: flex; align-items: center; justify-content: center; overflow: hidden;
             opacity: 1; visibility: visible;
-            transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        #appSplash.splash-fade { opacity: 0; visibility: hidden; transform: scale(1.04); pointer-events: none; }
-        .splash-container { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; }
-        .splash-glow { position: absolute; width: 170px; height: 170px; border-radius: 50%; background: rgba(37, 99, 235, 0.12); filter: blur(35px); animation: splashGlow 2s ease-in-out infinite; }
-        @keyframes splashGlow { 0%, 100% { transform: scale(0.85); opacity: 0.45; } 50% { transform: scale(1.15); opacity: 0.9; } }
-        .splash-ring-outer { position: absolute; width: 210px; height: 210px; border-radius: 50%; border: 1px solid rgba(59, 130, 246, 0.22); border-top-color: rgba(96, 165, 250, 0.9); border-right-color: rgba(129, 140, 248, 0.45); animation: splashRotate 5s linear infinite; }
-        .splash-ring-middle { position: absolute; width: 174px; height: 174px; border-radius: 50%; border: 2px dashed rgba(99, 102, 241, 0.35); animation: splashRotateReverse 7s linear infinite; }
-        .splash-orbit { position: absolute; width: 225px; height: 225px; border-radius: 50%; animation: splashRotate 4s linear infinite; }
-        .splash-dot { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 12px rgba(96, 165, 250, 0.9), 0 0 25px rgba(59, 130, 246, 0.5); top: 5px; left: 50%; transform: translateX(-50%); }
-        .splash-dot-two { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #a78bfa; box-shadow: 0 0 12px rgba(167, 139, 250, 0.9); bottom: 25px; left: 25px; }
+        #appSplash.splash-fade { opacity: 0; visibility: hidden; transform: scale(1.06); pointer-events: none; }
+        .splash-container { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
+        .splash-glow { position: absolute; width: 190px; height: 190px; border-radius: 50%; background: rgba(37, 99, 235, 0.22); filter: blur(45px); animation: splashGlow 2.5s ease-in-out infinite; }
+        @keyframes splashGlow { 0%, 100% { transform: scale(0.8); opacity: 0.4; } 50% { transform: scale(1.25); opacity: 0.95; } }
+        .splash-ring-outer { position: absolute; width: 220px; height: 220px; border-radius: 50%; border: 2px solid rgba(59, 130, 246, 0.25); border-top-color: rgba(96, 165, 250, 1); border-right-color: rgba(129, 140, 248, 0.6); animation: splashRotate 4s linear infinite; box-shadow: 0 0 25px rgba(59,130,246,0.2); }
+        .splash-ring-middle { position: absolute; width: 178px; height: 178px; border-radius: 50%; border: 2px dashed rgba(168, 85, 247, 0.4); animation: splashRotateReverse 6s linear infinite; }
+        .splash-orbit { position: absolute; width: 240px; height: 240px; border-radius: 50%; animation: splashRotate 3.5s linear infinite; }
+        .splash-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 15px #60a5fa, 0 0 30px #3b82f6; top: 4px; left: 50%; transform: translateX(-50%); }
+        .splash-dot-two { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #c084fc; box-shadow: 0 0 15px #c084fc; bottom: 20px; left: 20px; }
         @keyframes splashRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes splashRotateReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
         .splash-logo {
-            position: relative; z-index: 10; width: 82px; height: 82px; border-radius: 22px;
+            position: relative; z-index: 10; width: 90px; height: 90px; border-radius: 26px;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.28), rgba(79, 70, 229, 0.22), rgba(124, 58, 237, 0.18));
-            border: 1px solid rgba(96, 165, 250, 0.45);
-            box-shadow: 0 0 35px rgba(59, 130, 246, 0.35), inset 0 0 25px rgba(99, 102, 241, 0.12);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            animation: logoAppear 1s ease-out forwards, logoPulse 2s ease-in-out 1s infinite;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(79, 70, 229, 0.28), rgba(124, 58, 237, 0.22));
+            border: 1.5px solid rgba(96, 165, 250, 0.6);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.45), inset 0 0 30px rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            animation: logoAppear 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, logoPulse 2s ease-in-out 1s infinite;
         }
-        .splash-logo span { font-size: 28px; font-weight: 900; letter-spacing: -1px; background: linear-gradient(90deg, #60a5fa, #a5b4fc, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        @keyframes logoAppear { 0% { opacity: 0; transform: scale(0.55) rotate(-8deg); } 70% { opacity: 1; transform: scale(1.08) rotate(2deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
-        @keyframes logoPulse { 0%, 100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.28), inset 0 0 25px rgba(99, 102, 241, 0.1); } 50% { box-shadow: 0 0 50px rgba(59, 130, 246, 0.55), inset 0 0 30px rgba(99, 102, 241, 0.18); } }
-        .splash-brand { position: absolute; top: calc(50% + 72px); left: 50%; transform: translateX(-50%); width: max-content; text-align: center; animation: brandReveal 1.2s ease-out 0.2s both; }
-        .splash-brand-title { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; color: white; white-space: nowrap; }
+        .splash-logo span { font-size: 32px; font-weight: 900; letter-spacing: -1.5px; background: linear-gradient(90deg, #60a5fa, #a5b4fc, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        @keyframes logoAppear { 0% { opacity: 0; transform: scale(0.4) rotate(-15deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        @keyframes logoPulse { 0%, 100% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.35), inset 0 0 25px rgba(99, 102, 241, 0.15); } 50% { box-shadow: 0 0 60px rgba(59, 130, 246, 0.7), inset 0 0 35px rgba(99, 102, 241, 0.3); } }
+        .splash-brand { position: absolute; top: calc(50% + 78px); left: 50%; transform: translateX(-50%); width: max-content; text-align: center; animation: brandReveal 1s ease-out 0.3s both; }
+        .splash-brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: white; white-space: nowrap; }
         .splash-brand-title span { background: linear-gradient(90deg, #60a5fa, #818cf8, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .splash-subtitle { margin-top: 6px; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #64748b; }
-        @keyframes brandReveal { 0% { opacity: 0; transform: translate(-50%, 12px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
-        .splash-loader { position: absolute; bottom: calc(50% - 125px); left: 50%; transform: translateX(-50%); width: 110px; height: 2px; background: rgba(51, 65, 85, 0.8); border-radius: 99px; overflow: hidden; }
-        .splash-loader::after { content: ""; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, #60a5fa, #818cf8, transparent); animation: splashLoading 1.5s ease-in-out infinite; }
+        .splash-subtitle { margin-top: 5px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #94a3b8; }
+        @keyframes brandReveal { 0% { opacity: 0; transform: translate(-50%, 15px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+        .splash-loader { position: absolute; bottom: calc(50% - 135px); left: 50%; transform: translateX(-50%); width: 130px; height: 3px; background: rgba(51, 65, 85, 0.8); border-radius: 99px; overflow: hidden; }
+        .splash-loader::after { content: ""; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, #60a5fa, #c084fc, transparent); animation: splashLoading 1.4s ease-in-out infinite; }
         @keyframes splashLoading { 0% { left: -100%; } 100% { left: 100%; } }
 
         /* Site Styles */
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-        .float-card { animation: float 5s ease-in-out infinite; }
         .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
         .hero-grid {
             background-image: linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
@@ -138,18 +136,23 @@
                 <span class="text-base sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
 
+            <!-- Desktop Navigation Links -->
             <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-400">
+                <a href="/" class="hover:text-white transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
-                <a href="#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
-                <a href="#pro-features" class="text-purple-300 hover:text-purple-200 transition font-medium">Recruiter Suite</a>
-                <a href="#features" class="hover:text-white transition">Modules</a>
-                <a href="#how-it-works" class="hover:text-white transition">Workflow</a>
-                <a href="#architect" class="hover:text-white transition">Architect</a>
+                <a href="/history" class="hover:text-white transition">History</a>
+                {% if logged_in %}
+                    <a href="/dashboard" class="text-blue-400 hover:text-blue-300 transition">Dashboard</a>
+                {% endif %}
+                <a href="/#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
+                <a href="/#features" class="hover:text-white transition">Modules</a>
             </nav>
 
+            <!-- Authentication Actions -->
             <div class="flex items-center gap-2 sm:gap-4 shrink-0">
                 {% if logged_in %}
                     <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition">Dashboard</a>
+                    <a href="/logout" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 py-2.5 rounded-xl transition">Logout</a>
                 {% else %}
                     <a href="/login" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">Log In</a>
                     <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">Get Started Free</a>
@@ -241,7 +244,7 @@
             setTimeout(function () {
                 splash.classList.add("splash-fade");
                 setTimeout(function () { if (splash) splash.remove(); }, 850);
-            }, 1400);
+            }, 1200);
         }
         if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
 
@@ -264,23 +267,6 @@
             }
         }
         document.getElementById('mobileDrawerOverlay').addEventListener('click', function(e) { if (e.target === this) toggleDrawer(false); });
-
-        function setFastTopic(topicText) {
-            const inputField = document.getElementById('topicSearchInput');
-            if (inputField) { inputField.value = topicText; inputField.focus(); }
-        }
-
-        const topicForm = document.getElementById('topicSearchForm');
-        if (topicForm) {
-            topicForm.addEventListener('submit', function() {
-                const btn = document.getElementById('exploreBtn');
-                const btnText = document.getElementById('btnText');
-                const spinner = document.getElementById('btnSpinner');
-                if (btn) { btn.disabled = true; btn.classList.add('opacity-80', 'cursor-not-allowed'); }
-                if (btnText) btnText.textContent = 'Generating...';
-                if (spinner) spinner.classList.remove('hidden');
-            });
-        }
     </script>
 </body>
 </html>
