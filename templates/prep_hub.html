@@ -1,12 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Primary Metadata & SEO Configuration -->
     <title>Placement &amp; Syllabus Hub | CareersAnalysis</title>
+    <meta name="title" content="Placement & Syllabus Hub | CareersAnalysis">
+    <meta name="description" content="Real corporate assessment patterns, coding interview matrices, and semester-wise engineering syllabi across all disciplines.">
+    <meta name="author" content="Satyam Kumar">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <!-- Core Styling & Typography -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+        html, body { overflow-x: hidden !important; max-width: 100vw; width: 100%; position: relative; background: #020617; }
+        * { box-sizing: border-box; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Universal App Splash Animation Overlay */
+        #appSplash {
+            position: fixed; inset: 0; z-index: 9999;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.18), rgba(2, 6, 23, 0.98) 50%, #020617 100%);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #appSplash.splash-fade { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-container { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
+        .splash-glow { position: absolute; width: 190px; height: 190px; border-radius: 50%; background: rgba(37, 99, 235, 0.22); filter: blur(45px); animation: splashGlow 2.5s ease-in-out infinite; }
+        @keyframes splashGlow { 0%, 100% { transform: scale(0.8); opacity: 0.4; } 50% { transform: scale(1.25); opacity: 0.95; } }
+        .splash-ring-outer { position: absolute; width: 220px; height: 220px; border-radius: 50%; border: 2px solid rgba(59, 130, 246, 0.25); border-top-color: rgba(96, 165, 250, 1); border-right-color: rgba(129, 140, 248, 0.6); animation: splashRotate 4s linear infinite; box-shadow: 0 0 25px rgba(59,130,246,0.2); }
+        .splash-ring-middle { position: absolute; width: 178px; height: 178px; border-radius: 50%; border: 2px dashed rgba(168, 85, 247, 0.4); animation: splashRotateReverse 6s linear infinite; }
+        .splash-orbit { position: absolute; width: 240px; height: 240px; border-radius: 50%; animation: splashRotate 3.5s linear infinite; }
+        .splash-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: #60a5fa; box-shadow: 0 0 15px #60a5fa, 0 0 30px #3b82f6; top: 4px; left: 50%; transform: translateX(-50%); }
+        .splash-dot-two { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #c084fc; box-shadow: 0 0 15px #c084fc; bottom: 20px; left: 20px; }
+        @keyframes splashRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes splashRotateReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        .splash-logo {
+            position: relative; z-index: 10; width: 90px; height: 90px; border-radius: 26px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(79, 70, 229, 0.28), rgba(124, 58, 237, 0.22));
+            border: 1.5px solid rgba(96, 165, 250, 0.6);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.45), inset 0 0 30px rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            animation: logoAppear 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, logoPulse 2s ease-in-out 1s infinite;
+        }
+        .splash-logo span { font-size: 32px; font-weight: 900; letter-spacing: -1.5px; background: linear-gradient(90deg, #60a5fa, #a5b4fc, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        @keyframes logoAppear { 0% { opacity: 0; transform: scale(0.4) rotate(-15deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        @keyframes logoPulse { 0%, 100% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.35), inset 0 0 25px rgba(99, 102, 241, 0.15); } 50% { box-shadow: 0 0 60px rgba(59, 130, 246, 0.7), inset 0 0 35px rgba(99, 102, 241, 0.3); } }
+        .splash-brand { position: absolute; top: calc(50% + 78px); left: 50%; transform: translateX(-50%); width: max-content; text-align: center; animation: brandReveal 1s ease-out 0.3s both; }
+        .splash-brand-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: white; white-space: nowrap; }
+        .splash-brand-title span { background: linear-gradient(90deg, #60a5fa, #818cf8, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .splash-subtitle { margin-top: 5px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #94a3b8; }
+        @keyframes brandReveal { 0% { opacity: 0; transform: translate(-50%, 15px); } 100% { opacity: 1; transform: translate(-50%, 0); } }
+        .splash-loader { position: absolute; bottom: calc(50% - 135px); left: 50%; transform: translateX(-50%); width: 130px; height: 3px; background: rgba(51, 65, 85, 0.8); border-radius: 99px; overflow: hidden; }
+        .splash-loader::after { content: ""; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, #60a5fa, #c084fc, transparent); animation: splashLoading 1.4s ease-in-out infinite; }
+        @keyframes splashLoading { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
         .loader-spin {
             border: 3px solid rgba(255, 255, 255, 0.2);
             border-top: 3px solid #38bdf8;
@@ -15,101 +76,197 @@
             height: 18px;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-sky-500 selection:text-white">
 
+    <!-- Universal App Splash Overlay -->
+    <div id="appSplash">
+        <div class="splash-container">
+            <div class="splash-glow"></div>
+            <div class="splash-ring-outer"></div>
+            <div class="splash-ring-middle"></div>
+            <div class="splash-orbit">
+                <div class="splash-dot"></div>
+                <div class="splash-dot-two"></div>
+            </div>
+            <div class="splash-logo"><span>CA</span></div>
+            <div class="splash-brand">
+                <div class="splash-brand-title">Careers<span>Analysis</span></div>
+                <div class="splash-subtitle">AI Career Intelligence</div>
+            </div>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
     <!-- Header Navigation -->
-    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2.5 group shrink-0">
-    <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/25 group-hover:scale-105 transition duration-300 border border-slate-800">
-    <span class="text-lg font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
-        Careers<span class="text-blue-500">Analysis</span>
-    </span>
-</a>
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover shadow-lg shadow-blue-500/25 group-hover:scale-105 transition duration-300 border border-slate-800">
+                <span class="text-lg font-extrabold tracking-tight text-white group-hover:text-blue-400 transition">
+                    Careers<span class="text-blue-500">Analysis</span>
+                </span>
+            </a>
             <div class="flex items-center gap-4 text-sm font-medium">
-                <a href="/" class="text-slate-400 hover:text-slate-200">Home</a>
+                <a href="/" class="text-slate-400 hover:text-slate-200 transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 font-semibold">Prep Hub</a>
+                <a href="/history" class="text-slate-400 hover:text-slate-200 transition hidden sm:inline-block">History</a>
                 {% if logged_in %}
-                    <a href="/dashboard" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg">Dashboard</a>
+                    <a href="/dashboard" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg shadow-md shadow-sky-600/30 transition">Dashboard</a>
+                    <a href="/logout" class="text-rose-400 hover:text-rose-300 transition text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-rose-950/30 border border-rose-900/40 hidden sm:inline-block">Logout</a>
                 {% else %}
-                    <a href="/login" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg">Log In</a>
+                    <a href="/login" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg shadow-md shadow-sky-600/30 transition">Log In</a>
                 {% endif %}
+                <button type="button" onclick="toggleDrawer(true)" class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
+            <div>
+                <div class="flex items-center justify-between pb-5 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+                        <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">Quick Menu &amp; History</span>
+                    </div>
+                    <button type="button" onclick="toggleDrawer(false)" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <nav class="mt-5 flex flex-col gap-2">
+                    <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🏠</span> Home</a>
+                    <a href="/prep-hub" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"><span>✦</span> Prep Hub</a>
+                    <a href="/history" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🕒</span> History Page</a>
+                    <a href="/dashboard" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard</a>
+                </nav>
+            </div>
+            <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
+                {% if logged_in %}
+                    <a href="/logout" class="w-full text-center py-3 text-sm font-semibold text-rose-400 bg-rose-950/40 border border-rose-800/40 rounded-xl transition">Logout</a>
+                {% else %}
+                    <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-300 bg-slate-800 rounded-xl">Log In</a>
+                    <a href="/signup" class="w-full text-center py-3 text-sm font-semibold text-white bg-blue-600 rounded-xl shadow-lg">Get Started Free</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-10">
 
-        <!-- Header Title -->
-        <div class="text-center space-y-3 mb-8">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-950/80 text-sky-400 border border-sky-800/60">
+        <!-- Header Title / Banner -->
+        <div class="relative overflow-hidden rounded-3xl p-8 sm:p-10 glass border border-sky-500/30 shadow-2xl shadow-sky-500/10 mb-8 text-center space-y-3">
+            <div class="absolute -right-10 -top-10 w-48 h-48 bg-sky-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-sky-950/80 text-sky-400 border border-sky-800/60 mx-auto">
                 <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span> Universal Assessment &amp; Syllabus Engine
             </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Placement &amp; Syllabus Hub</h1>
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto">
-                Real corporate assessment patterns, coding interview matrices, and semester-wise engineering syllabi across all disciplines.
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Placement &amp; <span class="bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Syllabus Hub</span></h1>
+            <p class="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
+                Real corporate assessment patterns, coding interview matrices, and semester-wise engineering syllabi across all disciplines powered by AI.
             </p>
         </div>
 
-     <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-6">
-    <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
-        <!-- Text Input -->
-        <input 
-            type="text" 
-            name="query" 
-            id="hub-input" 
-            value="{{ query }}" 
-            placeholder="Search or Speak e.g. GATE CSE, TCS NQT..." 
-            required
-            class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
-        >
+        <!-- Search Bar Form -->
+        <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-10">
+            <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition-all shadow-xl shadow-black/40">
+                <input 
+                    type="text" 
+                    name="query" 
+                    id="hub-input" 
+                    value="{{ query }}" 
+                    placeholder="Search or Speak e.g. GATE CSE, TCS NQT..." 
+                    required
+                    class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
+                >
+                <button 
+                    type="button" 
+                    onclick="startVoiceSearch()" 
+                    id="mic-btn"
+                    title="Search by Voice"
+                    class="p-2.5 text-slate-400 hover:text-sky-400 hover:bg-slate-800/80 rounded-xl transition flex items-center justify-center shrink-0 mr-1"
+                >
+                    <svg id="mic-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                    </svg>
+                </button>
+                <button 
+                    type="submit" 
+                    id="hub-btn" 
+                    class="bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-medium text-sm px-6 py-2.5 rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-lg shadow-sky-600/30"
+                >
+                    <span id="hub-btn-text">Generate ✦</span>
+                    <div id="hub-spinner" class="loader-spin hidden"></div>
+                </button>
+            </div>
+        </form>
 
-        <!-- 🎙️ Voice Search Mic Button -->
-        <button 
-            type="button" 
-            onclick="startVoiceSearch()" 
-            id="mic-btn"
-            title="Search by Voice"
-            class="p-2.5 text-slate-400 hover:text-sky-400 hover:bg-slate-800/80 rounded-xl transition flex items-center justify-center shrink-0 mr-1"
-        >
-            <svg id="mic-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-            </svg>
-        </button>
+        <!-- Bento Grid Quick Explore Cards (Replacing boring chips) -->
+        <div class="mb-12">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                Trending Explorer Pathways
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                <button onclick="fillQuery('TCS NQT Assessment Pattern')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-sky-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-sky-400 font-bold text-sm mb-1 group-hover:text-sky-300 flex items-center justify-between">
+                        <span>⚡ TCS NQT Pattern</span>
+                        <span class="text-slate-600 group-hover:text-sky-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Corporate aptitude &amp; coding rounds</p>
+                </button>
 
-        <!-- Generate Button -->
-        <button 
-            type="submit" 
-            id="hub-btn" 
-            class="bg-sky-600 hover:bg-sky-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl transition flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-sky-600/30"
-        >
-            <span id="hub-btn-text">Generate ✦</span>
-            <div id="hub-spinner" class="loader-spin hidden"></div>
-        </button>
-    </div>
-</form>
+                <button onclick="fillQuery('GATE CSE Core Syllabus & Weightage')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-indigo-400 font-bold text-sm mb-1 group-hover:text-indigo-300 flex items-center justify-between">
+                        <span>🎯 GATE CSE Core</span>
+                        <span class="text-slate-600 group-hover:text-indigo-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Algorithms, DBMS &amp; Networks</p>
+                </button>
 
-        <!-- Professional Quick Explore Chips -->
-        <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto mb-10 text-xs">
-            <span class="text-slate-500 font-medium">Quick explore:</span>
-            <button type="button" onclick="fillQuery('TCS NQT Assessment Pattern')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">TCS NQT Pattern</button>
-            <button type="button" onclick="fillQuery('GATE CSE Core Syllabus &amp; Weightage')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">GATE CSE Core Syllabus</button>
-            <button type="button" onclick="fillQuery('B.Tech CSE 4th Semester Core Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">B.Tech CSE 4th Semester Syllabus</button>
-            <button type="button" onclick="fillQuery('B.Tech 1st Year Engineering Common Syllabus')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">B.Tech 1st Year (All Branches)</button>
-            <button type="button" onclick="fillQuery('Google SDE Technical Rounds')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">Google SDE Technical Rounds</button>
-            <button type="button" onclick="fillQuery('Core CS Interview Drill (OS, DBMS, CN)')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-3.5 py-1.5 rounded-full transition">Core CS Interview (OS/DBMS/CN)</button>
+                <button onclick="fillQuery('B.Tech CSE 4th Semester Core Syllabus')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-purple-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-purple-400 font-bold text-sm mb-1 group-hover:text-purple-300 flex items-center justify-between">
+                        <span>📚 CSE 4th Semester</span>
+                        <span class="text-slate-600 group-hover:text-purple-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">University curriculum &amp; labs</p>
+                </button>
+
+                <button onclick="fillQuery('B.Tech 1st Year Engineering Common Syllabus')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-sky-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-sky-400 font-bold text-sm mb-1 group-hover:text-sky-300 flex items-center justify-between">
+                        <span>🎓 1st Year Core</span>
+                        <span class="text-slate-600 group-hover:text-sky-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Common engineering foundations</p>
+                </button>
+
+                <button onclick="fillQuery('Google SDE Technical Rounds')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-emerald-400 font-bold text-sm mb-1 group-hover:text-emerald-300 flex items-center justify-between">
+                        <span>💼 Google SDE Prep</span>
+                        <span class="text-slate-600 group-hover:text-emerald-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Advanced DSA &amp; System Design</p>
+                </button>
+
+                <button onclick="fillQuery('Core CS Interview Drill (OS, DBMS, CN)')" class="group text-left p-4 rounded-2xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-amber-500/50 transition-all duration-300 hover:scale-[1.02] shadow-lg">
+                    <div class="text-amber-400 font-bold text-sm mb-1 group-hover:text-amber-300 flex items-center justify-between">
+                        <span>💻 Core CS Interview</span>
+                        <span class="text-slate-600 group-hover:text-amber-400 transition">→</span>
+                    </div>
+                    <p class="text-xs text-slate-500">OS, DBMS, Computer Networks</p>
+                </button>
+            </div>
         </div>
 
         <!-- Clean Structured Result Card -->
         {% if data %}
         <div class="space-y-6 animate-fade-in">
-
             <!-- Overview Header -->
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-800 gap-4">
@@ -218,13 +375,65 @@
                 {{ data }}
             </div>
             {% endif %}
-
         </div>
         {% endif %}
 
     </main>
 
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950 mt-auto">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar.</span>
+            <span class="text-slate-600">AI-powered career readiness platform</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script>
+        // Remove Splash on Load
+        function removeSplash() {
+            const splash = document.getElementById("appSplash");
+            if (!splash) return;
+            setTimeout(function () {
+                splash.classList.add("splash-fade");
+                setTimeout(function () { if (splash) splash.remove(); }, 600);
+            }, 1000);
+        }
+        if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
+
+        // Universal Action Animation Trigger on Clicks
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a, button, input[type="submit"]');
+            if (!target) return;
+            const href = target.getAttribute('href');
+            if (href && href.startsWith('javascript:')) return;
+            showActionSplash(target.textContent.trim() || "Processing...");
+        });
+
+        function showActionSplash(actionName) {
+            if (document.getElementById('appSplash')) return;
+            const splashDiv = document.createElement('div');
+            splashDiv.id = 'appSplash';
+            splashDiv.innerHTML = `
+                <div class="splash-container">
+                    <div class="splash-glow"></div>
+                    <div class="splash-ring-outer"></div>
+                    <div class="splash-ring-middle"></div>
+                    <div class="splash-orbit">
+                        <div class="splash-dot"></div>
+                        <div class="splash-dot-two"></div>
+                    </div>
+                    <div class="splash-logo"><span>CA</span></div>
+                    <div class="splash-brand">
+                        <div class="splash-brand-title">Careers<span>Analysis</span></div>
+                        <div class="splash-subtitle">${actionName ? actionName.substring(0, 20) + '...' : 'AI Processing'}</div>
+                    </div>
+                    <div class="splash-loader"></div>
+                </div>
+            `;
+            document.body.appendChild(splashDiv);
+        }
+
         function fillQuery(text) {
             document.getElementById('hub-input').value = text;
             document.getElementById('hub-form').submit();
@@ -239,42 +448,54 @@
             btnText.innerText = "Analyzing...";
             spinner.classList.remove('hidden');
         });
-     function startVoiceSearch() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("Aapka browser voice search support nahi karta. Kripya Google Chrome ya Edge use karein.");
-        return;
-    }
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-IN'; // Indian English / Hinglish terms acche se recognise karta hai
+        function startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Browser does not support voice search.");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-IN';
+            const micBtn = document.getElementById('mic-btn');
+            const inputField = document.getElementById('hub-input');
 
-    const micBtn = document.getElementById('mic-btn');
-    const inputField = document.getElementById('hub-input');
+            recognition.onstart = function() {
+                micBtn.classList.add('text-red-500', 'animate-pulse');
+                inputField.placeholder = "Listening...";
+            };
+            recognition.onresult = function(event) {
+                inputField.value = event.results[0][0].transcript;
+                document.getElementById('hub-form').submit();
+            };
+            recognition.onerror = function() {
+                micBtn.classList.remove('text-red-500', 'animate-pulse');
+            };
+            recognition.onend = function() {
+                micBtn.classList.remove('text-red-500', 'animate-pulse');
+            };
+            recognition.start();
+        }
 
-    recognition.onstart = function() {
-        micBtn.classList.add('text-red-500', 'animate-pulse');
-        inputField.placeholder = "Listening... Bolna shuru kijiye...";
-    };
-
-    recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        inputField.value = transcript;
-        // Bolte hi auto-search submit ho jayega
-        document.getElementById('hub-form').submit();
-    };
-
-    recognition.onerror = function() {
-        micBtn.classList.remove('text-red-500', 'animate-pulse');
-        inputField.placeholder = "Search e.g. GATE CSE, TCS NQT Pattern...";
-    };
-
-    recognition.onend = function() {
-        micBtn.classList.remove('text-red-500', 'animate-pulse');
-    };
-
-    recognition.start();
-}   
+        function toggleDrawer(open) {
+            const overlay = document.getElementById('mobileDrawerOverlay');
+            const panel = document.getElementById('mobileDrawerPanel');
+            if (!overlay || !panel) return;
+            if (open) {
+                overlay.classList.remove('pointer-events-none', 'opacity-0');
+                overlay.classList.add('pointer-events-auto', 'opacity-100');
+                panel.classList.remove('translate-x-full');
+                panel.classList.add('translate-x-0');
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.remove('pointer-events-auto', 'opacity-100');
+                overlay.classList.add('pointer-events-none', 'opacity-0');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            }
+        }
+        document.getElementById('mobileDrawerOverlay').addEventListener('click', function(e) { if (e.target === this) toggleDrawer(false); });
     </script>
 </body>
 </html>
