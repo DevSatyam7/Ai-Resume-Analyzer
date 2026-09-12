@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Primary Metadata & SEO Configuration -->
     <title>CareersAnalysis — AI Resume Analysis & Career Readiness Platform</title>
     <meta name="title" content="CareersAnalysis — AI Resume Analysis & Career Readiness Platform">
     <meta name="description" content="CareersAnalysis helps students and job seekers analyze resumes, understand ATS alignment, identify skill gaps, and build focused career preparation roadmaps.">
@@ -13,17 +12,14 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ai-resume-analyzer-2jxj.onrender.com/">
 
-    <!-- Social Graph Meta -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
     <meta property="og:title" content="CareersAnalysis — AI Resume Analysis & Career Readiness">
     <meta property="og:description" content="Analyze your resume, identify skill gaps, and build a focused career preparation roadmap.">
     <meta property="og:image" content="{{ url_for('static', filename='favicon.png') }}">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 
-    <!-- Core Styling & Typography -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,19 +83,11 @@
             mask-image: linear-gradient(to bottom, black, transparent 85%);
             -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
         }
-        .premium-border { position: relative; }
-        .premium-border::before {
-            content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-            background: linear-gradient(135deg, rgba(59,130,246,.5), rgba(99,102,241,.15), rgba(14,165,233,.35));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
-        }
     </style>
 </head>
 
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
 
-    <!-- App Splash -->
     <div id="appSplash">
         <div class="splash-container">
             <div class="splash-glow"></div>
@@ -118,7 +106,6 @@
         </div>
     </div>
 
-    <!-- Top Announcement -->
     <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg shadow-blue-950/20">
         <div class="animate-marquee tracking-wide flex items-center gap-8">
             <span>🚀 CareersAnalysis • AI-powered Resume & Career Analysis</span>
@@ -128,7 +115,6 @@
         </div>
     </div>
 
-    <!-- Sticky Header (Consistent across PC and Mobile) -->
     <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
             <a href="/" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
@@ -136,42 +122,40 @@
                 <span class="text-base sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
 
-            <!-- Desktop Navigation Links -->
             <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-400">
                 <a href="/" class="hover:text-white transition">Home</a>
                 <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
                 <a href="/history" class="hover:text-white transition">History</a>
+                <a href="/#resume-upload-section" class="text-emerald-400 font-semibold hover:text-emerald-300 transition flex items-center gap-1"><span>✨</span> Analyze New</a>
                 {% if logged_in %}
                     <a href="/dashboard" class="text-blue-400 font-semibold hover:text-blue-300 transition">Dashboard</a>
                 {% endif %}
-                <a href="/#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
-                <a href="/#features" class="hover:text-white transition">Modules</a>
             </nav>
 
-            <!-- PC & Desktop Header Actions (Replacing Get Started with Go to Home Screen / Logout consistency) -->
-            <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+            <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+                <a href="/#resume-upload-section" class="hidden sm:inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-emerald-600/30 transition"><span>✨</span> New Analysis</a>
+                
                 {% if logged_in %}
-                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition">Dashboard</a>
-                    <a href="/logout" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 px-3.5 sm:px-3 py-2.5 rounded-xl transition">Logout</a>
+                    <a href="/dashboard" class="hidden sm:inline-block text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition">Dashboard</a>
+                    <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg transition">Logout</a>
                 {% else %}
-                    <a href="/" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-200 bg-slate-900 hover:bg-slate-800 border border-slate-700 px-3.5 py-2.5 rounded-xl transition">Go to Home Screen</a>
-                    <a href="/login" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">Log In</a>
+                    <a href="/login" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl transition">Log In</a>
                 {% endif %}
-                <button type="button" onclick="toggleDrawer(true)" class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 active:scale-95 transition cursor-pointer" aria-label="Open Navigation Menu">
+
+                <button type="button" onclick="toggleDrawer(true)" class="md:hidden p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 active:scale-95 transition cursor-pointer" aria-label="Open Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Drawer -->
     <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
         <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
             <div>
                 <div class="flex items-center justify-between pb-5 border-b border-slate-800">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
-                        <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">Quick Menu &amp; History</span>
+                        <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">Menu &amp; Navigation</span>
                     </div>
                     <button type="button" onclick="toggleDrawer(false)" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close Menu">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -180,56 +164,52 @@
 
                 <nav class="mt-5 flex flex-col gap-2">
                     <a href="/" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🏠</span> Home</a>
+                    <a href="/#resume-upload-section" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-emerald-400 bg-emerald-950/30 hover:bg-emerald-950/50 border border-emerald-800/40 transition"><span>✨</span> Analyze New Resume</a>
                     <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"><span>✦</span> Prep Hub</a>
                     <a href="/history" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🕒</span> History Page</a>
                     <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard</a>
                 </nav>
 
-                <!-- Past Audit History in Mobile Drawer -->
                 <div class="mt-6 pt-5 border-t border-slate-800">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
-                        <span class="flex items-center gap-1.5">📜 Past Audit History</span>
+                        <span class="flex items-center gap-1.5">📜 Recent Audits</span>
                         <span class="text-[10px] text-blue-400 font-mono">TiDB Sync</span>
                     </h4>
-                    <div class="space-y-2.5 max-h-52 overflow-y-auto no-scrollbar">
+                    <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
                         {% if user_reports %}
                             {% for rep in user_reports %}
                             <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs flex items-center justify-between">
                                 <div>
                                     <span class="text-slate-200 font-bold block">Report #{{ rep.id }}</span>
-                                    <span class="text-[10px] text-slate-400">Recent Audit</span>
+                                    <span class="text-[10px] text-slate-400">Audit Saved</span>
                                 </div>
                                 <a href="/download-audit/{{ rep.id }}" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg font-bold text-[11px] transition">Download ↓</a>
                             </div>
                             {% endfor %}
                         {% else %}
                             <div class="p-3 text-center bg-slate-950/50 rounded-xl border border-slate-800/50">
-                                <p class="text-[11px] text-slate-500">No past audits found.</p>
+                                <p class="text-[11px] text-slate-500">No past audits yet.</p>
                             </div>
                         {% endif %}
                     </div>
                 </div>
             </div>
 
-            <!-- Mobile Drawer Bottom Actions (Go to Home Screen & Logout / Login consistency) -->
             <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
-                <a href="/" class="w-full text-center py-3 text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition shadow-md">Go to Home Screen</a>
                 {% if logged_in %}
-                    <a href="/logout" class="w-full text-center py-3 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition shadow-lg">Logout</a>
+                    <a href="/logout" class="w-full text-center py-3 text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 rounded-xl transition shadow-lg">Logout Account</a>
                 {% else %}
-                    <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-300 bg-slate-900 hover:bg-slate-800 rounded-xl transition">Log In</a>
+                    <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">Log In</a>
                 {% endif %}
-                <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.4 • Gemini AI</span>
+                <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.4 • Satyam Kumar</span>
             </div>
         </div>
     </div>
 
-    <!-- Main -->
     <main class="w-full overflow-x-hidden flex-1">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <span>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar.</span>
@@ -237,7 +217,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         function removeSplash() {
             const splash = document.getElementById("appSplash");
