@@ -128,10 +128,47 @@
             mask-composite: exclude;
             pointer-events: none;
         }
+
+        /* Futuristic Splash Screen Animations */
+        @keyframes spinSlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(55px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(55px) rotate(-360deg); }
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-spin-slow {
+            animation: spinSlow 2s linear infinite;
+        }
+        .animate-orbit {
+            animation: orbit 1.5s linear infinite;
+        }
+        .splash-content {
+            animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
     </style>
 </head>
 
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Custom Futuristic Splash Screen Loader -->
+    <div id="app-splash-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950 transition-opacity duration-500 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-[#020617] to-slate-900"></div>
+        <div class="absolute w-[300px] h-[300px] bg-gradient-to-r from-blue-600/20 via-violet-600/20 to-pink-600/20 blur-[80px] rounded-full pointer-events-none animate-pulse"></div>
+
+        <div class="relative flex items-center justify-center w-32 h-32 splash-content">
+            <div class="absolute inset-0 rounded-full border-2 border-transparent border-t-blue-500 border-l-violet-500 animate-spin-slow"></div>
+            <div class="absolute inset-0 animate-orbit pointer-events-none">
+                <div class="w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_12px_#22d3ee]"></div>
+            </div>
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-16 h-16 object-contain rounded-full relative z-10 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+        </div>
+    </div>
 
     <!-- Top Announcement -->
     <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg shadow-blue-950/20">
@@ -553,7 +590,7 @@
                     <div class="flex items-center justify-between gap-3 mb-3">
 
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-bold uppercase tracking-wider">
-                            ⚡ AI Topic Explorer
+                            ⚡ AI Topic &amp; Exam Explorer
                         </span>
 
                         <a
@@ -566,7 +603,7 @@
                     </div>
 
                     <h3 class="text-white text-lg sm:text-xl font-bold mt-3">
-                        Turn Any Topic Into a Study Roadmap
+                        Turn Any Topic Or Exam Into a Study Roadmap
                     </h3>
 
                     <p class="text-slate-400 text-xs sm:text-sm mt-1.5 mb-5 leading-relaxed">
@@ -1141,6 +1178,16 @@
 
     <!-- Scripts -->
     <script>
+        // Splash Screen Removal after 1.4 seconds
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const splash = document.getElementById('app-splash-screen');
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 500);
+                }
+            }, 1400);
+        });
 
         function toggleDrawer(open) {
 
