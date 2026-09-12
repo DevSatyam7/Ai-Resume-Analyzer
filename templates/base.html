@@ -124,30 +124,26 @@
                 <a href="/about" class="hover:text-blue-400 transition flex items-center gap-1.5 py-2 px-3 rounded-xl hover:bg-slate-900"><span>ℹ️</span> About</a>
             </nav>
 
-            <!-- PC Right Actions -->
+            <!-- Right Header Actions (Logout + Universal Hamburger Menu Button) -->
             <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-                <a href="/dashboard" class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition transform hover:scale-105 flex items-center gap-1.5">
-                    <span>✨</span> Analyze New
-                </a>
-
                 {% if session.get('user_id') or session.get('user') or session.get('email') or logged_in %}
                     <a href="/dashboard" class="hidden sm:inline-block text-xs sm:text-sm font-bold text-blue-400 bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/50 px-3.5 py-2.5 rounded-xl transition">Dashboard</a>
-                    <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/60 px-3.5 py-2.5 rounded-xl shadow-lg transition">Logout</a>
+                    <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/60 px-3.5 sm:px-3 py-2.5 rounded-xl shadow-lg transition">Logout</a>
                 {% else %}
                     <a href="/login" class="text-xs sm:text-sm font-bold text-slate-100 bg-slate-900 hover:bg-slate-800 border border-slate-700 px-4 py-2.5 rounded-xl transition shadow-md">Log In</a>
                 {% endif %}
 
-                <!-- Mobile Drawer Toggle Button -->
-                <button type="button" onclick="openDrawer()" class="lg:hidden p-2.5 rounded-xl text-slate-200 hover:text-white bg-slate-900 border border-slate-700 active:scale-95 transition cursor-pointer shadow-md" aria-label="Open Menu">
+                <!-- Hamburger Menu Button (Always visible on all screen sizes now to guarantee access) -->
+                <button type="button" onclick="openDrawer()" class="p-2.5 rounded-xl text-slate-200 hover:text-white bg-slate-900 border border-slate-700 active:scale-95 transition cursor-pointer shadow-md flex items-center justify-center shrink-0" aria-label="Open Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Sidebar Drawer -->
+    <!-- Sidebar Drawer (Contains "New AI Resume Analyzer" at the very top) -->
     <div id="mobileDrawerOverlay" style="display: none; opacity: 0;" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 transition-opacity duration-300">
-        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
+        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
             <div>
                 <div class="flex items-center justify-between pb-5 border-b border-slate-800">
                     <div class="flex items-center gap-2">
@@ -160,8 +156,10 @@
                 </div>
 
                 <nav class="mt-5 flex flex-col gap-2.5">
+                    <!-- New AI Resume Analyzer right at the top of the drawer -->
+                    <a href="/dashboard" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg shadow-blue-600/30 transition"><span>✨</span> New AI Resume Analyzer</a>
+                    
                     <a href="/" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-200 hover:bg-slate-800 transition border border-slate-800"><span>🏠</span> Home</a>
-                    <a href="/dashboard" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg shadow-blue-600/30 transition"><span>✨</span> New AI Resume Analyzer</a>
                     <a href="/prep-hub" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-sky-400 hover:bg-sky-950/40 transition border border-sky-900/40"><span>✦</span> Prep Hub</a>
                     <a href="/exam-explorer" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-purple-400 hover:bg-purple-950/40 transition border border-purple-900/40"><span>🎯</span> Exam Explorer</a>
                     <a href="/history" onclick="closeDrawer()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-200 hover:bg-slate-800 transition border border-slate-800"><span>🕒</span> History &amp; Reports</a>
@@ -216,7 +214,6 @@
     </footer>
 
     <script>
-        // Bulletproof splash screen handler: ensures it never gets stuck forever.
         function removeSplash() {
             const splash = document.getElementById("appSplash");
             if (!splash) return;
@@ -231,7 +228,6 @@
             setTimeout(removeSplash, 1200);
         }
 
-        // Mobile Drawer Controller Functions
         function openDrawer() {
             const overlay = document.getElementById('mobileDrawerOverlay');
             const panel = document.getElementById('mobileDrawerPanel');
@@ -262,3 +258,5 @@
             if (e.target === this) closeDrawer(); 
         });
     </script>
+</body>
+</html>
