@@ -3,6 +3,7 @@ import json
 import PyPDF2
 import docx
 from flask import Flask, render_template, request, redirect, session, url_for, Response, send_from_directory, send_file
+from authlib.integrations.flask_client import OAuth
 from db import Base, engine, SessionLocal
 import models
 from ai import analyze_resume, get_comprehensive_drill, rewrite_bullet_point
@@ -10,6 +11,16 @@ from ai import analyze_resume, get_comprehensive_drill, rewrite_bullet_point
 app = Flask(__name__)
 app.secret_key = "secret12345678"
 Base.metadata.create_all(bind=engine)
+
+# Google OAuth Setup
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.environ.get('GOOGLE_CLIENT_ID'),
+    client_secret=os.environ.get('GOOGLE_CLIENT_SECRET'),
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'openid email profile'}
+)
 
 
 def get_or_cache_syllabus(query):
@@ -107,6 +118,34 @@ def login():
             return "Invalid credentials"
 
     return render_template("login.html")
+
+
+@app.route('/login/google')
+def google_login():
+    redirect_uri = url_for('google_authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route('/login/google/callback')
+def google_authorize():
+    try:
+        token = google.authorize_access_token()
+        user_info = token.get('userinfo')
+        if user_info and 'email' in user_info:
+            email = user_info['email']
+            db = SessionLocal()
+            try:
+                user = db.query(models.User).filter_by(email=email).first()
+                if not user:
+                    user = models.User(email=email, password="")
+                    db.add(user)
+                    db.commit()
+                session["user"] = user.email
+            finally:
+                db.close()
+    except Exception as e:
+        print(f"Google Auth Error: {e}")
+    return redirect(url_for('dashboard'))
 
 
 @app.route("/dashboard", methods=["GET", "POST"])
@@ -490,6 +529,8 @@ def sitemap():
 
 
 @app.route("/topic-drill", methods=["GET", "POST"])
+def topic_drill():
+    app.route("/topic-drill", methods=["GET", "POST"])
 def topic_drill():
     if request.method == "POST":
         query = request.form.get("query", "").strip()
