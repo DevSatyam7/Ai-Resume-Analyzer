@@ -20,7 +20,8 @@
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-8 text-center md:text-left">
             <div class="relative shrink-0">
                 <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 blur-md opacity-70 animate-pulse"></div>
-                <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Satyam Kumar" class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border-2 border-blue-400/50 shadow-2xl">
+                <!-- Corrected image filename to satyam-profile.jpg -->
+                <img src="{{ url_for('static', filename='satyam-profile.jpg') }}" alt="Satyam Kumar" class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border-2 border-blue-400/50 shadow-2xl">
             </div>
 
             <div class="space-y-2">
@@ -74,7 +75,6 @@
                 <p class="text-slate-300 text-sm leading-relaxed mb-4">
                     Hands-on production experience with modern backend frameworks, relational databases, secure cloud deployments, and advanced generative AI APIs.
                 </p>
-                <!-- Tech Badges -->
                 <div class="flex flex-wrap gap-2 mb-4">
                     <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-700 text-blue-400">Python / Flask</span>
                     <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-700 text-indigo-400">Gemini &amp; Granite AI</span>
@@ -130,7 +130,7 @@
 
     </div>
 
-    <!-- Connect & Collaborate Section -->
+    <!-- Connect & Collaborate Section (With Real LinkedIn Link) -->
     <div class="rounded-3xl p-8 glass border border-slate-800 text-center relative overflow-hidden shadow-2xl">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 pointer-events-none"></div>
         <div class="relative z-10">
@@ -140,10 +140,13 @@
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="https://github.com/DevSatyam7" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2.5 shadow-lg">
-                    <i class="fa-brands fa-github text-lg"></i> GitHub Profile
+                    <i class="fa-brands fa-github text-lg"></i> GitHub
                 </a>
-                <a href="mailto:satyam62kumar02@gmail.com" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center gap-2.5 shadow-lg shadow-blue-600/30">
-                    <i class="fa-solid fa-envelope text-lg"></i> Email Creator
+                <a href="https://www.linkedin.com/in/satyam-kumar-29b331423" target="_blank" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center gap-2.5 shadow-lg shadow-sky-600/30">
+                    <i class="fa-brands fa-linkedin text-lg"></i> LinkedIn
+                </a>
+                <a href="mailto:satyam62kumar02@gmail.com" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2.5 shadow-lg">
+                    <i class="fa-solid fa-envelope text-lg"></i> Email Me
                 </a>
             </div>
         </div>
