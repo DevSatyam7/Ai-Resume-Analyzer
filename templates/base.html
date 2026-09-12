@@ -250,17 +250,15 @@
         if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
 
         // Universal Action Trigger: Displays the exact custom animation on ANY interaction (clicks, downloads, form analyzes)
-        document.addEventListener('click', function(e) {
-            const target = e.target.closest('a, button, input[type="submit"]');
-            if (!target) return;
-            
-            const href = target.getAttribute('href');
-            // Skip external links, anchors, or download toggles if needed, but show for core navigation & analysis actions
-            if (href && (href.startsWith('#') || href.startsWith('javascript:'))) return;
+       document.addEventListener('click', function(e) {
+    const target = e.target.closest('a, button, input[type="submit"]');
+    if (!target) return;
+    
+    const href = target.getAttribute('href');
+    if (href && href.startsWith('javascript:')) return;
 
-            // Trigger splash animation on click
-            showActionSplash(target.textContent.trim() || "Processing...");
-        });
+    showActionSplash(target.textContent.trim() || "Processing...");
+});
 
         function showActionSplash(actionName) {
             if (document.getElementById('appSplash')) return; // Already visible
