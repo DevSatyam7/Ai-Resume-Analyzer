@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Primary Metadata & SEO Configuration -->
     <title>CareersAnalysis — AI Resume Analysis & Career Readiness Platform</title>
     <meta name="title" content="CareersAnalysis — AI Resume Analysis & Career Readiness Platform">
     <meta name="description" content="CareersAnalysis helps students and job seekers analyze resumes, understand ATS alignment, identify skill gaps, and build focused career preparation roadmaps.">
@@ -13,17 +12,14 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ai-resume-analyzer-2jxj.onrender.com/">
 
-    <!-- Social Graph Meta -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai-resume-analyzer-2jxj.onrender.com/">
     <meta property="og:title" content="CareersAnalysis — AI Resume Analysis & Career Readiness">
     <meta property="og:description" content="Analyze your resume, identify skill gaps, and build a focused career preparation roadmap.">
     <meta property="og:image" content="{{ url_for('static', filename='favicon.png') }}">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 
-    <!-- Core Styling & Typography -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +32,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Universal App Splash Animation Overlay */
+        /* Initial Page Load Splash Animation Overlay */
         #appSplash {
             position: fixed; inset: 0; z-index: 9999;
             background: radial-gradient(circle at center, rgba(37, 99, 235, 0.18), rgba(2, 6, 23, 0.98) 50%, #020617 100%);
@@ -76,17 +72,14 @@
         .splash-loader::after { content: ""; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, #60a5fa, #c084fc, transparent); animation: splashLoading 1.4s ease-in-out infinite; }
         @keyframes splashLoading { 0% { left: -100%; } 100% { left: 100%; } }
 
-        /* Site Styles */
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
-        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
     </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden w-full max-w-full">
 
-    <!-- App Splash -->
     <div id="appSplash">
         <div class="splash-container">
             <div class="splash-glow"></div>
@@ -105,8 +98,7 @@
         </div>
     </div>
 
-    <!-- Top Announcement -->
-    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg shadow-blue-950/20">
+    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] sm:text-xs font-bold py-1.5 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg shadow-blue-950/30 w-full">
         <div class="animate-marquee tracking-wide flex items-center gap-8">
             <span>🚀 CareersAnalysis • AI-powered Resume & Career Analysis</span>
             <span>⚡ 15+ API Key Multi-Rotation Active</span>
@@ -115,42 +107,45 @@
         </div>
     </div>
 
-    <!-- Sticky Header -->
-    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+    <!-- Sticky Header with Enhanced Bold Links -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/90 border-b border-slate-800 shadow-xl w-full max-w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3 w-full">
             <a href="/" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="CareersAnalysis Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/20 group-hover:scale-105 transition duration-200 border border-slate-800">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="CareersAnalysis Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/30 group-hover:scale-105 transition duration-200 border border-slate-700">
                 <span class="text-base sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
 
-            <!-- Clean Desktop Navigation (No duplicate buttons) -->
-            <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-400">
-                <a href="/" class="hover:text-white transition">Home</a>
-                <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1"><span>✦</span> Prep Hub</a>
-                <a href="/history" class="hover:text-white transition">History</a>
-                {% if logged_in or session.get('user_id') %}
-                    <a href="/dashboard" class="text-blue-400 font-semibold hover:text-blue-300 transition">Dashboard</a>
-                {% endif %}
+            <!-- Enhanced Bold Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-extrabold tracking-wide text-slate-200">
+                <a href="/" class="hover:text-blue-400 transition py-2 px-3 rounded-xl hover:bg-slate-900">Home</a>
+                <a href="/prep-hub" class="text-sky-400 hover:text-sky-300 transition flex items-center gap-1.5 py-2 px-3 rounded-xl hover:bg-sky-950/30"><span>✦</span> Prep Hub</a>
+                <a href="/exam-explorer" class="text-purple-400 hover:text-purple-300 transition flex items-center gap-1.5 py-2 px-3 rounded-xl hover:bg-purple-950/30"><span>🎯</span> Exam Explorer</a>
+                <a href="/history" class="hover:text-blue-400 transition flex items-center gap-1.5 py-2 px-3 rounded-xl hover:bg-slate-900"><span>🕒</span> History</a>
+                <a href="/about" class="hover:text-blue-400 transition flex items-center gap-1.5 py-2 px-3 rounded-xl hover:bg-slate-900"><span>ℹ️</span> About</a>
             </nav>
 
-            <!-- Desktop Actions (Properly showing Logout if logged in) -->
+            <!-- Right Actions (Always detecting login state reliably) -->
             <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-                {% if logged_in or session.get('user_id') %}
-                    <a href="/dashboard" class="hidden sm:inline-block text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-3.5 sm:px-2.5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition">Dashboard</a>
-                    <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg transition">Logout</a>
+                <a href="/dashboard" class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-3.5 sm:px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition transform hover:scale-105 flex items-center gap-1.5">
+                    <span>✨</span> Analyze New
+                </a>
+
+                {% if session.get('user_id') or session.get('user') or session.get('email') or logged_in %}
+                    <a href="/dashboard" class="hidden sm:inline-block text-xs sm:text-sm font-bold text-blue-400 bg-blue-950/40 hover:bg-blue-900/50 border border-blue-800/50 px-3.5 py-2.5 rounded-xl transition">Dashboard</a>
+                    <a href="/logout" class="text-xs sm:text-sm font-bold text-rose-400 bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/60 px-3.5 py-2.5 rounded-xl shadow-lg transition">Logout</a>
                 {% else %}
-                    <a href="/login" class="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-700 px-4 py-2.5 rounded-xl transition">Log In</a>
+                    <a href="/login" class="text-xs sm:text-sm font-bold text-slate-100 bg-slate-900 hover:bg-slate-800 border border-slate-700 px-4 py-2.5 rounded-xl transition shadow-md">Log In</a>
                 {% endif %}
 
-                <!-- Mobile Drawer Toggle Button -->
-                <button type="button" onclick="toggleDrawer(true)" class="md:hidden p-2.5 rounded-xl text-slate-300 hover:text-white bg-slate-900 border border-slate-800 active:scale-95 transition cursor-pointer" aria-label="Open Menu">
+                <!-- Mobile & Sidebar Drawer Toggle Button -->
+                <button type="button" onclick="toggleDrawer(true)" class="lg:hidden p-2.5 rounded-xl text-slate-200 hover:text-white bg-slate-900 border border-slate-700 active:scale-95 transition cursor-pointer shadow-md" aria-label="Open Menu">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Drawer -->
+    <!-- Sidebar / Mobile Drawer with New AI Analyzer -->
     <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
         <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl overflow-y-auto">
             <div>
@@ -164,20 +159,19 @@
                     </button>
                 </div>
 
-                <nav class="mt-5 flex flex-col gap-2">
-                    <a href="/" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🏠</span> Home</a>
-                    <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition"><span>✦</span> Prep Hub</a>
-                    <a href="/history" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 transition"><span>🕒</span> History Page</a>
-                    {% if logged_in or session.get('user_id') %}
-                        <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition"><span>📊</span> Dashboard / New Analysis</a>
-                    {% endif %}
+                <nav class="mt-5 flex flex-col gap-2.5">
+                    <a href="/" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-200 hover:bg-slate-800 transition border border-slate-800"><span>🏠</span> Home</a>
+                    <a href="/dashboard" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-extrabold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-lg shadow-blue-600/30 transition"><span>✨</span> New AI Resume Analyzer</a>
+                    <a href="/prep-hub" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-sky-400 hover:bg-sky-950/40 transition border border-sky-900/40"><span>✦</span> Prep Hub</a>
+                    <a href="/exam-explorer" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-purple-400 hover:bg-purple-950/40 transition border border-purple-900/40"><span>🎯</span> Exam Explorer</a>
+                    <a href="/history" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-200 hover:bg-slate-800 transition border border-slate-800"><span>🕒</span> History &amp; Reports</a>
+                    <a href="/about" onclick="toggleDrawer(false)" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-200 hover:bg-slate-800 transition border border-slate-800"><span>ℹ️</span> About Creator</a>
                 </nav>
 
-                <!-- Past Audit History in Mobile Drawer -->
                 <div class="mt-6 pt-5 border-t border-slate-800">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
+                    <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wide mb-3 flex items-center justify-between">
                         <span class="flex items-center gap-1.5">📜 Recent Audits</span>
-                        <span class="text-[10px] text-blue-400 font-mono">TiDB Sync</span>
+                        <span class="text-[10px] text-blue-400 font-mono">Synced</span>
                     </h4>
                     <div class="space-y-2.5 max-h-48 overflow-y-auto no-scrollbar">
                         {% if user_reports %}
@@ -199,78 +193,45 @@
                 </div>
             </div>
 
-            <!-- Mobile Drawer Bottom Actions -->
             <div class="pt-5 mt-6 border-t border-slate-800 flex flex-col gap-2.5">
-                {% if logged_in or session.get('user_id') %}
-                    <a href="/logout" class="w-full text-center py-3 text-sm font-bold text-rose-400 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-800/50 rounded-xl transition shadow-lg">Logout Account</a>
+                {% if session.get('user_id') or session.get('user') or session.get('email') or logged_in %}
+                    <a href="/logout" class="w-full text-center py-3 text-sm font-bold text-rose-400 bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/60 rounded-xl transition shadow-lg">Logout Account</a>
                 {% else %}
-                    <a href="/login" class="w-full text-center py-3 text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition">Log In</a>
+                    <a href="/login" class="w-full text-center py-3 text-sm font-bold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition border border-slate-700">Log In</a>
                 {% endif %}
-                <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.4 • Satyam Kumar</span>
+                <span class="text-[10px] text-center text-slate-500 mt-1">CareersAnalysis v2.5 • Satyam Kumar</span>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="w-full overflow-x-hidden flex-1">
+    <main class="w-full overflow-x-hidden flex-1 max-w-full">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950">
+    <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950 w-full max-w-full">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <span>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar.</span>
-            <span class="text-slate-600">AI-powered career readiness platform</span>
+            <span class="text-slate-400 font-semibold">AI-powered career readiness platform</span>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
+        // Bulletproof splash screen handler: ensures it never gets stuck forever.
         function removeSplash() {
             const splash = document.getElementById("appSplash");
             if (!splash) return;
-            setTimeout(function () {
-                splash.classList.add("splash-fade");
-                setTimeout(function () { if (splash) splash.remove(); }, 500);
-            }, 600);
-        }
-        if (document.readyState === "complete") { removeSplash(); } else { window.addEventListener("load", removeSplash); }
-
-        // Clean Action Trigger (Skipping internal anchors and history loading loops)
-        document.addEventListener('click', function(e) {
-            const target = e.target.closest('a, button, input[type="submit"]');
-            if (!target) return;
-            if (target.getAttribute('onclick') && target.getAttribute('onclick').includes('toggleDrawer')) return;
-            const href = target.getAttribute('href');
-            if (href && (href.startsWith('#') || href.startsWith('javascript:') || href.includes('/history'))) return;
-
-            showActionSplash(target.textContent.trim() || "Processing...");
-        });
-
-        function showActionSplash(actionName) {
-            if (document.getElementById('appSplash')) return;
-            const splashDiv = document.createElement('div');
-            splashDiv.id = 'appSplash';
-            splashDiv.innerHTML = `
-                <div class="splash-container">
-                    <div class="splash-glow"></div>
-                    <div class="splash-ring-outer"></div>
-                    <div class="splash-ring-middle"></div>
-                    <div class="splash-orbit">
-                        <div class="splash-dot"></div>
-                        <div class="splash-dot-two"></div>
-                    </div>
-                    <div class="splash-logo"><span>CA</span></div>
-                    <div class="splash-brand">
-                        <div class="splash-brand-title">Careers<span>Analysis</span></div>
-                        <div class="splash-subtitle">${actionName ? actionName.substring(0, 20) + '...' : 'AI Processing'}</div>
-                    </div>
-                    <div class="splash-loader"></div>
-                </div>
-            `;
-            document.body.appendChild(splashDiv);
+            splash.classList.add("splash-fade");
+            setTimeout(function () { if (splash) splash.remove(); }, 400);
         }
 
+        if (document.readyState === "complete") { 
+            removeSplash(); 
+        } else { 
+            window.addEventListener("load", removeSplash);
+            setTimeout(removeSplash, 1200);
+        }
+
+        // Mobile Drawer Controller
         function toggleDrawer(open) {
             const overlay = document.getElementById('mobileDrawerOverlay');
             const panel = document.getElementById('mobileDrawerPanel');
