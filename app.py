@@ -52,7 +52,6 @@ def get_or_cache_syllabus(query):
         db.close()
 
 
-# Sidebar history ke liye context processor jo session check karke data bhejega
 @app.context_processor
 def inject_user_reports():
     user_email = session.get("user")
@@ -529,8 +528,6 @@ def sitemap():
 
 
 @app.route("/topic-drill", methods=["GET", "POST"])
-def topic_drill():
-    app.route("/topic-drill", methods=["GET", "POST"])
 def topic_drill():
     if request.method == "POST":
         query = request.form.get("query", "").strip()
