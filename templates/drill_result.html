@@ -133,27 +133,6 @@
             color: #94a3b8;
             font-size: 0.85rem;
         }
-        .q-card {
-            background: #111c35;
-            border: 1px solid #1e293b;
-            border-left: 4px solid #2563eb;
-            padding: 14px 16px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-        .q-text {
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: #f8fafc;
-            margin-bottom: 6px;
-        }
-        .q-ans {
-            font-size: 0.86rem;
-            color: #94a3b8;
-        }
-        .q-ans strong {
-            color: #10b981;
-        }
         .tips-list {
             padding-left: 18px;
             color: #cbd5e1;
@@ -201,19 +180,6 @@
                     <span class="tag-weight">{{ unit.weightage }} Weightage</span>
                 </div>
                 <div class="unit-topics">{{ unit.must_cover_topics }}</div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <!-- High-Yield Questions -->
-        {% if data.high_yield_questions %}
-        <div class="card">
-            <h2 class="section-heading">🎯 High-Yield Questions & Approaches</h2>
-            {% for item in data.high_yield_questions %}
-            <div class="q-card">
-                <div class="q-text">Q{{ loop.index }}: {{ item.q }}</div>
-                <div class="q-ans"><strong>Best Approach:</strong> {{ item.approach }}</div>
             </div>
             {% endfor %}
         </div>
