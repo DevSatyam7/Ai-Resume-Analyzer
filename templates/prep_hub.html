@@ -3,146 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Placement & Syllabus Hub | CareersAnalysis</title>
-    <meta name="description" content="Dedicated placement preparation hub for corporate assessment patterns, coding DSA, Core CS, and interview roadmaps.">
+    <meta name="description" content="AI-powered placement preparation and syllabus roadmap.">
+
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: #f8fafc; }
-        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(18px); }
-        .loader-spin { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid #38bdf8; border-radius: 50%; width: 18px; height: 18px; animation: spin 0.8s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #020617;
+            color: #f8fafc;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, .68);
+            backdrop-filter: blur(20px);
+        }
+
+        .glow {
+            box-shadow: 0 0 50px rgba(14,165,233,.08);
+        }
+
+        .card {
+            transition: .25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56,189,248,.35);
+            box-shadow: 0 15px 40px rgba(0,0,0,.25);
+        }
+
+        .loader-spin {
+            border: 3px solid rgba(255,255,255,.2);
+            border-top: 3px solid #38bdf8;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media print {
+            header, footer, #search-area, #quick-guide {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            #result {
+                border: none;
+                box-shadow: none;
+            }
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-2.5 group shrink-0">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-8 h-8 rounded-xl object-cover border border-slate-800">
-                <span class="text-lg font-extrabold text-white">Careers<span class="text-blue-500">Analysis</span></span>
+<!-- HEADER -->
+<header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+
+        <a href="/" class="flex items-center gap-2.5">
+            <img src="{{ url_for('static', filename='favicon.png') }}"
+                 class="w-9 h-9 rounded-xl border border-slate-700">
+            <span class="text-lg font-extrabold">
+                Careers<span class="text-blue-500">Analysis</span>
+            </span>
+        </a>
+
+        <nav class="flex items-center gap-4 text-sm">
+            <a href="/" class="text-slate-400 hover:text-white">Home</a>
+            <a href="/prep-hub" class="text-sky-400 font-semibold">Placement Hub</a>
+
+            {% if logged_in %}
+            <a href="/dashboard"
+               class="bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-xl">
+                Dashboard
             </a>
-            <div class="flex items-center gap-4 text-sm font-medium">
-                <a href="/" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="/prep-hub" class="text-sky-400 font-semibold">Placement Hub</a>
-                {% if logged_in %}
-                    <a href="/dashboard" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg shadow-md transition">Dashboard</a>
-                {% else %}
-                    <a href="/login" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-lg shadow-md transition">Log In</a>
-                {% endif %}
-            </div>
+            {% else %}
+            <a href="/login"
+               class="bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-xl">
+                Log In
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-10">
+
+<!-- HERO -->
+<section class="relative overflow-hidden rounded-[2rem] glass border border-sky-500/25 p-8 sm:p-12 text-center glow mb-8">
+
+    <div class="absolute -top-24 -right-24 w-64 h-64 bg-sky-500/10 blur-3xl rounded-full"></div>
+
+    <div class="relative">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                     bg-sky-950/70 border border-sky-800/60
+                     text-sky-400 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+            AI Placement Intelligence
+        </span>
+
+        <h1 class="mt-5 text-4xl sm:text-5xl font-extrabold tracking-tight">
+            Placement &
+            <span class="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-400
+                         bg-clip-text text-transparent">
+                Syllabus Hub
+            </span>
+        </h1>
+
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Explore company recruitment patterns, aptitude, coding, Core CS,
+            interviews and academic preparation through one structured roadmap.
+        </p>
+    </div>
+</section>
+
+
+<!-- SEARCH -->
+<form action="/prep-hub" method="POST" id="hub-form"
+      class="max-w-3xl mx-auto mb-12" id="search-area">
+
+    <div class="flex items-center gap-2 p-1.5 rounded-2xl
+                bg-slate-900 border border-slate-800
+                focus-within:border-sky-500 shadow-2xl">
+
+        <input
+            type="text"
+            name="query"
+            value="{{ query }}"
+            placeholder="Search: Wipro Elite NTH, TCS NQT, DSA, DBMS..."
+            required
+            class="flex-1 bg-transparent px-4 py-3 text-sm text-white
+                   placeholder-slate-500 focus:outline-none">
+
+        <button id="hub-btn"
+                class="bg-gradient-to-r from-sky-600 to-indigo-600
+                       hover:from-sky-500 hover:to-indigo-500
+                       px-5 py-3 rounded-xl font-semibold text-sm
+                       flex items-center gap-2 shadow-lg">
+
+            <span id="hub-btn-text">Explore ✦</span>
+            <div id="hub-spinner" class="loader-spin hidden"></div>
+        </button>
+    </div>
+
+    <p class="text-center text-xs text-slate-600 mt-3">
+        Try a company, exam, skill, subject or placement topic
+    </p>
+</form>
+
+
+<!-- QUICK GUIDE -->
+<section id="quick-guide" class="mb-14">
+
+    <div class="flex items-end justify-between mb-5">
+        <div>
+            <p class="text-sky-400 text-xs font-bold uppercase tracking-widest">
+                Preparation Framework
+            </p>
+            <h2 class="text-2xl font-extrabold mt-1">
+                Everything for Placement
+            </h2>
         </div>
-    </header>
+    </div>
 
-    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        <!-- Banner -->
-        <div class="relative overflow-hidden rounded-3xl p-8 sm:p-10 glass border border-sky-500/30 shadow-2xl mb-8 text-center space-y-3">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-sky-950/80 text-sky-400 border border-sky-800/60 mx-auto">
-                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span> Job &amp; Campus Placement Engine
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Placement &amp; <span class="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">Syllabus Hub</span></h1>
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
-                Your ultimate roadmap for corporate recruitment drives, aptitude matrices, coding rounds, and core computer science placement preparation.
+        {% set modules = [
+            ('🏢','Company Patterns','TCS NQT, Infosys, Wipro, Accenture and recruitment test structures.'),
+            ('📊','Aptitude & Reasoning','Quantitative aptitude, logical reasoning and verbal ability.'),
+            ('💻','Coding & DSA','Arrays, strings, linked lists, trees, graphs and algorithms.'),
+            ('⚙️','Core CS Subjects','DBMS, SQL, OS, Computer Networks and OOP concepts.'),
+            ('🎙️','Technical & HR','Project discussion, technical interviews and HR preparation.'),
+            ('📚','Semester Academics','University subjects, semester mapping and academic preparation.')
+        ] %}
+
+        {% for icon,title,desc in modules %}
+        <div class="card p-6 rounded-2xl bg-slate-900/80
+                    border border-slate-800">
+
+            <div class="text-2xl mb-4">{{ icon }}</div>
+
+            <h3 class="font-bold text-white">{{ title }}</h3>
+
+            <p class="text-sm text-slate-400 leading-relaxed mt-2">
+                {{ desc }}
             </p>
         </div>
+        {% endfor %}
 
-        <!-- Search Bar -->
-        <form action="/prep-hub" method="POST" id="hub-form" class="relative max-w-2xl mx-auto mb-10">
-            <div class="flex items-center bg-slate-900 border border-slate-800 rounded-2xl p-1.5 focus-within:border-sky-500 transition shadow-xl">
-                <input 
-                    type="text" 
-                    name="query" 
-                    id="hub-input" 
-                    value="{{ query }}" 
-                    placeholder="Search company or skill e.g. TCS NQT, Infosys Coding, DBMS..." 
-                    required
-                    class="w-full bg-transparent px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none"
-                >
-                <button type="submit" id="hub-btn" class="bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 text-white font-medium text-sm px-6 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg">
-                    <span id="hub-btn-text">Explore Hub ✦</span>
-                    <div id="hub-spinner" class="loader-spin hidden"></div>
-                </button>
-            </div>
-        </form>
+    </div>
+</section>
 
-        <!-- Placement Core Modules Grid (Always Visible Quick Guide) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-sky-400 text-xl">🏢</div>
-                <h3 class="font-bold text-white text-sm">Company Patterns</h3>
-                <p class="text-xs text-slate-400">TCS NQT, Infosys InfyTQ, Wipro WILP, Accenture test sections and cutoffs.</p>
+
+<!-- RESULT -->
+{% if data %}
+
+<section id="result"
+         class="rounded-[2rem] bg-slate-900/80 border border-slate-800
+                shadow-2xl overflow-hidden">
+
+    <!-- RESULT HEADER -->
+    <div class="p-6 sm:p-8 border-b border-slate-800">
+
+        <div class="flex flex-col sm:flex-row sm:items-center
+                    sm:justify-between gap-5">
+
+            <div>
+                <p class="text-xs uppercase tracking-widest text-sky-400 font-bold">
+                    AI Preparation Report
+                </p>
+
+                <h2 class="text-3xl font-extrabold mt-2 capitalize">
+                    {{ query }}
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-2">
+                    Structured placement preparation roadmap
+                </p>
             </div>
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-indigo-400 text-xl">📊</div>
-                <h3 class="font-bold text-white text-sm">Aptitude &amp; Reasoning</h3>
-                <p class="text-xs text-slate-400">Quantitative aptitude, logical reasoning puzzles, and verbal ability modules.</p>
-            </div>
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-purple-400 text-xl">💻</div>
-                <h3 class="font-bold text-white text-sm">Coding &amp; DSA</h3>
-                <p class="text-xs text-slate-400">Arrays, Strings, Linked Lists, Trees, Graphs, and Dynamic Programming matrices.</p>
-            </div>
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-emerald-400 text-xl">⚙️</div>
-                <h3 class="font-bold text-white text-sm">Core CS Subjects</h3>
-                <p class="text-xs text-slate-400">DBMS SQL queries, Operating Systems locking/threads, Computer Networks &amp; OOPs.</p>
-            </div>
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-amber-400 text-xl">🎙️</div>
-                <h3 class="font-bold text-white text-sm">Technical &amp; HR Interviews</h3>
-                <p class="text-xs text-slate-400">Project-based viva questions, resume cross-questioning, and behavioral HR rounds.</p>
-            </div>
-            <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-                <div class="text-rose-400 text-xl">📚</div>
-                <h3 class="font-bold text-white text-sm">Semester Academics</h3>
-                <p class="text-xs text-slate-400">University curriculum mapping and engineering core semester study material.</p>
-            </div>
+
+            <button onclick="window.print()"
+                    class="self-start bg-slate-800 hover:bg-slate-700
+                           border border-slate-700 px-4 py-2.5
+                           rounded-xl text-sm">
+                ↓ Save as PDF
+            </button>
         </div>
+    </div>
 
-        <!-- Dynamic Query Result Section -->
-        {% if data %}
-        <div class="space-y-6 bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                <h2 class="text-2xl font-extrabold text-white capitalize">{{ query }}</h2>
-                <button onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-xl border border-slate-700">Save as PDF</button>
+
+    <div class="p-6 sm:p-8 space-y-10">
+
+        <!-- SUMMARY -->
+        {% if data.summary %}
+        <div>
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-sky-400 font-bold">01.</span>
+                <h3 class="text-xl font-bold">Overview</h3>
             </div>
-            <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
-                {% if data.summary %}
-                <p>{{ data.summary }}</p>
-                {% endif %}
-                {% if data.syllabus_units %}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    {% for unit in data.syllabus_units %}
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                        <h4 class="font-bold text-white text-sm mb-1">{{ unit.unit_name }}</h4>
-                        <p class="text-xs text-slate-400">{{ unit.must_cover_topics }}</p>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+
+            <div class="p-5 rounded-2xl bg-slate-950/70
+                        border border-slate-800 text-slate-300
+                        leading-relaxed">
+                {{ data.summary }}
             </div>
         </div>
         {% endif %}
 
-    </main>
 
-    <footer class="border-t border-slate-900 py-8 px-4 text-center text-xs text-slate-500 bg-slate-950 mt-auto">
-        <p>&copy; 2026 CareersAnalysis. Designed &amp; Maintained by Satyam Kumar.</p>
-    </footer>
+        <!-- SYLLABUS -->
+        {% if data.syllabus_units %}
+        <div>
 
-    <script>
-        document.getElementById('hub-form').addEventListener('submit', function() {
-            const btn = document.getElementById('hub-btn');
-            const btnText = document.getElementById('hub-btn-text');
-            const spinner = document.getElementById('hub-spinner');
-            btn.disabled = true;
-            btnText.innerText = "Processing...";
-            spinner.classList.remove('hidden');
-        });
-    </script>
+            <div class="flex items-center gap-3 mb-5">
+                <span class="text-sky-400 font-bold">02.</span>
+                <h3 class="text-xl font-bold">
+                    Core Preparation Areas
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                {% for unit in data.syllabus_units %}
+
+                <div class="card p-5 rounded-2xl
+                            bg-slate-950/80 border border-slate-800">
+
+                    <div class="flex items-start justify-between gap-3">
+
+                        <h4 class="font-bold text-white">
+                            {{ unit.unit_name }}
+                        </h4>
+
+                        <span class="shrink-0 text-[10px]
+                                     font-bold uppercase tracking-wide
+                                     px-2.5 py-1 rounded-lg
+                                     bg-sky-950 text-sky-400
+                                     border border-sky-800">
+                            Focus
+                        </span>
+                    </div>
+
+                    <p class="text-sm text-slate-400
+                              leading-relaxed mt-3">
+                        {{ unit.must_cover_topics }}
+                    </p>
+
+                    <div class="mt-4 h-1 rounded-full bg-slate-800 overflow-hidden">
+                        <div class="h-full w-3/4 bg-gradient-to-r
+                                    from-sky-500 to-indigo-500"></div>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+
+        <!-- PREPARATION CHECKLIST -->
+        <div>
+            <div class="flex items-center gap-3 mb-5">
+                <span class="text-sky-400 font-bold">03.</span>
+                <h3 class="text-xl font-bold">
+                    How to Prepare
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                <div class="p-5 rounded-2xl bg-sky-950/30
+                            border border-sky-900/60">
+                    <div class="text-xl mb-3">01</div>
+                    <h4 class="font-bold">Learn</h4>
+                    <p class="text-xs text-slate-400 mt-2">
+                        Build concepts from the listed high-priority areas.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-indigo-950/30
+                            border border-indigo-900/60">
+                    <div class="text-xl mb-3">02</div>
+                    <h4 class="font-bold">Practice</h4>
+                    <p class="text-xs text-slate-400 mt-2">
+                        Solve problems and apply concepts under timed conditions.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-emerald-950/30
+                            border border-emerald-900/60">
+                    <div class="text-xl mb-3">03</div>
+                    <h4 class="font-bold">Revise</h4>
+                    <p class="text-xs text-slate-400 mt-2">
+                        Track weak areas and revise before the assessment.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- FINAL CTA -->
+        <div class="relative overflow-hidden rounded-2xl
+                    bg-gradient-to-r from-sky-950 to-indigo-950
+                    border border-sky-800/40 p-6 text-center">
+
+            <h3 class="font-bold text-lg">
+                Ready to prepare smarter?
+            </h3>
+
+            <p class="text-sm text-slate-400 mt-2">
+                Follow the roadmap above instead of preparing randomly.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+{% endif %}
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-900 py-8 px-4
+               text-center text-xs text-slate-500 bg-slate-950">
+
+    <p>
+        © 2026 CareersAnalysis. Designed & Maintained by Satyam Kumar.
+    </p>
+
+    <p class="mt-2 text-slate-600">
+        AI-powered career readiness platform
+    </p>
+</footer>
+
+
+<script>
+document.getElementById('hub-form').addEventListener('submit', function () {
+
+    const btn = document.getElementById('hub-btn');
+    const text = document.getElementById('hub-btn-text');
+    const spinner = document.getElementById('hub-spinner');
+
+    btn.disabled = true;
+    text.innerText = "Analyzing...";
+    spinner.classList.remove('hidden');
+});
+</script>
+
 </body>
 </html>
