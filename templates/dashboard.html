@@ -1,36 +1,36 @@
 {% extends "base.html" %}
 {% block robots %}noindex, nofollow{% endblock %}
 {% block content %}
-<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+<div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-12">
     <!-- Header Title Section -->
-    <div class="text-center mb-10 print:hidden">
+    <div class="text-center mb-8 sm:mb-10 print:hidden">
         <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-3 shadow-inner">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span class="text-xs font-bold text-blue-300 uppercase tracking-widest">Algorithmic Resume &amp; JD Audit Engine</span>
         </div>
         <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
             AI Resume &amp; Career Analyzer
         </h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto mt-3">
+        <p class="text-slate-400 text-xs sm:text-base max-w-xl mx-auto mt-2.5 px-2">
             Measure your ATS score, contrast against enterprise job descriptions, and discover role-specific placement roadmaps.
         </p>
     </div>
 
     <!-- Error Alert Box -->
     {% if result and result.error %}
-    <div class="mb-8 bg-red-950/60 border border-red-800/80 text-red-300 px-6 py-4 rounded-2xl text-sm print:hidden flex items-start gap-3 shadow-xl">
-        <span class="text-xl">⚠</span>
+    <div class="mb-6 bg-red-950/60 border border-red-800/80 text-red-300 px-5 py-4 rounded-2xl text-xs sm:text-sm print:hidden flex items-start gap-3 shadow-xl">
+        <span class="text-lg">⚠</span>
         <div>
             <strong class="font-bold">Evaluation Notice:</strong>
-            <p class="mt-0.5 text-xs sm:text-sm text-red-200/90">{{ result.error }}</p>
+            <p class="mt-0.5 text-xs text-red-200/90">{{ result.error }}</p>
         </div>
     </div>
     {% endif %}
 
     <!-- Input Form Card -->
-    <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-2xl mb-12 print:hidden relative overflow-hidden">
+    <div class="bg-slate-900/90 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-5 sm:p-10 shadow-2xl mb-10 print:hidden relative overflow-hidden">
         <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none"></div>
-        <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-6 relative z-10">
+        <form id="analyzeForm" method="POST" enctype="multipart/form-data" class="space-y-5 relative z-10">
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-200">
@@ -94,11 +94,11 @@
                         class="w-full text-xs text-slate-400 file:mr-4 file:py-3 file:px-5 file:rounded-2xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer transition">
                 </div>
                 <button type="submit" id="submitBtn"
-                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-2xl shadow-xl shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3.5 rounded-2xl shadow-xl shadow-blue-600/30 active:scale-95 transition whitespace-nowrap cursor-pointer">
                     Run Analysis ⚡
                 </button>
                 <div id="loadingState" class="hidden w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl cursor-not-allowed text-xs sm:text-sm">
-                    <svg class="animate-spin h-5 w-5 text-white shrink-0" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin h-5 w-5 text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                     </svg>
@@ -108,46 +108,39 @@
         </form>
     </div>
 
-    <!-- Complete Analysis Output Screen -->
+    <!-- Complete Analysis Output Screen (2-Column Desktop Grid Layout) -->
     {% if result and not result.error %}
-    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8 scroll-mt-20">
+    <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-8 shadow-2xl space-y-6 scroll-mt-20">
         
         <!-- Top Score Header Banner -->
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-6">
-            <div class="space-y-2">
-                <div class="flex items-center gap-2.5 flex-wrap">
-                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3.5 py-1.5 rounded-xl border border-emerald-500/20">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div class="space-y-1.5">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         Audit Evaluation Complete
                     </span>
-                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3.5 py-1.5 rounded-xl">
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-xl">
                         <span>🎯 Target:</span>
                         <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
                     </span>
                 </div>
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
                     ATS Audit &amp; Skill Gap Diagnosis
                 </h2>
             </div>
             
             <div class="flex items-center gap-3">
                 {% if result.ats_score is defined %}
-                <div class="bg-blue-950/90 border border-blue-800/80 px-5 py-2.5 rounded-2xl text-center shadow-xl">
-                    <span class="text-[11px] text-blue-300 block font-semibold uppercase tracking-wider">ATS Match</span>
-                    <span class="text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
+                <div class="bg-blue-950/90 border border-blue-800/80 px-4 py-2 rounded-2xl text-center shadow-xl">
+                    <span class="text-[10px] text-blue-300 block font-semibold uppercase tracking-wider">ATS Match</span>
+                    <span class="text-2xl sm:text-3xl font-black text-blue-400">{{ result.ats_score }}%</span>
                 </div>
                 {% endif %}
 
-                {% if current_audit_id %}
-                <a href="/download-audit/{{ current_audit_id }}" 
-                    class="print:hidden flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold transition shadow-lg shadow-blue-600/30 whitespace-nowrap">
-                    <span>Download ⬇</span>
-                </a>
-                {% endif %}
-
                 <button type="button" onclick="window.print()" 
-                    class="print:hidden flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 px-4 py-3 rounded-2xl text-xs sm:text-sm font-semibold transition whitespace-nowrap shadow-md">
-                    <span>Save PDF</span>
+                    class="print:hidden flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold transition whitespace-nowrap shadow-lg shadow-blue-600/35 cursor-pointer">
+                    <span>Save PDF 🖨️</span>
                 </button>
             </div>
         </div>
@@ -155,209 +148,211 @@
         <!-- Quick Jump Navigation Bar -->
         <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto no-scrollbar print:hidden sticky top-20 bg-slate-900/95 backdrop-blur-md z-30 py-2">
             <button type="button" onclick="scrollToSection('section-overview')" 
-                class="px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white whitespace-nowrap">
-                📊 Overview &amp; Pay
+                class="px-3.5 py-2 rounded-xl text-xs font-bold transition bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white whitespace-nowrap cursor-pointer">
+                📊 Overview
             </button>
             <button type="button" onclick="scrollToSection('section-eligibility')" 
-                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
-                🛡️ Eligibility Check
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap cursor-pointer">
+                🛡️ Eligibility
             </button>
             <button type="button" onclick="scrollToSection('section-skills')" 
-                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap cursor-pointer">
                 ⚡ Skills &amp; Gaps
             </button>
             <button type="button" onclick="scrollToSection('section-roadmap')" 
-                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap cursor-pointer">
                 🎯 Roadmap &amp; Viva
             </button>
             <button type="button" onclick="scrollToSection('section-resources')" 
-                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
-                📺 YouTube Links
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap cursor-pointer">
+                📺 YouTube
             </button>
             <button type="button" onclick="scrollToSection('section-pitch')" 
-                class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap">
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-slate-950 text-slate-300 hover:text-white border border-slate-800 whitespace-nowrap cursor-pointer">
                 ✉️ HR Pitch
             </button>
         </div>
 
-        <!-- ================= SECTION 1: OVERVIEW & PAY (Styled Properly) ================= -->
-        <div id="section-overview" class="space-y-6 pt-2">
-            <div class="bg-slate-950 border border-sky-500/30 rounded-2xl p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2"><span>📋</span> Profile Summary</h3>
-                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ result.file_summary }}</p>
-            </div>
+        <!-- Dual-Column Desktop Grid Layout (12 Columns: Left 5, Right 7) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+            
+            <!-- LEFT COLUMN (Overview, Pay Scale, Eligibility) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Overview & Summary -->
+                <div id="section-overview" class="bg-slate-950 border border-sky-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <h3 class="text-xs sm:text-sm font-bold text-white mb-2 flex items-center gap-2"><span>📋</span> Profile Summary</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ result.file_summary }}</p>
+                </div>
 
-            {% if result.pay_scale %}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-gradient-to-br from-slate-950 to-blue-950/40 border border-blue-500/30 rounded-2xl p-6 shadow-xl">
+                <!-- Pay Scale & CTC -->
+                {% if result.pay_scale %}
+                <div class="bg-gradient-to-br from-slate-950 to-blue-950/40 border border-blue-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
                     <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider block mb-1">💰 Market Pay Scale &amp; CTC</span>
-                    <h4 class="text-xl font-black text-white mt-1">{{ result.pay_scale.salary_range }}</h4>
+                    <h4 class="text-lg sm:text-xl font-black text-white mt-1">{{ result.pay_scale.salary_range }}</h4>
                     <p class="text-xs text-blue-200/90 mt-2 font-medium">In-Hand: {{ result.pay_scale.in_hand_monthly }}</p>
+                    <div class="mt-4 pt-3 border-t border-blue-500/20">
+                        <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider block mb-1">🚀 Career Growth Projection</span>
+                        <p class="text-xs text-emerald-100/90 leading-relaxed font-medium">{{ result.pay_scale.career_growth }}</p>
+                    </div>
                 </div>
-                <div class="bg-gradient-to-br from-slate-950 to-emerald-950/40 border border-emerald-500/30 rounded-2xl p-6 shadow-xl">
-                    <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider block mb-1">🚀 Career Growth Projection</span>
-                    <p class="text-xs text-emerald-100/90 mt-1.5 leading-relaxed font-medium">{{ result.pay_scale.career_growth }}</p>
-                </div>
-            </div>
-            {% endif %}
-        </div>
+                {% endif %}
 
-        <!-- ================= SECTION 1.5: ELIGIBILITY CHECK BOX (Styled Inner Grid) ================= -->
-        <div id="section-eligibility" class="space-y-4 pt-4 border-t border-slate-800">
-            {% if result.eligibility %}
-            <div class="bg-slate-950 border border-amber-500/30 rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
-                    <span>🛡️</span> Eligibility Check &amp; Criteria Fit
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div class="p-4 bg-slate-900/90 border border-amber-500/20 rounded-xl space-y-1">
-                        <span class="text-amber-300/80 font-bold uppercase tracking-wider text-[10px] block">Status Verification</span>
-                        <span class="text-white font-extrabold text-sm block">{{ result.eligibility.status }}</span>
-                    </div>
-                    <div class="p-4 bg-slate-900/90 border border-slate-800 rounded-xl space-y-1">
-                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Criteria Fit Assessment</span>
-                        <span class="text-slate-200 font-medium block text-xs leading-relaxed">{{ result.eligibility.criteria_fit }}</span>
-                    </div>
-                    <div class="p-4 bg-slate-900/90 border border-slate-800 rounded-xl space-y-1">
-                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Required Qualification</span>
-                        <span class="text-slate-300 font-medium block text-xs leading-relaxed">{{ result.eligibility.required_qualification }}</span>
-                    </div>
-                    <div class="p-4 bg-slate-900/90 border border-slate-800 rounded-xl space-y-1">
-                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Candidate Match</span>
-                        <span class="text-slate-300 font-medium block text-xs leading-relaxed">{{ result.eligibility.matched_qualification }}</span>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- ================= SECTION 2: SKILLS & GAPS ================= -->
-        <div id="section-skills" class="space-y-6 pt-4 border-t border-slate-800">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>⚡</span> Skill Gap &amp; Keyword Analysis</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                    <div class="p-5 bg-emerald-950/20 border border-emerald-800/40 rounded-2xl">
-                        <span class="text-xs font-bold text-emerald-400 block mb-3">✓ Matched Skills</span>
-                        <div class="flex flex-wrap gap-2">
-                            {% if result.matched_skills is iterable and result.matched_skills is not string %}
-                                {% for skill in result.matched_skills %}
-                                <span class="bg-emerald-900/40 border border-emerald-700/50 text-emerald-300 text-xs px-3 py-1.5 rounded-xl font-medium">{{ skill }}</span>
-                                {% endfor %}
-                            {% else %}
-                                <span class="text-xs text-slate-300">{{ result.matched_skills }}</span>
-                            {% endif %}
+                <!-- Eligibility Check Box -->
+                <div id="section-eligibility" class="bg-slate-950 border border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-xl space-y-3">
+                    {% if result.eligibility %}
+                    <h3 class="text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <span>🛡️</span> Eligibility Check &amp; Criteria Fit
+                    </h3>
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3.5 bg-slate-900 border border-amber-500/20 rounded-xl space-y-1">
+                            <span class="text-amber-300/80 font-bold uppercase tracking-wider text-[10px] block">Status Verification</span>
+                            <span class="text-white font-extrabold text-sm block">{{ result.eligibility.status }}</span>
+                        </div>
+                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Criteria Fit Assessment</span>
+                            <span class="text-slate-200 font-medium block text-xs leading-relaxed">{{ result.eligibility.criteria_fit }}</span>
+                        </div>
+                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Required Qualification</span>
+                            <span class="text-slate-300 font-medium block text-xs leading-relaxed">{{ result.eligibility.required_qualification }}</span>
+                        </div>
+                        <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px] block">Candidate Match</span>
+                            <span class="text-slate-300 font-medium block text-xs leading-relaxed">{{ result.eligibility.matched_qualification }}</span>
                         </div>
                     </div>
-                    <div class="p-5 bg-rose-950/20 border border-rose-800/40 rounded-2xl">
-                        <span class="text-xs font-bold text-rose-400 block mb-3">▲ Missing / Recommended Skills</span>
-                        <div class="flex flex-wrap gap-2">
-                            {% if result.missing_skills is iterable and result.missing_skills is not string %}
-                                {% for skill in result.missing_skills %}
-                                <span class="bg-rose-900/40 border border-rose-700/50 text-rose-300 text-xs px-3 py-1.5 rounded-xl font-medium">{{ skill }}</span>
-                                {% endfor %}
-                            {% else %}
-                                <span class="text-xs text-slate-300">{{ result.missing_skills }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION 3: ROADMAP & VIVA (5 Detailed Questions) ================= -->
-        <div id="section-roadmap" class="space-y-6 pt-4 border-t border-slate-800">
-            <div class="space-y-6">
-                <!-- Detailed Roadmap Section -->
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>🎯</span> Targeted Career Roadmap</h3>
-                    <div class="space-y-3.5">
-                        {% if result.roadmap %}
-                            {% for step in result.roadmap %}
-                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-start gap-3.5 shadow-inner">
-                                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl shrink-0 shadow">Phase {{ loop.index }}</span>
-                                <p class="text-xs sm:text-sm text-slate-200 leading-relaxed pt-1">{{ step }}</p>
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-xs text-slate-400">Follow core data structures, system design, and deployment milestones.</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <!-- Top Interview / Viva Questions (5 Questions) -->
-                <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>💡</span> Targeted Technical &amp; Exam Questions</h3>
-                    <div class="space-y-4">
-                        {% if result.viva_questions %}
-                            {% for q in result.viva_questions %}
-                            <div class="p-5 bg-slate-900 border border-slate-800 rounded-2xl space-y-3 shadow-inner">
-                                <p class="text-xs sm:text-sm font-extrabold text-slate-100 flex items-start gap-2">
-                                    <span class="text-blue-400">{{ loop.index }}.</span>
-                                    <span>{{ q.question if q is mapping else q }}</span>
-                                </p>
-                                {% if q is mapping and q.evaluation_focus %}
-                                <div class="text-xs text-slate-300 bg-slate-950/90 p-3.5 rounded-xl border border-slate-800/80">
-                                    <strong class="text-sky-400 font-bold uppercase tracking-wider block mb-1 text-[10px]">Evaluation Focus:</strong> 
-                                    {{ q.evaluation_focus }}
-                                </div>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl shadow-inner">
-                                <p class="text-xs text-slate-300">1. Explain how request context works in Flask and handling multi-threading safely.</p>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SECTION 4: YOUTUBE & RESOURCES (With YouTube Logo) ================= -->
-        <div id="section-resources" class="space-y-6 pt-4 border-t border-slate-800">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>📺</span> Missing Skill YouTube Learning Links</h3>
-                <p class="text-xs text-slate-400">Targeted video tutorials curated specifically for every identified missing skill to bridge your technical gaps.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-                    {% if result.youtube_links %}
-                        {% for link in result.youtube_links %}
-                        <a href="{{ link.url }}" target="_blank" class="p-4 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
-                            <div class="flex items-center gap-2.5 pr-2 truncate">
-                                <span class="bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 flex items-center gap-0.5 shadow">▶ YT</span>
-                                <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400 truncate">{{ link.title }}</span>
-                            </div>
-                            <span class="text-xs text-blue-400 font-bold shrink-0 bg-blue-500/10 px-2.5 py-1 rounded-xl border border-blue-500/20">Watch ↗</span>
-                        </a>
-                        {% endfor %}
-                    {% else %}
-                        <a href="[https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design](https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design)" target="_blank" class="p-4 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
-                            <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">Advanced Flask &amp; System Design Masterclass</span>
-                            <span class="text-xs text-blue-400 font-bold shrink-0">Watch ↗</span>
-                        </a>
                     {% endif %}
                 </div>
-            </div>
-        </div>
 
-        <!-- ================= SECTION 5: HR PITCH & COVER LETTER (Professional Styled Box) ================= -->
-        <div id="section-pitch" class="space-y-6 pt-4 border-t border-slate-800">
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>✉️</span> Instant AI Recruiter &amp; HR Referral Pitch</h3>
-                    <div class="flex items-center gap-2">
-                        <button type="button" onclick="copyPitchText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-2 rounded-xl transition border border-slate-700">
-                            Copy Pitch 📋
-                        </button>
-                        <button type="button" onclick="downloadPitchText()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl transition shadow-md">
-                            Download Pitch ⬇
-                        </button>
+            </div>
+
+            <!-- RIGHT COLUMN (Skills, Roadmap, YouTube Links, HR Pitch) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Skill Gaps & Keywords -->
+                <div id="section-skills" class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>⚡</span> Skill Gap &amp; Keyword Analysis</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-2xl">
+                            <span class="text-xs font-bold text-emerald-400 block mb-3">✓ Matched Skills</span>
+                            <div class="flex flex-wrap gap-2">
+                                {% if result.matched_skills is iterable and result.matched_skills is not string %}
+                                    {% for skill in result.matched_skills %}
+                                    <span class="bg-emerald-900/40 border border-emerald-700/50 text-emerald-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-xs text-slate-300">{{ result.matched_skills }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="p-4 bg-rose-950/20 border border-rose-800/40 rounded-2xl">
+                            <span class="text-xs font-bold text-rose-400 block mb-3">▲ Missing / Recommended Skills</span>
+                            <div class="flex flex-wrap gap-2">
+                                {% if result.missing_skills is iterable and result.missing_skills is not string %}
+                                    {% for skill in result.missing_skills %}
+                                    <span class="bg-rose-900/40 border border-rose-700/50 text-rose-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-xs text-slate-300">{{ result.missing_skills }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p class="text-xs text-slate-400">Use this hyper-personalized outreach template on LinkedIn or Email to grab recruiter attention.</p>
-                <div class="p-6 bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono whitespace-pre-wrap shadow-inner" id="pitchBox">
-{{ result.hr_pitch | default('Respected Selection Panel,\n\nI am writing to express my strong candidacy for the position. Having audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nSincerely,\nSatyam Kumar') }}
+
+                <!-- Career Roadmap & Viva Questions -->
+                <div id="section-roadmap" class="space-y-6">
+                    <!-- Detailed Roadmap -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                        <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>🎯</span> Targeted Career Roadmap</h3>
+                        <div class="space-y-3">
+                            {% if result.roadmap %}
+                                {% for step in result.roadmap %}
+                                <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl flex items-start gap-3 shadow-inner">
+                                    <span class="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-xl shrink-0 shadow">Phase {{ loop.index }}</span>
+                                    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed pt-0.5">{{ step }}</p>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-xs text-slate-400">Follow core data structures, system design, and deployment milestones.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Top Interview / Viva Questions -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                        <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>💡</span> Targeted Technical &amp; Exam Questions</h3>
+                        <div class="space-y-3">
+                            {% if result.viva_questions %}
+                                {% for q in result.viva_questions %}
+                                <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-2.5 shadow-inner">
+                                    <p class="text-xs sm:text-sm font-extrabold text-slate-100 flex items-start gap-2">
+                                        <span class="text-blue-400">{{ loop.index }}.</span>
+                                        <span>{{ q.question if q is mapping else q }}</span>
+                                    </p>
+                                    {% if q is mapping and q.evaluation_focus %}
+                                    <div class="text-xs text-slate-300 bg-slate-950/90 p-3 rounded-xl border border-slate-800/80">
+                                        <strong class="text-sky-400 font-bold uppercase tracking-wider block mb-1 text-[10px]">Evaluation Focus:</strong> 
+                                        {{ q.evaluation_focus }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl shadow-inner">
+                                    <p class="text-xs text-slate-300">1. Explain how request context works in Flask and handling multi-threading safely.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
+
+                <!-- YouTube Learning Links -->
+                <div id="section-resources" class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-3">
+                    <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>📺</span> Missing Skill YouTube Learning Links</h3>
+                    <p class="text-xs text-slate-400">Targeted video tutorials curated specifically for every identified missing skill to bridge your technical gaps.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        {% if result.youtube_links %}
+                            {% for link in result.youtube_links %}
+                            <a href="{{ link.url }}" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
+                                <div class="flex items-center gap-2 pr-2 truncate">
+                                    <span class="bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 flex items-center gap-0.5 shadow">▶ YT</span>
+                                    <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400 truncate">{{ link.title }}</span>
+                                </div>
+                                <span class="text-[11px] text-blue-400 font-bold shrink-0 bg-blue-500/10 px-2.5 py-1 rounded-xl border border-blue-500/20">Watch ↗</span>
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            <a href="https://www.youtube.com/results?search_query=Flask+RESTful+API+System+Design" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
+                                <span class="text-xs font-medium text-slate-200 group-hover:text-blue-400">Advanced Flask &amp; System Design Masterclass</span>
+                                <span class="text-[11px] text-blue-400 font-bold shrink-0">Watch ↗</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- HR Pitch & Cover Letter -->
+                <div id="section-pitch" class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>✉️</span> Instant AI Recruiter &amp; HR Referral Pitch</h3>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="copyPitchText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-3 py-2 rounded-xl transition border border-slate-700 cursor-pointer">
+                                Copy 📋
+                            </button>
+                            <button type="button" onclick="downloadPitchText()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-semibold px-3 py-2 rounded-xl transition shadow-md cursor-pointer">
+                                Download ⬇
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400">Use this hyper-personalized outreach template on LinkedIn or Email to grab recruiter attention.</p>
+                    <div class="p-4 sm:p-6 bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono whitespace-pre-wrap shadow-inner" id="pitchBox">
+{{ result.hr_pitch | default('Respected Selection Panel,\n\nI am writing to express my strong candidacy for the position. Having audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nSincerely,\nSatyam Kumar') }}
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
     </div>
@@ -438,4 +433,5 @@
         }
     }
 </script>
+{% endblock %}
 {% endblock %}
