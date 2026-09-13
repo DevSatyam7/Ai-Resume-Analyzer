@@ -1,231 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ data.query_title }} — CareersAnalysis Explorer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
+    <!-- Dynamic SEO & Open Graph Metadata for Exam / Topic Explorer -->
+    <title>{{ data.query_title }} Preparation Roadmap &amp; Syllabus — CareersAnalysis</title>
+    <meta name="title" content="{{ data.query_title }} Preparation Roadmap &amp; Syllabus — CareersAnalysis">
+    <meta name="description" content="Comprehensive study blueprint, core units, weightage distribution, and preparation strategy for {{ data.query_title }}. Built by Satyam Kumar.">
+    <meta name="author" content="Satyam Kumar">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://careersanalysis.me/">
 
-    body{
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:#030712;
-      color:#f8fafc;
-      line-height:1.6;
-      padding:34px 16px;
+    <!-- Social Graph & Open Graph Meta -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="CareersAnalysis">
+    <meta property="og:url" content="https://careersanalysis.me/">
+    <meta property="og:title" content="{{ data.query_title }} Study Roadmap — CareersAnalysis">
+    <meta property="og:description" content="Explore structured study blueprint and preparation guide for {{ data.query_title }}.">
+    <meta property="og:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
+
+    <!-- Google Ownership & Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://careersanalysis.me/#techarticle",
+          "headline": "{{ data.query_title }} Preparation Roadmap",
+          "description": "Study blueprint and syllabus breakdown for {{ data.query_title }}.",
+          "author": {
+            "@type": "Person",
+            "name": "Satyam Kumar",
+            "alumniOf": "Government Engineering College Munger",
+            "sameAs": "https://www.linkedin.com/in/satyam-kumar-29b331423"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "CareersAnalysis",
+            "url": "https://careersanalysis.me/"
+          }
+        }
+      ]
     }
+    </script>
 
-    .container{
-      max-width:900px;
-      margin:auto;
-    }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 
-    .back{
-      display:inline-block;
-      color:#94a3b8;
-      text-decoration:none;
-      margin-bottom:18px;
-      font-size:14px;
-    }
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
 
-    .back:hover{color:#fff}
+        body{
+          font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+          background:#030712;
+          color:#f8fafc;
+          line-height:1.6;
+          padding:34px 16px;
+        }
 
-    .card{
-      background:linear-gradient(145deg,#0b1220,#070c16);
-      border:1px solid #1e293b;
-      border-radius:20px;
-      padding:28px;
-      margin-bottom:18px;
-      box-shadow:0 15px 45px rgba(0,0,0,.22);
-    }
+        .container{
+          max-width:900px;
+          margin:auto;
+        }
 
-    .hero{
-      padding:34px;
-      border-color:#263449;
-    }
+        .back{
+          display:inline-block;
+          color:#94a3b8;
+          text-decoration:none;
+          margin-bottom:18px;
+          font-size:14px;
+        }
 
-    .badge{
-      display:inline-flex;
-      padding:6px 11px;
-      border-radius:999px;
-      background:#111c30;
-      border:1px solid #263958;
-      color:#93c5fd;
-      font-size:12px;
-      font-weight:700;
-      margin-bottom:14px;
-    }
+        .back:hover{color:#fff}
 
-    h1{
-      font-size:clamp(30px,5vw,48px);
-      line-height:1.1;
-      letter-spacing:-1px;
-      margin-bottom:14px;
-    }
+        .card{
+          background:linear-gradient(145deg,#0b1220,#070c16);
+          border:1px solid #1e293b;
+          border-radius:20px;
+          padding:28px;
+          margin-bottom:18px;
+          box-shadow:0 15px 45px rgba(0,0,0,.22);
+        }
 
-    .summary{
-      color:#a8b3c5;
-      max-width:760px;
-      font-size:16px;
-    }
+        .hero{
+          padding:34px;
+          border-color:#263449;
+        }
 
-    .section-title{
-      font-size:20px;
-      margin-bottom:18px;
-    }
+        .badge{
+          display:inline-flex;
+          padding:6px 11px;
+          border-radius:999px;
+          background:#111c30;
+          border:1px solid #263958;
+          color:#93c5fd;
+          font-size:12px;
+          font-weight:700;
+          margin-bottom:14px;
+        }
 
-    .section-number{
-      color:#64748b;
-      font-size:12px;
-      margin-right:7px;
-    }
+        h1{
+          font-size:clamp(30px,5vw,48px);
+          line-height:1.1;
+          letter-spacing:-1px;
+          margin-bottom:14px;
+        }
 
-    .snapshot{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
+        .summary{
+          color:#a8b3c5;
+          max-width:760px;
+          font-size:16px;
+        }
 
-    .stat{
-      padding:18px;
-      border-radius:15px;
-      background:#080f1b;
-      border:1px solid #1d2a3c;
-    }
+        .section-title{
+          font-size:20px;
+          margin-bottom:18px;
+        }
 
-    .stat label{
-      display:block;
-      color:#64748b;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.7px;
-      margin-bottom:7px;
-    }
+        .section-number{
+          color:#64748b;
+          font-size:12px;
+          margin-right:7px;
+        }
 
-    .stat strong{
-      display:block;
-      color:#e2e8f0;
-      font-size:14px;
-      line-height:1.5;
-    }
+        .snapshot{
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:12px;
+        }
 
-    .unit{
-      border:1px solid #1d2939;
-      background:#080e18;
-      border-radius:16px;
-      padding:19px;
-      margin-top:12px;
-    }
+        .stat{
+          padding:18px;
+          border-radius:15px;
+          background:#080f1b;
+          border:1px solid #1d2a3c;
+        }
 
-    .unit-head{
-      display:flex;
-      justify-content:space-between;
-      gap:15px;
-      align-items:flex-start;
-      margin-bottom:12px;
-    }
+        .stat label{
+          display:block;
+          color:#64748b;
+          font-size:11px;
+          text-transform:uppercase;
+          letter-spacing:.7px;
+          margin-bottom:7px;
+        }
 
-    .unit-name{
-      font-weight:700;
-      font-size:16px;
-    }
+        .stat strong{
+          display:block;
+          color:#e2e8f0;
+          font-size:14px;
+          line-height:1.5;
+        }
 
-    .weight{
-      white-space:nowrap;
-      font-size:11px;
-      font-weight:700;
-      color:#cbd5e1;
-      padding:5px 9px;
-      border-radius:999px;
-      background:#111827;
-      border:1px solid #293548;
-    }
+        .unit{
+          border:1px solid #1d2939;
+          background:#080e18;
+          border-radius:16px;
+          padding:19px;
+          margin-top:12px;
+        }
 
-    .topics{
-      color:#94a3b8;
-      font-size:14px;
-    }
+        .unit-head{
+          display:flex;
+          justify-content:space-between;
+          gap:15px;
+          align-items:flex-start;
+          margin-bottom:12px;
+        }
 
-    .priority-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
+        .unit-name{
+          font-weight:700;
+          font-size:16px;
+        }
 
-    .priority{
-      border-radius:15px;
-      padding:18px;
-      background:#080e18;
-      border:1px solid #1d2939;
-    }
+        .weight{
+          white-space:nowrap;
+          font-size:11px;
+          font-weight:700;
+          color:#cbd5e1;
+          padding:5px 9px;
+          border-radius:999px;
+          background:#111827;
+          border:1px solid #293548;
+        }
 
-    .priority h3{
-      font-size:14px;
-      margin-bottom:7px;
-    }
+        .topics{
+          color:#94a3b8;
+          font-size:14px;
+        }
 
-    .priority p{
-      color:#8fa0b5;
-      font-size:13px;
-    }
+        .priority-grid{
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:12px;
+        }
 
-    .priority.must h3{color:#f8fafc}
-    .priority.important h3{color:#cbd5e1}
-    .priority.secondary h3{color:#94a3b8}
+        .priority{
+          border-radius:15px;
+          padding:18px;
+          background:#080e18;
+          border:1px solid #1d2939;
+        }
 
-    .tips{
-      list-style:none;
-    }
+        .priority h3{
+          font-size:14px;
+          margin-bottom:7px;
+        }
 
-    .tips li{
-      position:relative;
-      padding:12px 0 12px 22px;
-      border-bottom:1px solid #172131;
-      color:#a8b3c5;
-      font-size:14px;
-    }
+        .priority p{
+          color:#8fa0b5;
+          font-size:13px;
+        }
 
-    .tips li:last-child{border-bottom:0}
+        .priority.must h3{color:#f8fafc}
+        .priority.important h3{color:#cbd5e1}
+        .priority.secondary h3{color:#94a3b8}
 
-    .tips li:before{
-      content:"•";
-      position:absolute;
-      left:4px;
-      color:#64748b;
-      font-size:18px;
-    }
+        .tips{
+          list-style:none;
+        }
 
-    .footer{
-      text-align:center;
-      color:#475569;
-      font-size:12px;
-      padding:10px 0 4px;
-    }
+        .tips li{
+          position:relative;
+          padding:12px 0 12px 22px;
+          border-bottom:1px solid #172131;
+          color:#a8b3c5;
+          font-size:14px;
+        }
 
-    @media(max-width:650px){
-      body{padding:22px 12px}
-      .card,.hero{padding:21px}
-      .snapshot,.priority-grid{grid-template-columns:1fr}
-      .unit-head{flex-direction:column}
-      h1{font-size:32px}
-    }
+        .tips li:last-child{border-bottom:0}
 
-    @media print{
-      body{background:#fff;color:#111;padding:20px}
-      .card{box-shadow:none;border:1px solid #ddd;background:#fff}
-      .back{display:none}
-      .summary,.topics,.tips li,.priority p{color:#444}
-      .stat,.unit,.priority{background:#fff;border-color:#ddd}
-    }
-  </style>
+        .tips li:before{
+          content:"•";
+          position:absolute;
+          left:4px;
+          color:#64748b;
+          font-size:18px;
+        }
+
+        .footer{
+          text-align:center;
+          color:#475569;
+          font-size:12px;
+          padding:10px 0 4px;
+        }
+
+        /* Splash Screen & Orbital Animations */
+        @keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes orbit { 0% { transform: rotate(0deg) translateX(55px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(55px) rotate(-360deg); } }
+        @keyframes scaleIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .animate-spin-slow { animation: spinSlow 2s linear infinite; }
+        .animate-orbit { animation: orbit 1.5s linear infinite; }
+        .splash-content { animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        @media(max-width:650px){
+          body{padding:22px 12px}
+          .card,.hero{padding:21px}
+          .snapshot,.priority-grid{grid-template-columns:1fr}
+          .unit-head{flex-direction:column}
+          h1{font-size:32px}
+        }
+
+        @media print{
+          body{background:#fff;color:#111;padding:20px}
+          .card{box-shadow:none;border:1px solid #ddd;background:#fff}
+          .back,.download-btn{display:none}
+          .summary,.topics,.tips li,.priority p{color:#444}
+          .stat,.unit,.priority{background:#fff;border-color:#ddd}
+        }
+    </style>
 </head>
 
 <body>
+
+    <!-- Custom Futuristic Splash Screen Loader -->
+    <div id="app-splash-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950 transition-opacity duration-700 overflow-hidden" style="position:fixed;inset:0;background:#020617;z-index:9999;display:flex;align-items:center;justify-content:center;">
+        <div style="position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,0.25),transparent 70%);border-radius:50%;filter:blur(40px);"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;">
+            <div style="position:relative;display:flex;align-items:center;justify-content:center;width:140px;height:140px;margin-bottom:20px;">
+                <div class="animate-spin-slow" style="position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:#3b82f6;border-right-color:#6366f1;"></div>
+                <div class="animate-orbit" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:14px;height:14px;background:#38bdf8;border-radius:50%;box-shadow:0 0 15px #38bdf8;"></div>
+                </div>
+                <div style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg,rgba(37,99,235,0.9),rgba(79,70,229,0.9));backdrop-filter:blur(10px);border:1px solid rgba(96,165,250,0.4);display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(59,130,246,0.5);z-index:10;">
+                    <span style="font-size:24px;font-weight:800;color:#fff;">CA</span>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <h2 style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Careers<span style="color:#60a5fa">Analysis</span></h2>
+                <p style="font-size:10px;font-family:monospace;letter-spacing:2px;color:#93c5fd;margin-top:4px;" class="animate-pulse">LOADING BLUEPRINT...</p>
+            </div>
+        </div>
+    </div>
+
   <div class="container">
 
-    <!-- Clean exam roadmap layout -->
-
+    <!-- Back Navigation -->
     <a href="/" class="back">← Back to CareersAnalysis</a>
 
     <!-- 01 Overview -->
@@ -360,11 +432,31 @@
     </section>
     {% endif %}
 
+    <!-- Download / Print Action Button -->
+    <div class="card download-btn" style="text-align:center; padding:20px;">
+        <button onclick="window.print()" style="background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;border:none;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.4);">
+            📥 Download / Print Roadmap (PDF)
+        </button>
+    </div>
+
 
     <div class="footer">
       AI-generated preparation roadmap · CareersAnalysis
     </div>
 
   </div>
+
+  <!-- Splash Screen Removal Script -->
+  <script>
+      window.addEventListener('load', function() {
+          setTimeout(function() {
+              const splash = document.getElementById('app-splash-screen');
+              if(splash) {
+                  splash.style.opacity = '0';
+                  setTimeout(() => splash.remove(), 500);
+              }
+          }, 1200);
+      });
+  </script>
 </body>
 </html>
