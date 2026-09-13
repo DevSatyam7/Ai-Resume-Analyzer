@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block robots %}noindex, nofollow{% endblock %}
+
 {% block content %}
 <div class="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-12">
     <!-- Header Title Section -->
@@ -17,7 +19,7 @@
     </div>
 
     <!-- Error Alert Box -->
-    {% if result and result.error %}
+    {% if result is defined and result and result.error %}
     <div class="mb-6 bg-red-950/60 border border-red-800/80 text-red-300 px-5 py-4 rounded-2xl text-xs sm:text-sm print:hidden flex items-start gap-3 shadow-xl">
         <span class="text-lg">⚠</span>
         <div>
@@ -41,7 +43,7 @@
                     </button>
                 </div>
                 <input type="text" id="targetRoleInput" name="role" required
-                    value="{{ searched_role or '' }}"
+                    value="{{ searched_role if searched_role is defined else '' }}"
                     placeholder="e.g. Backend Developer, Data Analyst, TCS NQT 2026..."
                     class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition shadow-inner">
             </div>
@@ -57,7 +59,7 @@
                 </div>
                 <textarea id="jdInput" name="job_description" rows="3"
                     placeholder="Paste job requirements or tech stack..."
-                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition shadow-inner">{{ searched_jd or '' }}</textarea>
+                    class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition shadow-inner">{{ searched_jd if searched_jd is defined else '' }}</textarea>
             </div>
 
             <div>
@@ -109,7 +111,7 @@
     </div>
 
     <!-- Complete Analysis Output Screen (2-Column Desktop Grid Layout) -->
-    {% if result and not result.error %}
+    {% if result is defined and result and not result.error %}
     <div id="reportContainer" class="bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-8 shadow-2xl space-y-6 scroll-mt-20">
         
         <!-- Top Score Header Banner -->
@@ -122,7 +124,7 @@
                     </span>
                     <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-300 bg-sky-500/10 border border-sky-500/30 px-3 py-1 rounded-xl">
                         <span>🎯 Target:</span>
-                        <span class="text-white">{{ result.target_role or searched_role or "Role Specified" }}</span>
+                        <span class="text-white">{{ result.target_role if result.target_role is defined and result.target_role else (searched_role if searched_role is defined else 'Role Specified') }}</span>
                     </span>
                 </div>
                 <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
@@ -186,7 +188,7 @@
                 </div>
 
                 <!-- Pay Scale & CTC -->
-                {% if result.pay_scale %}
+                {% if result.pay_scale is defined and result.pay_scale %}
                 <div class="bg-gradient-to-br from-slate-950 to-blue-950/40 border border-blue-500/30 rounded-2xl p-5 sm:p-6 shadow-xl">
                     <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider block mb-1">💰 Market Pay Scale &amp; CTC</span>
                     <h4 class="text-lg sm:text-xl font-black text-white mt-1">{{ result.pay_scale.salary_range }}</h4>
@@ -200,7 +202,7 @@
 
                 <!-- Eligibility Check Box -->
                 <div id="section-eligibility" class="bg-slate-950 border border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-xl space-y-3">
-                    {% if result.eligibility %}
+                    {% if result.eligibility is defined and result.eligibility %}
                     <h3 class="text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-2">
                         <span>🛡️</span> Eligibility Check &amp; Criteria Fit
                     </h3>
@@ -237,24 +239,24 @@
                         <div class="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-2xl">
                             <span class="text-xs font-bold text-emerald-400 block mb-3">✓ Matched Skills</span>
                             <div class="flex flex-wrap gap-2">
-                                {% if result.matched_skills is iterable and result.matched_skills is not string %}
+                                {% if result.matched_skills is defined and result.matched_skills is iterable and result.matched_skills is not string %}
                                     {% for skill in result.matched_skills %}
                                     <span class="bg-emerald-900/40 border border-emerald-700/50 text-emerald-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
                                     {% endfor %}
                                 {% else %}
-                                    <span class="text-xs text-slate-300">{{ result.matched_skills }}</span>
+                                    <span class="text-xs text-slate-300">{{ result.matched_skills if result.matched_skills is defined else '' }}</span>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="p-4 bg-rose-950/20 border border-rose-800/40 rounded-2xl">
                             <span class="text-xs font-bold text-rose-400 block mb-3">▲ Missing / Recommended Skills</span>
                             <div class="flex flex-wrap gap-2">
-                                {% if result.missing_skills is iterable and result.missing_skills is not string %}
+                                {% if result.missing_skills is defined and result.missing_skills is iterable and result.missing_skills is not string %}
                                     {% for skill in result.missing_skills %}
                                     <span class="bg-rose-900/40 border border-rose-700/50 text-rose-300 text-xs px-3 py-1 rounded-xl font-medium">{{ skill }}</span>
                                     {% endfor %}
                                 {% else %}
-                                    <span class="text-xs text-slate-300">{{ result.missing_skills }}</span>
+                                    <span class="text-xs text-slate-300">{{ result.missing_skills if result.missing_skills is defined else '' }}</span>
                                 {% endif %}
                             </div>
                         </div>
@@ -267,7 +269,7 @@
                     <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
                         <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>🎯</span> Targeted Career Roadmap</h3>
                         <div class="space-y-3">
-                            {% if result.roadmap %}
+                            {% if result.roadmap is defined and result.roadmap %}
                                 {% for step in result.roadmap %}
                                 <div class="p-3.5 bg-slate-900 border border-slate-800 rounded-2xl flex items-start gap-3 shadow-inner">
                                     <span class="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-xl shrink-0 shadow">Phase {{ loop.index }}</span>
@@ -284,7 +286,7 @@
                     <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
                         <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>💡</span> Targeted Technical &amp; Exam Questions</h3>
                         <div class="space-y-3">
-                            {% if result.viva_questions %}
+                            {% if result.viva_questions is defined and result.viva_questions %}
                                 {% for q in result.viva_questions %}
                                 <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl space-y-2.5 shadow-inner">
                                     <p class="text-xs sm:text-sm font-extrabold text-slate-100 flex items-start gap-2">
@@ -313,7 +315,7 @@
                     <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2"><span>📺</span> Missing Skill YouTube Learning Links</h3>
                     <p class="text-xs text-slate-400">Targeted video tutorials curated specifically for every identified missing skill to bridge your technical gaps.</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        {% if result.youtube_links %}
+                        {% if result.youtube_links is defined and result.youtube_links %}
                             {% for link in result.youtube_links %}
                             <a href="{{ link.url }}" target="_blank" class="p-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl flex items-center justify-between transition group shadow-inner">
                                 <div class="flex items-center gap-2 pr-2 truncate">
@@ -347,7 +349,7 @@
                     </div>
                     <p class="text-xs text-slate-400">Use this hyper-personalized outreach template on LinkedIn or Email to grab recruiter attention.</p>
                     <div class="p-4 sm:p-6 bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-2xl text-xs sm:text-sm text-slate-200 leading-relaxed font-mono whitespace-pre-wrap shadow-inner" id="pitchBox">
-{{ result.hr_pitch | default('Respected Selection Panel,\n\nI am writing to express my strong candidacy for the position. Having audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nSincerely,\nSatyam Kumar') }}
+{{ result.hr_pitch if result is defined and result and result.hr_pitch is defined else ('Respected Selection Panel,\n\nI am writing to express my strong candidacy for the position. Having audited my resume via CareersAnalysis, I achieved a strong ATS match score with demonstrated skills in Python, Flask, and database architectures.\n\nSincerely,\nSatyam Kumar') }}
                     </div>
                 </div>
 
@@ -433,5 +435,4 @@
         }
     }
 </script>
-{% endblock %}
 {% endblock %}
