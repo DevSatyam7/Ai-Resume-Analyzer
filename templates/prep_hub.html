@@ -207,7 +207,7 @@
             </div>
         </form>
 
-        <!-- Bento Grid Quick Explore Cards (Replacing boring chips) -->
+        <!-- Bento Grid Quick Explore Cards -->
         <div class="mb-12">
             <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
@@ -264,7 +264,7 @@
             </div>
         </div>
 
-        <!-- Clean Structured Result Card -->
+        <!-- Clean Structured Result Card (No Questions Section) -->
         {% if data %}
         <div class="space-y-6 animate-fade-in">
             <!-- Overview Header -->
@@ -330,33 +330,11 @@
             </div>
             {% endif %}
 
-            <!-- High Yield Questions Section -->
-            {% if data.high_yield_questions %}
-            <div class="space-y-3 pt-2">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <span class="text-sky-400 font-mono">02.</span> High-Frequency Assessment Questions
-                </h3>
-                <div class="space-y-3">
-                    {% for item in data.high_yield_questions %}
-                    <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl space-y-2">
-                        <p class="text-white text-sm font-semibold flex items-start gap-2">
-                            <span class="text-sky-400 font-bold">Q:</span> {{ item.q }}
-                        </p>
-                        <div class="bg-slate-950/70 border-l-2 border-sky-500 p-3 rounded-r-xl text-xs text-slate-300 leading-relaxed">
-                            <strong class="text-sky-400 block mb-0.5 font-medium">Expected Solution Approach:</strong>
-                            {{ item.approach }}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
             <!-- Strategy & Traps -->
             {% if data.strategy_and_mistakes %}
             <div class="space-y-3 pt-2">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <span class="text-sky-400 font-mono">03.</span> Preparation Strategy &amp; Pitfalls
+                    <span class="text-sky-400 font-mono">02.</span> Preparation Strategy &amp; Pitfalls
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {% for tip in data.strategy_and_mistakes %}
