@@ -1,201 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ data.query_title }} — CareersAnalysis Breakdown</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        body {
-            background-color: #030712;
-            color: #f8fafc;
-            padding: 40px 16px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 860px;
-            margin: 0 auto;
-        }
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: border-color 0.2s;
-        }
-        .btn-back:hover {
-            border-color: #38bdf8;
-        }
-        .card {
-            background: #0b1120;
-            border: 1px solid #1e293b;
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 22px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        .badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.12);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 12px 0 8px;
-            color: #ffffff;
-        }
-        .summary {
-            color: #94a3b8;
-            font-size: 0.95rem;
-        }
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 18px;
-        }
-        .stat-box {
-            background: #111c35;
-            border: 1px solid #1e293b;
-            padding: 14px;
-            border-radius: 10px;
-            border-left: 3px solid #38bdf8;
-        }
-        .stat-label {
-            font-size: 0.75rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .stat-val {
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: #f1f5f9;
-            margin-top: 4px;
-        }
-        .section-heading {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #f8fafc;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .unit-card {
-            background: #111c35;
-            border: 1px solid #1e293b;
-            padding: 14px 16px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .unit-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-        .unit-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #f1f5f9;
-        }
-        .tag-weight {
-            font-size: 0.72rem;
-            background: rgba(37, 99, 235, 0.2);
-            color: #60a5fa;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        .unit-topics {
-            color: #94a3b8;
-            font-size: 0.85rem;
-        }
-        .tips-list {
-            padding-left: 18px;
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-        .tips-list li {
-            margin-bottom: 8px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ data.query_title }} — CareersAnalysis Explorer</title>
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#030712;
+      color:#f8fafc;
+      line-height:1.6;
+      padding:34px 16px;
+    }
+
+    .container{
+      max-width:900px;
+      margin:auto;
+    }
+
+    .back{
+      display:inline-block;
+      color:#94a3b8;
+      text-decoration:none;
+      margin-bottom:18px;
+      font-size:14px;
+    }
+
+    .back:hover{color:#fff}
+
+    .card{
+      background:linear-gradient(145deg,#0b1220,#070c16);
+      border:1px solid #1e293b;
+      border-radius:20px;
+      padding:28px;
+      margin-bottom:18px;
+      box-shadow:0 15px 45px rgba(0,0,0,.22);
+    }
+
+    .hero{
+      padding:34px;
+      border-color:#263449;
+    }
+
+    .badge{
+      display:inline-flex;
+      padding:6px 11px;
+      border-radius:999px;
+      background:#111c30;
+      border:1px solid #263958;
+      color:#93c5fd;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-size:clamp(30px,5vw,48px);
+      line-height:1.1;
+      letter-spacing:-1px;
+      margin-bottom:14px;
+    }
+
+    .summary{
+      color:#a8b3c5;
+      max-width:760px;
+      font-size:16px;
+    }
+
+    .section-title{
+      font-size:20px;
+      margin-bottom:18px;
+    }
+
+    .section-number{
+      color:#64748b;
+      font-size:12px;
+      margin-right:7px;
+    }
+
+    .snapshot{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:15px;
+      background:#080f1b;
+      border:1px solid #1d2a3c;
+    }
+
+    .stat label{
+      display:block;
+      color:#64748b;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      margin-bottom:7px;
+    }
+
+    .stat strong{
+      display:block;
+      color:#e2e8f0;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .unit{
+      border:1px solid #1d2939;
+      background:#080e18;
+      border-radius:16px;
+      padding:19px;
+      margin-top:12px;
+    }
+
+    .unit-head{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      align-items:flex-start;
+      margin-bottom:12px;
+    }
+
+    .unit-name{
+      font-weight:700;
+      font-size:16px;
+    }
+
+    .weight{
+      white-space:nowrap;
+      font-size:11px;
+      font-weight:700;
+      color:#cbd5e1;
+      padding:5px 9px;
+      border-radius:999px;
+      background:#111827;
+      border:1px solid #293548;
+    }
+
+    .topics{
+      color:#94a3b8;
+      font-size:14px;
+    }
+
+    .priority-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .priority{
+      border-radius:15px;
+      padding:18px;
+      background:#080e18;
+      border:1px solid #1d2939;
+    }
+
+    .priority h3{
+      font-size:14px;
+      margin-bottom:7px;
+    }
+
+    .priority p{
+      color:#8fa0b5;
+      font-size:13px;
+    }
+
+    .priority.must h3{color:#f8fafc}
+    .priority.important h3{color:#cbd5e1}
+    .priority.secondary h3{color:#94a3b8}
+
+    .tips{
+      list-style:none;
+    }
+
+    .tips li{
+      position:relative;
+      padding:12px 0 12px 22px;
+      border-bottom:1px solid #172131;
+      color:#a8b3c5;
+      font-size:14px;
+    }
+
+    .tips li:last-child{border-bottom:0}
+
+    .tips li:before{
+      content:"•";
+      position:absolute;
+      left:4px;
+      color:#64748b;
+      font-size:18px;
+    }
+
+    .footer{
+      text-align:center;
+      color:#475569;
+      font-size:12px;
+      padding:10px 0 4px;
+    }
+
+    @media(max-width:650px){
+      body{padding:22px 12px}
+      .card,.hero{padding:21px}
+      .snapshot,.priority-grid{grid-template-columns:1fr}
+      .unit-head{flex-direction:column}
+      h1{font-size:32px}
+    }
+
+    @media print{
+      body{background:#fff;color:#111;padding:20px}
+      .card{box-shadow:none;border:1px solid #ddd;background:#fff}
+      .back{display:none}
+      .summary,.topics,.tips li,.priority p{color:#444}
+      .stat,.unit,.priority{background:#fff;border-color:#ddd}
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <a href="/" class="btn-back">← Back to CareersAnalysis</a>
+  <div class="container">
 
-        <!-- Hero Overview -->
-        <div class="card">
-            <span class="badge">{{ data.category_type }}</span>
-            <h1 class="title">{{ data.query_title }}</h1>
-            <p class="summary">{{ data.summary }}</p>
+    <!-- Clean exam roadmap layout -->
 
-            <div class="stat-grid">
-                <div class="stat-box">
-                    <div class="stat-label">Eligibility / Target</div>
-                    <div class="stat-val">{{ data.key_stats.eligibility_or_prereq }}</div>
-                </div>
-                <div class="stat-box" style="border-left-color: #f59e0b;">
-                    <div class="stat-label">Difficulty Rating</div>
-                    <div class="stat-val" style="color: #fbbf24;">{{ data.key_stats.difficulty_rating }}</div>
-                </div>
-                <div class="stat-box" style="border-left-color: #10b981;">
-                    <div class="stat-label">Prep Timeline</div>
-                    <div class="stat-val" style="color: #34d399;">{{ data.key_stats.recommended_timeline }}</div>
-                </div>
-            </div>
+    <a href="/" class="back">← Back to CareersAnalysis</a>
+
+    <!-- 01 Overview -->
+    <section class="card hero">
+      <span class="badge">{{ data.category_type }}</span>
+
+      <h1>{{ data.query_title }}</h1>
+
+      <p class="summary">
+        {{ data.summary }}
+      </p>
+    </section>
+
+
+    <!-- 02 Quick Exam Snapshot -->
+    <section class="card">
+      <h2 class="section-title">
+        <span class="section-number">02</span>
+        Quick Exam Snapshot
+      </h2>
+
+      <div class="snapshot">
+
+        <div class="stat">
+          <label>Eligibility / Prerequisite</label>
+          <strong>{{ data.key_stats.eligibility_or_prereq }}</strong>
         </div>
 
-        <!-- Syllabus Breakdown -->
-        {% if data.syllabus_units %}
-        <div class="card">
-            <h2 class="section-heading">📚 High-Yield Syllabus & Units</h2>
-            {% for unit in data.syllabus_units %}
-            <div class="unit-card">
-                <div class="unit-header">
-                    <div class="unit-title">{{ unit.unit_name }}</div>
-                    <span class="tag-weight">{{ unit.weightage }} Weightage</span>
-                </div>
-                <div class="unit-topics">{{ unit.must_cover_topics }}</div>
-            </div>
-            {% endfor %}
+        <div class="stat">
+          <label>Difficulty</label>
+          <strong>{{ data.key_stats.difficulty_rating }}</strong>
         </div>
-        {% endif %}
 
-        <!-- Examiner Strategy & Traps -->
-        {% if data.strategy_and_mistakes %}
-        <div class="card">
-            <h2 class="section-heading">💡 Examiner Tips & Critical Traps</h2>
-            <ul class="tips-list">
-                {% for tip in data.strategy_and_mistakes %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
+        <div class="stat">
+          <label>Recommended Timeline</label>
+          <strong>{{ data.key_stats.recommended_timeline }}</strong>
         </div>
-        {% endif %}
+
+      </div>
+    </section>
+
+
+    <!-- 03 Core Units -->
+    {% if data.syllabus_units %}
+    <section class="card">
+
+      <h2 class="section-title">
+        <span class="section-number">03</span>
+        Core Units & Technical Breakdown
+      </h2>
+
+      {% for unit in data.syllabus_units %}
+      <div class="unit">
+
+        <div class="unit-head">
+          <div class="unit-name">
+            {{ unit.unit_name }}
+          </div>
+
+          <span class="weight">
+            {{ unit.weightage }} Weightage
+          </span>
+        </div>
+
+        <div class="topics">
+          {{ unit.must_cover_topics }}
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </section>
+    {% endif %}
+
+
+    <!-- 04 Preparation Priority -->
+    {% if data.syllabus_units %}
+    <section class="card">
+
+      <h2 class="section-title">
+        <span class="section-number">04</span>
+        Preparation Priority
+      </h2>
+
+      <div class="priority-grid">
+
+        <div class="priority must">
+          <h3>Must Master</h3>
+          <p>
+            Start with units marked as high weightage.
+            These should form the core of your preparation.
+          </p>
+        </div>
+
+        <div class="priority important">
+          <h3>Important</h3>
+          <p>
+            Cover medium-weightage units after completing
+            the high-priority areas.
+          </p>
+        </div>
+
+        <div class="priority secondary">
+          <h3>Secondary</h3>
+          <p>
+            Lower-priority areas can be revised after
+            the core syllabus is completed.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+    {% endif %}
+
+
+    <!-- 05 Strategy -->
+    {% if data.strategy_and_mistakes %}
+    <section class="card">
+
+      <h2 class="section-title">
+        <span class="section-number">05</span>
+        Preparation Strategy & Critical Traps
+      </h2>
+
+      <ul class="tips">
+        {% for tip in data.strategy_and_mistakes %}
+        <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+
+    </section>
+    {% endif %}
+
+
+    <div class="footer">
+      AI-generated preparation roadmap · CareersAnalysis
     </div>
+
+  </div>
 </body>
 </html>
