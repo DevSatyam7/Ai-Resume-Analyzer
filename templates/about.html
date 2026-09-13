@@ -1,14 +1,19 @@
 {% extends "base.html" %}
+
+{% block title %}About Satyam Kumar — Founder & Developer | CareersAnalysis{% endblock %}
+{% block description %}Discover the background, tech arsenal, and engineering philosophy of Satyam Kumar, B.Tech CSE-AI student at Government Engineering College Munger and founder of CareersAnalysis.{% endblock %}
+{% block canonical %}https://careersanalysis.me/about{% endblock %}
+
 {% block content %}
 <div class="max-w-5xl mx-auto px-4 py-12 sm:py-16">
 
-    <!-- Top Back Navigation -->
-    <div class="mb-8 flex items-center justify-between">
+    <!-- Top Back Navigation & Status Bar -->
+    <div class="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <a href="/" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-xl transition-all shadow-lg">
             ← Back to Home
         </a>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open to SDE Roles (Bangalore)
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Open to SDE &amp; AI Engineering Roles (Bangalore)
         </span>
     </div>
 
@@ -20,7 +25,6 @@
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 sm:gap-8 text-center md:text-left">
             <div class="relative shrink-0">
                 <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 blur-md opacity-70 animate-pulse"></div>
-                <!-- Corrected image filename to satyam-profile.jpg -->
                 <img src="{{ url_for('static', filename='satyam-profile.jpg') }}" alt="Satyam Kumar" class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border-2 border-blue-400/50 shadow-2xl">
             </div>
 
@@ -112,7 +116,7 @@
             </div>
         </div>
 
-        <!-- Card 4: Commitment to Innovation -->
+        <!-- Card 4: Engineering Philosophy -->
         <div class="rounded-3xl p-7 glass border border-slate-800 hover:border-sky-500/40 transition-all duration-300 shadow-xl flex flex-col justify-between group">
             <div>
                 <div class="w-10 h-10 rounded-xl bg-sky-600/10 border border-sky-500/20 flex items-center justify-center text-sky-400 font-bold mb-4 group-hover:scale-110 transition">
@@ -124,29 +128,50 @@
                 </p>
             </div>
             <div class="pt-4 border-t border-slate-800/80 text-xs text-slate-400">
-                <span>Active Projects: CareersAnalysis, AI Resume Analyzer, IBM Nutrition Agent</span>
+                <span>Active Projects: CareersAnalysis, AI Resume Analyzer, Seasonal Agriculture Performance Analysis</span>
             </div>
         </div>
 
     </div>
 
-    <!-- Connect & Collaborate Section (With Real LinkedIn Link) -->
+    <!-- Professional Milestones & Certifications Bar -->
+    <div class="rounded-3xl p-7 glass border border-slate-800 mb-10 shadow-xl">
+        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <span>🏆</span> Certifications &amp; Specialized Training
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+                <p class="font-bold text-blue-400 mb-1">IIRS-ISRO Certification</p>
+                <p class="text-slate-400">AI/ML for Geodata Analytics</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+                <p class="font-bold text-indigo-400 mb-1">FutureSkills Prime</p>
+                <p class="text-slate-400">Yuva AI for All Certified</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800">
+                <p class="font-bold text-purple-400 mb-1">IBM SkillsBuild &amp; VOIS</p>
+                <p class="text-slate-400">Data Analytics &amp; AI Cohorts</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connect & Collaborate Section -->
     <div class="rounded-3xl p-8 glass border border-slate-800 text-center relative overflow-hidden shadow-2xl">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-indigo-600/10 pointer-events-none"></div>
         <div class="relative z-10">
             <h3 class="text-2xl font-extrabold text-white mb-2">Connect &amp; Collaborate</h3>
             <p class="text-slate-400 text-sm max-w-xl mx-auto mb-6">
-                Feel free to reach out for professional opportunities, tech collaborations, or engineering discussions.
+                Feel free to reach out for professional SDE opportunities, tech collaborations, or engineering discussions.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="https://github.com/DevSatyam7" target="_blank" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2.5 shadow-lg">
-                    <i class="fa-brands fa-github text-lg"></i> GitHub
+                    <span>GitHub ↗</span>
                 </a>
                 <a href="https://www.linkedin.com/in/satyam-kumar-29b331423" target="_blank" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center gap-2.5 shadow-lg shadow-sky-600/30">
-                    <i class="fa-brands fa-linkedin text-lg"></i> LinkedIn
+                    <span>LinkedIn ↗</span>
                 </a>
                 <a href="mailto:satyam62kumar02@gmail.com" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition flex items-center gap-2.5 shadow-lg">
-                    <i class="fa-solid fa-envelope text-lg"></i> Email Me
+                    <span>Email Me ✉</span>
                 </a>
             </div>
         </div>
