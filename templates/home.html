@@ -1,90 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ============================================================
-         ADVANCED SEO & FOUNDER AUTHORITY METADATA
-    ============================================================= -->
-    <title>CareersAnalysis — AI Career Analysis & Resume Platform | Founder Satyam Kumar</title>
-    <meta name="title" content="CareersAnalysis — AI Career Analysis & Resume Platform | Founder Satyam Kumar">
-    <meta name="description" content="CareersAnalysis is an AI-powered career readiness and resume intelligence platform for engineering students. Built and founded by Satyam Kumar (B.Tech CSE-AI, GEC Munger). Optimize resumes, analyze ATS alignment, and explore placement roadmaps.">
-    <meta name="keywords" content="CareersAnalysis, Satyam Kumar, GEC Munger, AI Resume Analyzer, Bihar Engineering University, Career Intelligence, ATS Resume Checker, Placement Roadmaps, Software Engineer Student Founder">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>CareersAnalysis — AI Career Analysis & Resume Platform for Engineering Students</title>
+    <meta name="title" content="CareersAnalysis — AI Career Analysis & Resume Platform for Engineering Students">
+    <meta name="description" content="CareersAnalysis is an AI-powered career analysis and career readiness platform for engineering students. Analyze resumes, improve ATS alignment, identify skill gaps, explore career paths, and prepare for placements. Built by Satyam Kumar.">
     <meta name="author" content="Satyam Kumar">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://careersanalysis.me/">
 
-    <!-- ============================================================
-         OPEN GRAPH / SOCIAL SHARING (Google, LinkedIn, WhatsApp)
-    ============================================================= -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="CareersAnalysis">
-    <meta property="og:url" content="https://careersanalysis.me/">
-    <meta property="og:title" content="CareersAnalysis — AI Career Analysis & Resume Platform">
-    <meta property="og:description" content="AI-powered career analysis for engineering students. Founded by Satyam Kumar (GEC Munger). Analyze resumes, identify skill gaps, and build preparation roadmaps.">
-    <meta property="og:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
-
-    <!-- ============================================================
-         TWITTER / X CARDS
-    ============================================================= -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CareersAnalysis by Satyam Kumar">
-    <meta name="twitter:description" content="AI-powered resume analysis, ATS alignment, and career roadmaps for engineering students.">
-    <meta name="twitter:image" content="{{ url_for('static', filename='favicon.png', _external=True) }}">
-
-    <!-- ============================================================
-         GOOGLE KNOWLEDGE GRAPH SCHEMA (JSON-LD) — FOR FOUNDER RANKING
-    ============================================================= -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "WebSite",
-                "@id": "https://careersanalysis.me/#website",
-                "name": "CareersAnalysis",
-                "url": "https://careersanalysis.me/",
-                "description": "AI-powered career analysis and resume intelligence platform for engineering students."
-            },
-            {
-                "@type": "Organization",
-                "@id": "https://careersanalysis.me/#organization",
-                "name": "CareersAnalysis",
-                "url": "https://careersanalysis.me/",
-                "logo": "{{ url_for('static', filename='favicon.png', _external=True) }}",
-                "founder": {
-                    "@id": "https://careersanalysis.me/#founder"
-                },
-                "sameAs": [
-                    "https://www.linkedin.com/company/144984982/",
-                    "https://github.com/DevSatyam7"
-                ]
-            },
-            {
-                "@type": "Person",
-                "@id": "https://careersanalysis.me/#founder",
-                "name": "Satyam Kumar",
-                "jobTitle": "Founder & Developer",
-                "worksFor": {
-                    "@id": "https://careersanalysis.me/#organization"
-                },
-                "alumniOf": {
-                    "@type": "CollegeOrUniversity",
-                    "name": "Government Engineering College Munger"
-                },
-                "sameAs": [
-                    "https://www.linkedin.com/in/satyam-kumar-29b331423",
-                    "https://github.com/DevSatyam7",
-                    "https://devsatyamx.github.io/Resume/"
-                ]
-            }
-        ]
-    }
-    </script>
-
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -93,217 +21,300 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: #f8fafc; overflow-x: hidden; }
         .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(20px); }
         .hero-grid { background-image: linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: 48px 48px; }
+        
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .animate-marquee { display: inline-flex; animation: marquee 30s linear infinite; }
-        #splashScreen { position: fixed; inset: 0; background: #020617; z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 0.4s ease; }
-        #splashScreen.hidden-splash { opacity: 0; pointer-events: none; }
+        .animate-marquee { display: inline-flex; animation: marquee 35s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .float-card { animation: float 5s ease-in-out infinite; }
+
+        /* Original Futuristic Splash Screen Animation */
+        #app-splash-screen {
+            position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center;
+            background: #020617; transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #app-splash-screen.splash-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        @keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes orbit { 0% { transform: rotate(0deg) translateX(55px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(55px) rotate(-360deg); } }
+        @keyframes scaleIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .animate-spin-slow { animation: spinSlow 2s linear infinite; }
+        .animate-orbit { animation: orbit 1.5s linear infinite; }
+        .splash-content { animation: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .launch-card { transition: transform .3s ease, border-color .3s ease, background .3s ease; }
+        .launch-card:hover { transform: translateY(-4px); background: rgba(15, 23, 42, 0.9); }
     </style>
 </head>
+
 <body>
 
-    <!-- Splash Screen -->
-    <div id="splashScreen">
-        <div class="text-center">
-            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-600 flex items-center justify-center text-2xl font-extrabold text-white shadow-lg shadow-blue-600/50">CA</div>
-            <h2 class="text-xl font-bold text-white">Careers<span class="text-blue-400">Analysis</span></h2>
-            <p class="text-xs text-blue-400 tracking-widest uppercase mt-2 animate-pulse">Loading...</p>
+    <!-- Original Futuristic Splash Screen -->
+    <div id="app-splash-screen">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-[#020617] to-slate-900"></div>
+        <div class="absolute w-[400px] h-[400px] bg-gradient-to-r from-blue-600/25 via-violet-600/20 to-sky-600/25 blur-[100px] rounded-full pointer-events-none animate-pulse"></div>
+        <div class="relative flex flex-col items-center justify-center splash-content">
+            <div class="relative flex items-center justify-center w-36 h-36 mb-6">
+                <div class="absolute inset-0 rounded-full border-2 border-blue-500/20 border-t-blue-500 border-r-indigo-500 animate-spin-slow shadow-[0_0_30px_rgba(59,130,246,0.35)]"></div>
+                <div class="absolute inset-0 animate-orbit pointer-events-none flex items-center justify-center">
+                    <div class="w-4 h-4 bg-sky-400 rounded-full shadow-[0_0_15px_#38bdf8]"></div>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600/85 to-indigo-700/85 backdrop-blur-md border border-blue-400/40 flex items-center justify-center shadow-[0_0_35px_rgba(59,130,246,0.5)] relative z-10">
+                    <span class="text-2xl font-extrabold tracking-tight text-white drop-shadow">CA</span>
+                </div>
+            </div>
+            <div class="text-center space-y-1.5">
+                <h2 class="text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-400">Analysis</span></h2>
+                <p class="text-[11px] font-mono tracking-widest text-blue-400/90 uppercase animate-pulse">PROCESSING...</p>
+            </div>
         </div>
     </div>
 
     <!-- Announcement Bar -->
-    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 text-white text-xs font-semibold py-2 px-4 overflow-hidden whitespace-nowrap relative z-50">
-        <div class="animate-marquee flex gap-8">
+    <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 text-white text-[11px] sm:text-xs font-semibold py-2 px-4 overflow-hidden whitespace-nowrap relative z-50 shadow-lg">
+        <div class="animate-marquee tracking-wide flex items-center gap-8">
             <span>🚀 CareersAnalysis • AI-powered Resume & Career Analysis Platform</span>
             <span>⚡ Built by Satyam Kumar (GEC Munger)</span>
             <span>🎯 ATS Compatibility Checks • Skill Gap Diagnostics</span>
-            <span>💼 satyam@careersanalysis.me</span>
+            <span>🔥 Interactive Exam Roadmaps & Prep Hub</span>
+            <span>💼 Official Company LinkedIn & satyam@careersanalysis.me Active</span>
         </div>
     </div>
 
     <!-- Sticky Header -->
-    <header class="sticky top-0 z-40 glass border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3">
-                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover border border-slate-800">
-                <span class="text-lg font-extrabold text-white">Careers<span class="text-blue-500">Analysis</span></span>
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/85 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-3">
+            <a href="/" class="flex items-center gap-3 group shrink-0">
+                <img src="{{ url_for('static', filename='favicon.png') }}" alt="Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-slate-800">
+                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white">Careers<span class="text-blue-500">Analysis</span></span>
             </a>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
-                <a href="/prep-hub" class="text-sky-400 hover:text-sky-300">✦ Prep Hub</a>
-                <a href="#topic-search-card" class="hover:text-white">Topic Explorer</a>
-                <a href="#pro-features" class="text-purple-300 hover:text-purple-200">Recruiter Suite</a>
-                <a href="#features" class="hover:text-white">Modules</a>
-                <a href="#architect" class="hover:text-white">Architect</a>
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-400">
+                <a href="/prep-hub" class="text-sky-400 font-semibold hover:text-sky-300 flex items-center gap-1"><span>✦</span> Prep Hub</a>
+                <a href="#topic-search-card" class="hover:text-white transition">Topic Explorer</a>
+                <a href="#pro-features" class="text-purple-300 hover:text-purple-200 transition font-medium">Recruiter Suite</a>
+                <a href="#features" class="hover:text-white transition">Modules</a>
+                <a href="#architect" class="hover:text-white transition">Architect</a>
+                <button onclick="toggleDrawer(true)" class="hover:text-blue-400 cursor-pointer">About System</button>
             </nav>
             <div class="flex items-center gap-3">
                 {% if logged_in %}
-                    <a href="/dashboard" class="text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl">Dashboard</a>
+                    <a href="/dashboard" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl">Dashboard</a>
                 {% else %}
-                    <a href="/login" class="hidden sm:inline-block text-sm text-slate-300 hover:text-white px-3 py-2">Log In</a>
-                    <a href="/signup" class="text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl">Get Started Free</a>
+                    <a href="/login" class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-300 hover:text-white px-3 py-2">Log In</a>
+                    <a href="/signup" class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl shadow-lg">Get Started Free</a>
                 {% endif %}
-                <button onclick="toggleDrawer(true)" class="md:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">☰</button>
+                <button onclick="toggleDrawer(true)" class="md:hidden p-2.5 rounded-xl text-slate-300 bg-slate-900 border border-slate-800">☰</button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Drawer -->
     <div id="mobileDrawerOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 pointer-events-none opacity-0 transition-opacity duration-300">
-        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+        <div id="mobileDrawerPanel" class="fixed top-0 right-0 h-full w-80 bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 shadow-2xl">
             <div>
-                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-200">Menu</span>
-                    <button onclick="toggleDrawer(false)" class="text-slate-400 text-xl">✕</button>
+                <div class="flex items-center justify-between pb-5 border-b border-slate-800">
+                    <span class="text-xs font-bold text-slate-200 tracking-wider uppercase">Workspace &amp; System</span>
+                    <button onclick="toggleDrawer(false)" class="text-slate-400 text-2xl">✕</button>
                 </div>
-                <nav class="mt-6 flex flex-col gap-3 text-sm">
-                    <a href="/prep-hub" class="text-sky-400 font-medium">✦ Prep Hub</a>
-                    <a href="#topic-search-card" class="text-slate-300">⚡ Topic Explorer</a>
-                    <a href="#pro-features" class="text-purple-300">⚖️ Recruiter Suite</a>
-                    <a href="#features" class="text-slate-300">📊 Modules</a>
-                    <a href="#architect" class="text-slate-300">👨‍💻 Architect Profile</a>
+                <div class="mt-5 p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                    <h4 class="text-xs font-bold text-blue-400 uppercase">Platform Overview</h4>
+                    <p class="text-xs text-slate-300"><strong>CareersAnalysis</strong> built by <strong>Satyam Kumar</strong> (GEC Munger).</p>
+                    <p class="text-[11px] text-blue-400">✉ satyam@careersanalysis.me</p>
+                </div>
+                <nav class="mt-6 flex flex-col gap-2 text-sm font-medium">
+                    <a href="/dashboard" onclick="toggleDrawer(false)" class="px-3 py-2 rounded-xl text-blue-400 hover:bg-blue-950/40">📄 Resume Audit Portal</a>
+                    <a href="/prep-hub" onclick="toggleDrawer(false)" class="px-3 py-2 rounded-xl text-sky-400 hover:bg-sky-950/30">✦ Prep Hub</a>
+                    <a href="#topic-search-card" onclick="toggleDrawer(false)" class="px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800">⚡ Instant Topic Explorer</a>
+                    <a href="#pro-features" onclick="toggleDrawer(false)" class="px-3 py-2 rounded-xl text-purple-300 hover:bg-purple-950/30">⚖️ Recruiter Suite</a>
+                    <a href="#architect" onclick="toggleDrawer(false)" class="px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800">👨‍💻 Architect Profile</a>
                 </nav>
             </div>
-            <div class="pt-4 border-t border-slate-800 flex flex-col gap-2">
+            <div class="pt-5 border-t border-slate-800 flex flex-col gap-2">
                 {% if logged_in %}
-                    <a href="/logout" class="text-center py-2 text-sm text-rose-400 bg-rose-950/40 rounded-xl">Log Out</a>
+                    <a href="/logout" class="text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 rounded-xl">Log Out</a>
                 {% else %}
-                    <a href="/login" class="text-center py-2 text-sm text-slate-300 bg-slate-800 rounded-xl">Log In</a>
-                    <a href="/signup" class="text-center py-2 text-sm text-white bg-blue-600 rounded-xl">Get Started Free</a>
+                    <a href="/login" class="text-center py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 rounded-xl">Log In</a>
+                    <a href="/signup" class="text-center py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-xl">Get Started Free</a>
                 {% endif %}
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <main class="w-full overflow-x-hidden">
+    <main class="w-full overflow-x-hidden flex-1">
         
         <!-- Hero Section -->
-        <section class="relative pt-16 pb-20 hero-grid">
-            <div class="max-w-6xl mx-auto px-4 text-center lg:text-left grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-1.5 rounded-full mb-6 text-xs text-slate-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> AI Career Readiness Platform by Satyam Kumar
-                    </div>
-                    <h1 class="text-4xl sm:text-6xl font-extrabold text-white leading-tight mb-6">
-                        Understand Your <span class="text-blue-400">Career Fit.</span><br>Build Your <span class="text-indigo-400">Next Step.</span>
-                    </h1>
-                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-8">
-                        CareersAnalysis provides AI-powered career analysis for engineering students — analyze resumes, improve ATS alignment, identify skill gaps, and build preparation roadmaps.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="/dashboard" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3.5 rounded-2xl text-center shadow-lg shadow-blue-600/30 transition">Analyze Resume Now →</a>
-                        <a href="/prep-hub" class="bg-slate-900 border border-slate-700 text-slate-300 hover:text-white font-semibold px-6 py-3.5 rounded-2xl text-center transition">Explore Prep Hub ✦</a>
-                    </div>
-                </div>
-
-                <!-- Preview Card -->
-                <div class="glass p-6 rounded-3xl border border-slate-800 shadow-2xl text-left hidden md:block">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-                        <span class="text-xs font-bold text-white">Live ATS Diagnostic Engine</span>
-                        <span class="text-[10px] text-blue-400 font-mono">v2.4 Active</span>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="text-[10px] text-slate-500 uppercase">ATS Match Score</p>
-                                <p class="text-3xl font-extrabold text-white">87%</p>
+        <section class="relative pt-16 sm:pt-20 pb-16 hero-grid">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 items-center text-center lg:text-left">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-1.5 rounded-full mb-6 text-xs text-slate-300 shadow-xl">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> ✦ AI Career Readiness Platform by Satyam Kumar
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
+                            Understand Your <span class="text-blue-400">Career Fit.</span><br>Build Your <span class="text-indigo-400">Next Step.</span>
+                        </h1>
+                        <p class="text-sm sm:text-lg text-slate-400 leading-relaxed mb-8">
+                            CareersAnalysis provides AI-powered career analysis for engineering students — analyze your resume, understand ATS alignment, identify skill gaps, and build focused preparation roadmaps.
+                        </p>
+                        
+                        <!-- CTA & Hub Links -->
+                        <div class="flex flex-col gap-4 max-w-xl mx-auto lg:mx-0">
+                            <a href="/dashboard" class="inline-flex items-center justify-center gap-2 font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-6 py-4 rounded-2xl shadow-xl shadow-blue-600/30 transition">
+                                <span>Analyze Resume Now</span> <span>→</span>
+                            </a>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <a href="/prep-hub" class="group flex flex-col p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-left transition shadow-md">
+                                    <div class="flex items-center justify-between text-sky-400 font-bold text-sm">
+                                        <span>Prep Hub</span> <span>✦</span>
+                                    </div>
+                                    <span class="text-[11px] text-slate-400 mt-1">Access curated placement test patterns, coding round resources, and technical interview modules.</span>
+                                </a>
+                                <a href="#topic-search-card" class="group flex flex-col p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/40 text-left transition shadow-md">
+                                    <div class="flex items-center justify-between text-blue-400 font-bold text-sm">
+                                        <span>Exam Explorer</span> <span>⚡</span>
+                                    </div>
+                                    <span class="text-[11px] text-slate-400 mt-1">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly.</span>
+                                </a>
                             </div>
-                            <div class="w-14 h-14 rounded-full border-4 border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-sm">87</div>
                         </div>
-                        <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
-                            <div class="h-full w-[87%] bg-blue-500 rounded-full"></div>
+                    </div>
+
+                    <!-- Hero Preview Card -->
+                    <div class="relative hidden md:block float-card">
+                        <div class="absolute -inset-8 bg-blue-500/15 blur-3xl rounded-full"></div>
+                        <div class="glass rounded-3xl p-4 border border-slate-800 shadow-2xl relative">
+                            <div class="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden text-left p-6">
+                                <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+                                    <span class="text-xs font-bold text-white">Live ATS Diagnostic Engine</span>
+                                    <span class="text-[10px] text-blue-400 font-mono">v2.4 Active</span>
+                                </div>
+                                <div class="flex items-center justify-between mb-5">
+                                    <div>
+                                        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">ATS Match Score</p>
+                                        <p class="text-4xl font-extrabold text-white mt-1">87%</p>
+                                    </div>
+                                    <div class="w-16 h-16 rounded-full border-4 border-blue-500/40 flex items-center justify-center bg-blue-500/5 text-blue-400 font-bold">87</div>
+                                </div>
+                                <div class="h-2.5 bg-slate-800 rounded-full overflow-hidden mb-5">
+                                    <div class="h-full w-[87%] bg-blue-500 rounded-full"></div>
+                                </div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Enhance backend framework metrics and database indexing highlights to reach 95%+ target role match.</p>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Enhance backend framework metrics and database indexing highlights to reach 95%+ target match.</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Topic & Exam Explorer Search Card -->
-            <div id="topic-search-card" class="max-w-2xl mx-auto mt-16 px-4">
-                <div class="glass p-6 sm:p-8 rounded-3xl border border-slate-800 text-center shadow-2xl">
-                    <span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase">⚡ AI Topic &amp; Exam Explorer</span>
-                    <h3 class="text-white text-xl font-extrabold mt-3 mb-2">Turn Any Engineering Subject Or Exam Into a Study Roadmap</h3>
-                    <p class="text-slate-400 text-xs mb-6">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly using AI.</p>
+                <!-- Topic & Exam Explorer Search Card -->
+                <div id="topic-search-card" class="scroll-mt-28 max-w-2xl mx-auto mt-16 p-6 sm:p-8 glass rounded-3xl border border-slate-800 shadow-2xl text-center relative overflow-hidden">
+                    <span class="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">⚡ AI Topic &amp; Exam Explorer</span>
+                    <h3 class="text-white text-xl sm:text-2xl font-extrabold mt-4 mb-2">Turn Any Engineering Subject Or Exam Into a Study Roadmap</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly using AI.</p>
                     
                     <form action="/topic-drill" method="POST" id="topicSearchForm" class="flex flex-col sm:flex-row gap-3">
                         <div class="w-full bg-slate-950 border border-slate-800 rounded-2xl flex items-center pr-2">
-                            <input type="text" id="topicSearchInput" name="query" placeholder="e.g. GATE CSE, TCS NQT, DBMS..." required class="w-full bg-transparent px-4 py-3.5 text-sm text-white outline-none placeholder-slate-500">
-                            <button type="button" id="micBtn" onclick="startVoiceSearch()" class="p-2 text-slate-400 hover:text-blue-400 bg-slate-900 border border-slate-800 rounded-xl" title="Voice Search">🎙️</button>
+                            <input type="text" id="topicSearchInput" name="query" placeholder="e.g. GATE CSE, TCS NQT, DBMS, Operating Systems..." required class="w-full bg-transparent px-4 py-3.5 text-sm text-white outline-none placeholder-slate-500">
+                            <button type="button" id="micBtn" onclick="startVoiceSearch()" class="p-2.5 text-slate-400 hover:text-blue-400 bg-slate-900 border border-slate-800 rounded-xl" title="Voice Search">🎙️</button>
                         </div>
-                        <button type="submit" id="exploreBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-6 py-3.5 rounded-2xl whitespace-nowrap">Explore ⚡</button>
+                        <button type="submit" id="exploreBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-7 py-3.5 rounded-2xl whitespace-nowrap">Explore ⚡</button>
                     </form>
-                    <div id="voiceStatus" class="text-xs text-blue-400 mt-2 hidden animate-pulse">🎙️ Listening... Speak now</div>
+                    <div id="voiceStatus" class="text-xs text-blue-400 mt-2.5 hidden animate-pulse">🎙️ Listening... Speak now</div>
+                </div>
+
+                <!-- Metrics Bar -->
+                <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-800 text-center">
+                    <div class="p-4 rounded-2xl bg-slate-900/30 border border-slate-800"><div class="text-2xl font-extrabold text-white">Free</div><div class="text-xs text-slate-400 mt-1">Core Tools</div></div>
+                    <div class="p-4 rounded-2xl bg-slate-900/30 border border-slate-800"><div class="text-2xl font-extrabold text-blue-400">40+</div><div class="text-xs text-slate-400 mt-1">ATS Checkpoints</div></div>
+                    <div class="p-4 rounded-2xl bg-slate-900/30 border border-slate-800"><div class="text-2xl font-extrabold text-indigo-400">AI</div><div class="text-xs text-slate-400 mt-1">Career Insights</div></div>
+                    <div class="p-4 rounded-2xl bg-slate-900/30 border border-slate-800"><div class="text-2xl font-extrabold text-emerald-400">Bilingual</div><div class="text-xs text-slate-400 mt-1">English &amp; हिंदी</div></div>
                 </div>
             </div>
         </section>
 
         <!-- Before / After Section -->
         <section class="py-16 max-w-6xl mx-auto px-4">
-            <div class="text-center max-w-xl mx-auto mb-10">
-                <span class="text-xs font-bold uppercase text-blue-400 tracking-wider">Resume Intelligence</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">From Basic Descriptions to Impactful Profiles</h2>
-                <p class="text-sm text-slate-400 mt-2">Automated ATS alignment checks, skill gap diagnosis, and targeted resume optimization.</p>
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20">Resume Intelligence</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4">From Basic Descriptions to Impactful Profiles</h2>
+                <p class="text-sm text-slate-400 mt-3">Automated ATS alignment checks, skill gap diagnosis, and targeted resume optimization.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="p-6 rounded-3xl bg-slate-900/60 border border-rose-500/20">
-                    <h3 class="text-base font-bold text-white mb-3">❌ Before Audit</h3>
-                    <p class="text-xs font-mono text-slate-400">• "Worked on a web project using Python and HTML."<br>• "Responsible for managing database."</p>
+                    <h3 class="text-lg font-bold text-white mb-3">Before Audit</h3>
+                    <p class="text-xs font-mono text-slate-400 space-y-2">• "Worked on a web project using Python and HTML."<br>• "Responsible for managing database and fixing errors."</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-900/60 border border-emerald-500/20">
-                    <h3 class="text-base font-bold text-white mb-3">✓ After CareersAnalysis Audit</h3>
-                    <p class="text-xs font-mono text-slate-300">• Action-oriented project descriptions highlighting Python, Flask, &amp; SQLite.<br>• Optimized skill indexing for target roles.</p>
+                <div class="p-6 rounded-3xl bg-slate-900/60 border border-emerald-500/30">
+                    <h3 class="text-lg font-bold text-white mb-3">After CareersAnalysis Audit</h3>
+                    <p class="text-xs font-mono text-slate-300">• Action-oriented project descriptions highlighting Python, Flask, &amp; SQLite.<br>• Optimized skill indexing and quantified performance metrics.</p>
                 </div>
             </div>
         </section>
 
         <!-- Recruiter Suite -->
-        <section id="pro-features" class="py-16 max-w-6xl mx-auto px-4">
-            <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 border border-purple-500/30">
-                <span class="text-xs font-bold uppercase text-purple-400">Advanced Module</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 mb-4">Ethical AI &amp; Recruiter Suite</h2>
-                <div class="grid md:grid-cols-3 gap-4 mt-6">
-                    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300">⚖️ <strong>Blind Redaction:</strong> Focuses evaluation purely on competencies.</div>
-                    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300">⚡ <strong>JD Alignment:</strong> Benchmarks skills against target jobs.</div>
-                    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300">🎯 <strong>Technical Viva:</strong> Generates project interview questions.</div>
+        <section id="pro-features" class="py-16 max-w-6xl mx-auto px-4 scroll-mt-24">
+            <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-purple-500/30">
+                <span class="text-xs font-bold uppercase tracking-widest text-purple-400">Advanced Module</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3 mb-3">Ethical AI &amp; Recruiter Suite</h2>
+                <p class="text-sm text-slate-400 max-w-2xl mb-8">Professional evaluation tools built around structured skill-focused matching and technical preparation.</p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800">
+                        <div class="text-2xl mb-3">⚖️</div>
+                        <h3 class="text-sm font-bold text-white mb-1">Blind Resume Redaction</h3>
+                        <p class="text-xs text-slate-400">Focuses candidate evaluation purely on verified technical competencies.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800">
+                        <div class="text-2xl mb-3">⚡</div>
+                        <h3 class="text-sm font-bold text-white mb-1">Job Description Alignment</h3>
+                        <p class="text-xs text-slate-400">Dynamically benchmarks resume skills against specific target jobs.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800">
+                        <div class="text-2xl mb-3">🎯</div>
+                        <h3 class="text-sm font-bold text-white mb-1">Technical Viva Generator</h3>
+                        <p class="text-xs text-slate-400">Generates project-focused technical interview questions.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Modules -->
-        <section id="features" class="py-16 max-w-7xl mx-auto px-4 text-center">
-            <span class="text-xs font-bold uppercase text-blue-400">Platform Capabilities</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 mb-10">Engineered Around Your Career Journey</h2>
-            <div class="grid md:grid-cols-3 gap-6 text-left">
-                <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800">
-                    <div class="text-2xl mb-3">📊</div>
-                    <h3 class="font-bold text-white mb-2">ATS Resume Analysis</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Analyze resume keyword frequency, formatting compliance, and role fit via advanced parsing.</p>
+        <section id="features" class="py-20 max-w-7xl mx-auto px-4 text-center">
+            <span class="text-xs font-bold uppercase tracking-widest text-blue-400">Platform Capabilities</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3 mb-12">Engineered Around Your Career Journey</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="p-8 rounded-3xl bg-slate-900 border border-slate-800">
+                    <div class="text-2xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-white mb-3">ATS Resume Analysis</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Analyze resume keyword frequency, formatting compliance, and role fit via advanced parsing.</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800">
-                    <div class="text-2xl mb-3">🧩</div>
-                    <h3 class="font-bold text-white mb-2">Skill Gap Diagnosis</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Pinpoint missing technical competencies required for specialized tech roles and government exams.</p>
+                <div class="p-8 rounded-3xl bg-slate-900 border border-slate-800">
+                    <div class="text-2xl mb-4">🧩</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Skill Gap Diagnosis</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Pinpoint missing technical competencies required for specialized tech roles and government exams.</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800">
-                    <div class="text-2xl mb-3">🗺️</div>
-                    <h3 class="font-bold text-white mb-2">Career Roadmaps</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Transform career goals and technical topics into structured, step-by-step learning milestones.</p>
+                <div class="p-8 rounded-3xl bg-slate-900 border border-slate-800">
+                    <div class="text-2xl mb-4">🗺️</div>
+                    <h3 class="text-xl font-bold text-white mb-3">Career Roadmaps</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Transform career goals and technical topics into structured, step-by-step learning milestones.</p>
                 </div>
             </div>
         </section>
 
         <!-- Architect Profile -->
-        <section id="architect" class="py-16 max-w-4xl mx-auto px-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-xl">
-                <img src="{{ url_for('static', filename='satyam-profile.jpg') }}" alt="Satyam Kumar" class="w-24 h-24 rounded-2xl object-cover border border-slate-700 shrink-0">
-                <div class="text-center md:text-left">
-                    <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30">🟢 Student Founder &amp; Developer</span>
-                    <h3 class="text-xl font-extrabold text-white mt-2">Satyam Kumar</h3>
-                    <p class="text-xs text-blue-400 font-semibold">B.Tech Computer Science &amp; Engineering (AI)</p>
-                    <p class="text-xs text-slate-400 mt-1">Government Engineering College, Munger (Bihar Engineering University)</p>
-                    <div class="flex gap-3 mt-4 justify-center md:justify-start">
-                        <a href="https://www.linkedin.com/in/satyam-kumar-29b331423" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">LinkedIn ↗</a>
-                        <a href="mailto:satyam@careersanalysis.me" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">Email ✉</a>
+        <section id="architect" class="py-20 max-w-4xl mx-auto px-4">
+            <div class="text-center mb-8"><span class="text-xs font-bold uppercase text-blue-400">The Builder</span></div>
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+                <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                    <img src="{{ url_for('static', filename='satyam-profile.jpg') }}" alt="Satyam Kumar" class="w-28 h-28 rounded-2xl object-cover border border-slate-700 shrink-0 shadow-lg">
+                    <div class="space-y-1.5">
+                        <span class="inline-flex text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-500/30">🟢 Student Founder &amp; Developer</span>
+                        <h3 class="text-2xl font-extrabold text-white">Satyam Kumar</h3>
+                        <p class="text-xs sm:text-sm text-blue-400 font-semibold">B.Tech Computer Science &amp; Engineering (AI)</p>
+                        <p class="text-xs text-slate-400">Government Engineering College, Munger (Bihar Engineering University)</p>
                     </div>
+                </div>
+                <div class="flex flex-col gap-3 w-full md:w-auto shrink-0">
+                    <a href="https://www.linkedin.com/in/satyam-kumar-29b331423" target="_blank" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-xs font-bold text-center transition shadow-lg shadow-blue-600/30">Connect on LinkedIn ➔</a>
+                    <a href="/about" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-2xl text-xs font-semibold text-center transition">View Full Profile</a>
                 </div>
             </div>
         </section>
@@ -311,54 +322,57 @@
     </main>
 
     <!-- Footer with Badges -->
-    <footer class="border-t border-slate-900 bg-slate-950 py-10 px-4 text-xs text-slate-400">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 items-center text-center md:text-left mb-6 pb-6 border-b border-slate-900">
+    <footer class="border-t border-slate-900 bg-slate-950 py-12 px-4 text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 items-center text-center md:text-left mb-8 pb-8 border-b border-slate-900">
             <div>
                 <span class="text-sm font-extrabold text-white">Careers<span class="text-blue-500">Analysis</span></span>
-                <p class="text-slate-500 text-[11px] mt-2">An AI-driven career readiness &amp; resume analysis platform.</p>
+                <p class="text-slate-500 text-[11px] mt-2 mb-4">An AI-driven career readiness &amp; resume analysis platform.</p>
                 <!-- Launch Badges in Footer -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
-                    <a href="https://peerlist.io/satyam62kumar02/project/careersanalysis" target="_blank">
-                        <img src="https://peerlist.io/api/v1/projects/embed/PRJHJKNLNDLBGB9D83MOODKOBPEMPJ?showUpvote=false&theme=dark" alt="Peerlist" style="height:32px;" class="object-contain rounded-lg">
+                <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                    <a href="https://peerlist.io/satyam62kumar02/project/careersanalysis" target="_blank" class="launch-card px-3 py-2 rounded-xl bg-slate-900 border border-slate-800">
+                        <img src="https://peerlist.io/api/v1/projects/embed/PRJHJKNLNDLBGB9D83MOODKOBPEMPJ?showUpvote=false&theme=dark" alt="Peerlist" style="height:32px;" class="object-contain" loading="lazy">
                     </a>
-                    <a href="https://www.producthunt.com/products/careersanalysis?embed=true" target="_blank">
-                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1248743&theme=dark" alt="Product Hunt" width="130" height="32" class="object-contain rounded-lg">
+                    <a href="https://www.producthunt.com/products/careersanalysis?embed=true" target="_blank" class="launch-card px-3 py-2 rounded-xl bg-slate-900 border border-slate-800">
+                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1248743&theme=dark" alt="Product Hunt" width="130" height="32" class="object-contain" loading="lazy">
                     </a>
                 </div>
             </div>
             <div class="flex justify-center gap-6 text-slate-300 font-medium">
-                <a href="/prep-hub" class="hover:text-blue-400">Prep Hub</a>
-                <a href="/dashboard" class="hover:text-blue-400">Resume Audit</a>
-                <a href="#topic-search-card" class="hover:text-blue-400">Topic Explorer</a>
+                <a href="/prep-hub" class="hover:text-blue-400 transition">Prep Hub</a>
+                <a href="/dashboard" class="hover:text-blue-400 transition">Resume Audit</a>
+                <a href="#topic-search-card" class="hover:text-blue-400 transition">Topic Explorer</a>
             </div>
-            <div class="flex justify-center md:justify-end gap-3">
-                <a href="https://www.linkedin.com/company/144984982/" target="_blank" class="px-3 py-2 bg-slate-900 text-blue-400 rounded-xl border border-slate-800">LinkedIn Page ↗</a>
-                <a href="mailto:satyam@careersanalysis.me" class="px-3 py-2 bg-slate-900 text-slate-300 rounded-xl border border-slate-800">satyam@careersanalysis.me ✉</a>
+            <div class="flex justify-center md:justify-end gap-3 flex-wrap">
+                <a href="https://www.linkedin.com/company/144984982/" target="_blank" class="px-3.5 py-2 bg-slate-900 text-blue-400 rounded-xl border border-slate-800 font-semibold">Official LinkedIn ↗</a>
+                <a href="mailto:satyam@careersanalysis.me" class="px-3.5 py-2 bg-slate-900 text-slate-300 rounded-xl border border-slate-800 font-semibold">satyam@careersanalysis.me ✉</a>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto text-center text-slate-500 text-[11px]">
-            &copy; 2026 CareersAnalysis. Designed &amp; Developed by Satyam Kumar (GEC Munger). All rights reserved.
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+            <span>&copy; 2026 CareersAnalysis. Designed &amp; Developed by Satyam Kumar (B.Tech CSE-AI, GEC Munger).</span>
+            <span>All rights reserved.</span>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript with Original Splash Animation + Safety Timeout -->
     <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const splash = document.getElementById('splashScreen');
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const splash = document.getElementById('app-splash-screen');
                 if (splash) {
-                    splash.classList.add('hidden-splash');
-                    setTimeout(() => splash.remove(), 400);
+                    splash.classList.add('splash-hidden');
+                    setTimeout(() => splash.remove(), 500);
                 }
-            }, 800);
+            }, 1200);
+
+            // Emergency safety timeout in case load event takes too long
+            setTimeout(function () {
+                const splash = document.getElementById('app-splash-screen');
+                if (splash) {
+                    splash.classList.add('splash-hidden');
+                    setTimeout(() => splash.remove(), 500);
+                }
+            }, 2500);
         });
-        setTimeout(function() {
-            const splash = document.getElementById('splashScreen');
-            if (splash) {
-                splash.classList.add('hidden-splash');
-                setTimeout(() => splash.remove(), 400);
-            }
-        }, 2000);
 
         function toggleDrawer(open) {
             const overlay = document.getElementById('mobileDrawerOverlay');
@@ -368,25 +382,30 @@
                 overlay.classList.add('opacity-100');
                 panel.classList.remove('translate-x-full');
                 panel.classList.add('translate-x-0');
+                document.body.style.overflow = 'hidden';
             } else {
                 overlay.classList.add('pointer-events-none', 'opacity-0');
                 overlay.classList.remove('opacity-100');
                 panel.classList.remove('translate-x-0');
                 panel.classList.add('translate-x-full');
+                document.body.style.overflow = '';
             }
         }
 
-        knowledgeGraphSearch = true; // SEO helper hook
         function startVoiceSearch() {
-            const input = document.getElementById('topicSearchInput');
-            const status = document.getElementById('voiceStatus');
+            const inputField = document.getElementById('topicSearchInput');
+            const voiceStatus = document.getElementById('voiceStatus');
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) { alert('Speech recognition not supported in this browser.'); return; }
             const recognition = new SpeechRecognition();
-            recognition.onstart = () => status.classList.remove('hidden');
-            recognition.onresult = (e) => { input.value = e.results[0][0].transcript; status.classList.add('hidden'); document.getElementById('topicSearchForm').submit(); };
-            recognition.onerror = () => status.classList.add('hidden');
-            recognition.onend = () => status.classList.add('hidden');
+            recognition.onstart = () => voiceStatus.classList.remove('hidden');
+            recognition.onresult = (event) => {
+                inputField.value = event.results[0][0].transcript;
+                voiceStatus.classList.add('hidden');
+                document.getElementById('topicSearchForm').submit();
+            };
+            recognition.onerror = () => voiceStatus.classList.add('hidden');
+            recognition.onend = () => voiceStatus.classList.add('hidden');
             recognition.start();
         }
     </script>
