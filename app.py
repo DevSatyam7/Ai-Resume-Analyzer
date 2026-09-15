@@ -561,6 +561,9 @@ def serve_manifest():
 def serve_sw():
     return send_from_directory('static', 'sw.js', mimetype='application/javascript')
 
+@app.route('/ping')
+def ping():
+    return "OK", 200
 
 if __name__ == "__main__":
     app.run(debug=True)
