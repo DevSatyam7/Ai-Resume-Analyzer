@@ -2,6 +2,7 @@
 <html lang="en" class="scroll-smooth">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -11,7 +12,9 @@
          PRIMARY METADATA & SEO
     ============================================================ -->
 
-    <title>CareersAnalysis — AI Career Analysis & Resume Platform for Engineering Students</title>
+    <title>
+        CareersAnalysis — AI Career Analysis & Resume Platform for Engineering Students
+    </title>
 
     <meta name="title"
           content="CareersAnalysis — AI Career Analysis & Resume Platform for Engineering Students">
@@ -19,7 +22,8 @@
     <meta name="description"
           content="CareersAnalysis is an AI-powered career analysis and career readiness platform for engineering students. Analyze resumes, improve ATS alignment, identify skill gaps, explore career paths, and prepare for placements and technical opportunities. Built by Satyam Kumar.">
 
-    <meta name="author" content="Satyam Kumar">
+    <meta name="author"
+          content="Satyam Kumar">
 
     <meta name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -27,15 +31,21 @@
     <meta name="googlebot"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-    <link rel="canonical" href="https://careersanalysis.me/">
+    <link rel="canonical"
+          href="https://careersanalysis.me/">
 
     <!-- ============================================================
          OPEN GRAPH / SOCIAL SHARING
     ============================================================ -->
 
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="CareersAnalysis">
-    <meta property="og:url" content="https://careersanalysis.me/">
+    <meta property="og:type"
+          content="website">
+
+    <meta property="og:site_name"
+          content="CareersAnalysis">
+
+    <meta property="og:url"
+          content="https://careersanalysis.me/">
 
     <meta property="og:title"
           content="CareersAnalysis — AI Career Analysis & Resume Platform">
@@ -50,7 +60,8 @@
          TWITTER / SOCIAL SHARING
     ============================================================ -->
 
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card"
+          content="summary">
 
     <meta name="twitter:title"
           content="CareersAnalysis — AI Career Analysis Platform">
@@ -92,17 +103,25 @@
                 "name": "CareersAnalysis",
                 "alternateName": "Careers Analysis",
                 "url": "https://careersanalysis.me/",
+
+                "email": "satyam@careersanalysis.me",
+
                 "logo": {
                     "@type": "ImageObject",
                     "url": "{{ url_for('static', filename='favicon.png', _external=True) }}"
                 },
+
                 "founder": {
                     "@id": "https://careersanalysis.me/#founder"
                 },
+
                 "sameAs": [
+                    "https://www.linkedin.com/company/144984982/",
                     "https://www.linkedin.com/in/satyam-kumar-29b331423",
                     "https://github.com/DevSatyam7",
-                    "https://devsatyamx.github.io/Resume/"
+                    "https://devsatyamx.github.io/Resume/",
+                    "https://peerlist.io/satyam62kumar02/project/careersanalysis",
+                    "https://www.producthunt.com/products/careersanalysis"
                 ]
             },
 
@@ -153,7 +172,8 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
     <link rel="preconnect"
           href="https://fonts.gstatic.com"
@@ -165,7 +185,8 @@
     <style>
 
         body {
-            font-family: 'Plus Jakarta Sans',
+            font-family:
+                'Plus Jakarta Sans',
                 -apple-system,
                 BlinkMacSystemFont,
                 sans-serif;
@@ -189,6 +210,7 @@
         ======================================================== */
 
         @keyframes marquee {
+
             0% {
                 transform: translateX(100%);
             }
@@ -196,6 +218,7 @@
             100% {
                 transform: translateX(-100%);
             }
+
         }
 
         .animate-marquee {
@@ -221,6 +244,7 @@
             50% {
                 transform: translateY(-8px);
             }
+
         }
 
         .float-card {
@@ -242,6 +266,7 @@
         ======================================================== */
 
         .hero-grid {
+
             background-image:
                 linear-gradient(
                     rgba(148, 163, 184, 0.05) 1px,
@@ -279,6 +304,7 @@
         }
 
         .premium-border::before {
+
             content: "";
 
             position: absolute;
@@ -301,10 +327,75 @@
                 linear-gradient(#fff 0 0);
 
             -webkit-mask-composite: xor;
-
             mask-composite: exclude;
 
             pointer-events: none;
+        }
+
+        /* ========================================================
+           LAUNCH BADGES
+        ======================================================== */
+
+        .launch-proof-card {
+            position: relative;
+            overflow: hidden;
+            transition:
+                transform 300ms ease,
+                border-color 300ms ease,
+                background 300ms ease,
+                box-shadow 300ms ease;
+        }
+
+        .launch-proof-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -100px;
+            right: -70px;
+
+            border-radius: 9999px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(59, 130, 246, .14),
+                    transparent 70%
+                );
+
+            filter: blur(12px);
+
+            pointer-events: none;
+
+            transition:
+                transform 400ms ease,
+                opacity 300ms ease;
+        }
+
+        .launch-proof-card:hover {
+
+            transform: translateY(-4px);
+
+            background:
+                rgba(15, 23, 42, .92);
+
+            border-color:
+                rgba(59, 130, 246, .35);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, .22);
+        }
+
+        .launch-proof-card:hover::before {
+            transform: scale(1.35);
+        }
+
+        .launch-proof-label {
+            letter-spacing: .18em;
         }
 
         /* ========================================================
@@ -320,23 +411,29 @@
             100% {
                 transform: rotate(360deg);
             }
+
         }
 
         @keyframes orbit {
 
             0% {
+
                 transform:
                     rotate(0deg)
                     translateX(55px)
                     rotate(0deg);
+
             }
 
             100% {
+
                 transform:
                     rotate(360deg)
                     translateX(55px)
                     rotate(-360deg);
+
             }
+
         }
 
         @keyframes scaleIn {
@@ -350,6 +447,7 @@
                 transform: scale(1);
                 opacity: 1;
             }
+
         }
 
         .animate-spin-slow {
@@ -361,18 +459,21 @@
         }
 
         .splash-content {
+
             animation:
                 scaleIn
                 0.8s
                 cubic-bezier(0.16, 1, 0.3, 1)
                 forwards;
+
         }
 
     </style>
 
 </head>
 
-<body class="min-h-screen bg-slate-950 text-slate-100">
+
+<body class="bg-slate-950 text-slate-200 antialiased">
 
     <!-- ============================================================
          FUTURISTIC SPLASH SCREEN
@@ -392,13 +493,17 @@
                 <div class="absolute inset-0 rounded-full border-2 border-blue-500/20 border-t-blue-500 border-r-indigo-500 animate-spin-slow shadow-[0_0_30px_rgba(59,130,246,0.35)]"></div>
 
                 <div class="absolute inset-0 animate-orbit pointer-events-none flex items-center justify-center">
+
                     <div class="w-4 h-4 bg-sky-400 rounded-full shadow-[0_0_15px_#38bdf8]"></div>
+
                 </div>
 
                 <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600/85 to-indigo-700/85 backdrop-blur-md border border-blue-400/40 flex items-center justify-center shadow-[0_0_35px_rgba(59,130,246,0.5)] relative z-10">
+
                     <span class="text-2xl font-extrabold tracking-tight text-white drop-shadow">
                         CA
                     </span>
+
                 </div>
 
             </div>
@@ -406,16 +511,21 @@
             <div class="text-center space-y-1.5">
 
                 <h2 class="text-xl font-extrabold tracking-tight text-white">
+
                     Careers<span class="text-blue-400">Analysis</span>
+
                 </h2>
 
                 <p class="text-[11px] font-mono tracking-widest text-blue-400/90 uppercase animate-pulse">
+
                     PROCESSING...
+
                 </p>
 
             </div>
 
         </div>
+
     </div>
 
 
@@ -444,7 +554,7 @@
             </span>
 
             <span>
-                💼 Connect on LinkedIn for Professional Updates
+                💼 Follow CareersAnalysis on LinkedIn for Product Updates
             </span>
 
         </div>
@@ -468,7 +578,9 @@
                      class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-blue-500/20 group-hover:scale-105 transition duration-200 border border-slate-800">
 
                 <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+
                     Careers<span class="text-blue-500">Analysis</span>
+
                 </span>
 
             </a>
@@ -478,34 +590,46 @@
 
                 <a href="/prep-hub"
                    class="text-sky-400 font-semibold hover:text-sky-300 transition flex items-center gap-1">
+
                     <span>✦</span>
                     Prep Hub
+
                 </a>
 
                 <a href="#topic-search-card"
                    class="hover:text-white transition">
+
                     Topic Explorer
+
                 </a>
 
                 <a href="#pro-features"
                    class="text-purple-300 hover:text-purple-200 transition font-medium">
+
                     Recruiter Suite
+
                 </a>
 
                 <a href="#features"
                    class="hover:text-white transition">
+
                     Modules
+
                 </a>
 
                 <a href="#architect"
                    class="hover:text-white transition">
+
                     Architect
+
                 </a>
 
                 <button type="button"
                         onclick="toggleDrawer(true)"
                         class="hover:text-blue-400 transition cursor-pointer">
+
                     About System
+
                 </button>
 
             </nav>
@@ -517,19 +641,25 @@
 
                     <a href="/dashboard"
                        class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition">
+
                         Dashboard
+
                     </a>
 
                 {% else %}
 
                     <a href="/login"
                        class="hidden sm:inline-block text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition px-3 py-2">
+
                         Log In
+
                     </a>
 
                     <a href="/signup"
                        class="text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 active:scale-95 transition whitespace-nowrap">
+
                         Get Started Free
+
                     </a>
 
                 {% endif %}
@@ -613,10 +743,12 @@
                     </h4>
 
                     <p class="text-xs text-slate-300 leading-relaxed">
+
                         <strong>CareersAnalysis</strong>
                         is built by
                         <strong>Satyam Kumar</strong>
                         (B.Tech CSE-AI, GEC Munger).
+
                     </p>
 
                 </div>
@@ -627,36 +759,46 @@
                     <a href="/dashboard"
                        onclick="toggleDrawer(false)"
                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-blue-400 hover:bg-blue-950/40 transition">
+
                         <span>📄</span>
                         Resume Audit Portal
+
                     </a>
 
                     <a href="/prep-hub"
                        onclick="toggleDrawer(false)"
                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-sky-400 hover:bg-sky-950/30 transition">
+
                         <span>✦</span>
                         Placement &amp; Prep Hub
+
                     </a>
 
                     <a href="#topic-search-card"
                        onclick="toggleDrawer(false)"
                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
+
                         <span>⚡</span>
                         Instant Topic Explorer
+
                     </a>
 
                     <a href="#pro-features"
                        onclick="toggleDrawer(false)"
                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-purple-300 hover:bg-purple-950/30 transition">
+
                         <span>⚖️</span>
                         Recruiter Suite
+
                     </a>
 
                     <a href="#architect"
                        onclick="toggleDrawer(false)"
                        class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition">
+
                         <span>👨‍💻</span>
                         Architect Profile
+
                     </a>
 
                 </nav>
@@ -670,26 +812,37 @@
 
                     <a href="/logout"
                        class="w-full text-center py-2.5 text-sm font-semibold text-rose-400 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition">
+
                         Log Out
+
                     </a>
 
                 {% else %}
 
                     <a href="/login"
                        class="w-full text-center py-2.5 text-sm font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl">
+
                         Log In
+
                     </a>
 
                     <a href="/signup"
                        class="w-full text-center py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/25">
+
                         Get Started Free
+
                     </a>
 
                 {% endif %}
 
-                <span class="text-[10px] text-center text-slate-500 mt-1">
-                    CareersAnalysis • Built by Satyam Kumar
-                </span>
+                <a href="https://www.linkedin.com/company/144984982/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-[11px] text-center text-blue-400 hover:text-blue-300 transition mt-1">
+
+                    CareersAnalysis on LinkedIn ↗
+
+                </a>
 
             </div>
 
@@ -732,7 +885,9 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
 
                             <span class="text-[11px] sm:text-xs font-semibold text-slate-300 tracking-wide">
+
                                 ✦ AI Career Readiness Platform by Satyam Kumar
+
                             </span>
 
                         </div>
@@ -743,7 +898,9 @@
                             Understand Your
 
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-300">
+
                                 Career Fit.
+
                             </span>
 
                             <br>
@@ -751,19 +908,22 @@
                             Build Your
 
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-400 to-indigo-400">
+
                                 Next Step.
+
                             </span>
 
                         </h1>
 
 
-                        <!-- SEO-OPTIMIZED HERO DESCRIPTION -->
-
                         <p class="text-sm sm:text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-8">
 
                             CareersAnalysis provides AI-powered career analysis for engineering students —
+
                             analyze your resume, understand ATS alignment, identify skill gaps,
+
                             explore career paths, and build focused preparation roadmaps
+
                             for your target engineering career.
 
                         </p>
@@ -805,7 +965,9 @@
                                     </div>
 
                                     <span class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+
                                         Placement test patterns &amp; coding rounds
+
                                     </span>
 
                                 </a>
@@ -827,7 +989,9 @@
                                     </div>
 
                                     <span class="text-[11px] text-slate-400 mt-1 line-clamp-1">
+
                                         Blueprints &amp; weightage distribution
+
                                     </span>
 
                                 </a>
@@ -873,13 +1037,17 @@
                                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
 
                                         <span class="text-xs font-bold text-white">
+
                                             Live ATS Diagnostic Engine
+
                                         </span>
 
                                     </div>
 
                                     <span class="text-[10px] text-blue-400 font-mono">
+
                                         v2.4 Active
+
                                     </span>
 
                                 </div>
@@ -892,11 +1060,15 @@
                                         <div>
 
                                             <p class="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">
+
                                                 ATS Match Score
+
                                             </p>
 
                                             <p class="text-4xl font-extrabold text-white mt-1">
+
                                                 87<span class="text-lg text-blue-400">%</span>
+
                                             </p>
 
                                         </div>
@@ -952,11 +1124,15 @@
                                     <div class="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
 
                                         <p class="text-[10px] text-blue-400 font-bold uppercase tracking-wider">
+
                                             ✦ AI Optimization Note
+
                                         </p>
 
                                         <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+
                                             Enhance backend framework metrics and database indexing highlights to reach 95%+ target role match.
+
                                         </p>
 
                                     </div>
@@ -966,6 +1142,144 @@
                             </div>
 
                         </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     PRODUCT LAUNCH & COMMUNITY PROOF
+                ================================================== -->
+
+                <div class="max-w-4xl mx-auto mt-12 sm:mt-14">
+
+                    <div class="text-center mb-5">
+
+                        <span class="launch-proof-label text-[10px] sm:text-xs font-bold uppercase text-slate-500">
+
+                            Product Launch &amp; Community Presence
+
+                        </span>
+
+                        <h2 class="text-base sm:text-lg font-bold text-slate-200 mt-2">
+
+                            CareersAnalysis is publicly launched
+
+                        </h2>
+
+                        <p class="text-[11px] sm:text-xs text-slate-500 mt-1">
+
+                            Explore the product on independent product communities.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+
+                        <!-- ==================================================
+                             PEERLIST PREMIUM CARD
+                        ================================================== -->
+
+                        <a href="https://peerlist.io/satyam62kumar02/project/careersanalysis"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="CareersAnalysis on Peerlist"
+                           class="launch-proof-card group min-h-[112px] flex items-center justify-center rounded-2xl bg-slate-900/70 border border-slate-800 px-5 py-5 backdrop-blur-md shadow-lg shadow-black/10">
+
+                            <div class="relative z-10 w-full flex flex-col items-center justify-center">
+
+                                <div class="flex items-center gap-2 mb-3">
+
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,.8)]"></span>
+
+                                    <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500">
+
+                                        Community Launch
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="relative flex items-center justify-center">
+
+                                    <div class="absolute -inset-5 bg-blue-500/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                    <img
+                                        src="https://peerlist.io/api/v1/projects/embed/PRJHJKNLNDLBGB9D83MOODKOBPEMPJ?showUpvote=false&theme=dark"
+                                        alt="CareersAnalysis on Peerlist"
+                                        style="width:auto;height:68px;"
+                                        class="relative max-w-full object-contain group-hover:scale-[1.02] transition-transform duration-300"
+                                        loading="lazy"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <!-- ==================================================
+                             PRODUCT HUNT PREMIUM CARD
+                        ================================================== -->
+
+                        <a href="https://www.producthunt.com/products/careersanalysis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-careersanalysis"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="CareersAnalysis on Product Hunt"
+                           class="launch-proof-card group min-h-[112px] flex items-center justify-center rounded-2xl bg-slate-900/70 border border-slate-800 px-5 py-5 backdrop-blur-md shadow-lg shadow-black/10">
+
+                            <div class="relative z-10 w-full flex flex-col items-center justify-center">
+
+                                <div class="flex items-center gap-2 mb-3">
+
+                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,.8)]"></span>
+
+                                    <span class="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500">
+
+                                        Product Launch
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="relative flex items-center justify-center">
+
+                                    <div class="absolute -inset-5 bg-orange-500/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                    <img
+                                        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1248743&theme=dark&t=1789459776115"
+                                        alt="CareersAnalysis — Product Hunt"
+                                        width="250"
+                                        height="54"
+                                        class="relative max-w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-300"
+                                        loading="lazy"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="flex items-center justify-center gap-2 mt-4">
+
+                        <span class="w-1 h-1 rounded-full bg-emerald-400"></span>
+
+                        <p class="text-[10px] text-slate-600">
+
+                            Public product presence • CareersAnalysis
+
+                        </p>
 
                     </div>
 
@@ -1022,17 +1336,23 @@
                     <div class="relative">
 
                         <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider shadow-inner">
+
                             ⚡ AI Topic &amp; Exam Explorer
+
                         </span>
 
 
                         <h3 class="text-white text-xl sm:text-2xl font-extrabold mt-4">
+
                             Turn Any Engineering Subject Or Exam Into a Study Roadmap
+
                         </h3>
 
 
                         <p class="text-slate-400 text-xs sm:text-sm mt-2 mb-6 leading-relaxed">
+
                             Search or use voice search for any subject, technical skill, or placement exam to generate an instant structured preparation blueprint.
+
                         </p>
 
 
@@ -1040,7 +1360,6 @@
                               method="POST"
                               id="topicSearchForm"
                               class="flex flex-col sm:flex-row gap-3 w-full">
-
 
                             <div class="w-full bg-slate-950 border border-slate-800 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/30 rounded-2xl flex items-center pr-2 transition shadow-inner">
 
@@ -1122,42 +1441,54 @@
                         <div class="flex items-center justify-center flex-wrap gap-2 mt-5 pt-4 border-t border-slate-800/80">
 
                             <span class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mr-1">
+
                                 🔥 Top Searches:
+
                             </span>
 
 
                             <button type="button"
                                     onclick="setFastTopic('GATE CSE Data Structures')"
                                     class="text-xs bg-slate-900 hover:bg-slate-800 text-blue-400 hover:text-blue-300 px-3 py-1.5 rounded-xl border border-slate-800 transition cursor-pointer shadow-sm">
+
                                 GATE CSE
+
                             </button>
 
 
                             <button type="button"
                                     onclick="setFastTopic('TCS NQT 2027 Pattern')"
                                     class="text-xs bg-slate-900 hover:bg-slate-800 text-sky-400 hover:text-sky-300 px-3 py-1.5 rounded-xl border border-slate-800 transition cursor-pointer shadow-sm">
+
                                 TCS NQT
+
                             </button>
 
 
                             <button type="button"
                                     onclick="setFastTopic('Operating Systems Core Concepts')"
                                     class="text-xs bg-slate-900 hover:bg-slate-800 text-indigo-400 hover:text-indigo-300 px-3 py-1.5 rounded-xl border border-slate-800 transition cursor-pointer shadow-sm">
+
                                 Operating Systems
+
                             </button>
 
 
                             <button type="button"
                                     onclick="setFastTopic('Python OOPs & Flask Development')"
                                     class="text-xs bg-slate-900 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 px-3 py-1.5 rounded-xl border border-slate-800 transition cursor-pointer shadow-sm">
+
                                 Python OOPs
+
                             </button>
 
 
                             <button type="button"
                                     onclick="setFastTopic('DBMS & SQL Queries')"
                                     class="text-xs bg-slate-900 hover:bg-slate-800 text-purple-400 hover:text-purple-300 px-3 py-1.5 rounded-xl border border-slate-800 transition cursor-pointer shadow-sm">
+
                                 DBMS &amp; SQL
+
                             </button>
 
                         </div>
@@ -1240,15 +1571,21 @@
             <div class="text-center max-w-2xl mx-auto mb-12">
 
                 <span class="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
+
                     Resume Intelligence
+
                 </span>
 
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-4">
+
                     From Basic Descriptions to Impactful Profiles
+
                 </h2>
 
                 <p class="text-sm text-slate-400 mt-3">
+
                     See how automated ATS diagnosis turns vague technical summaries into role-focused professional highlights.
+
                 </p>
 
             </div>
@@ -1284,7 +1621,9 @@
 
 
                     <p class="text-xs text-slate-500 mt-5">
+
                         Generic descriptions lack quantified impact and keyword matching for automated ATS filters.
+
                     </p>
 
                 </div>
@@ -1317,7 +1656,9 @@
 
 
                     <p class="text-xs text-slate-500 mt-5">
+
                         CareersAnalysis highlights exact optimization areas to maximize interview callback rates.
+
                     </p>
 
                 </div>
@@ -1349,7 +1690,9 @@
                     </h2>
 
                     <p class="text-sm text-slate-400 max-w-2xl mb-8">
+
                         Professional evaluation tools built around structured skill-focused matching and technical preparation.
+
                     </p>
 
 
@@ -1367,7 +1710,9 @@
                             </h3>
 
                             <p class="text-xs text-slate-400 leading-relaxed">
+
                                 Focuses candidate evaluation purely on verified technical competencies and project work.
+
                             </p>
 
                         </div>
@@ -1384,7 +1729,9 @@
                             </h3>
 
                             <p class="text-xs text-slate-400 leading-relaxed">
+
                                 Dynamically benchmarks resume skills against specific target job descriptions.
+
                             </p>
 
                         </div>
@@ -1401,7 +1748,9 @@
                             </h3>
 
                             <p class="text-xs text-slate-400 leading-relaxed">
+
                                 Generates rigorous project-focused technical interview questions for rigorous prep.
+
                             </p>
 
                         </div>
@@ -1447,7 +1796,9 @@
                         </h3>
 
                         <p class="text-slate-400 text-sm leading-relaxed">
+
                             Analyze resume keyword frequency, formatting compliance, and role fit via advanced parsing.
+
                         </p>
 
                     </div>
@@ -1464,7 +1815,9 @@
                         </h3>
 
                         <p class="text-slate-400 text-sm leading-relaxed">
+
                             Pinpoint missing technical competencies required for specialized tech roles and government exams.
+
                         </p>
 
                     </div>
@@ -1481,7 +1834,9 @@
                         </h3>
 
                         <p class="text-slate-400 text-sm leading-relaxed">
+
                             Transform career goals and technical topics into structured, step-by-step learning milestones.
+
                         </p>
 
                     </div>
@@ -1506,480 +1861,4 @@
 
                     <span class="text-xs font-bold uppercase tracking-widest text-blue-400">
                         The Builder
-                    </span>
 
-                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">
-                        Built by a Student, for Engineering Students
-                    </h2>
-
-                </div>
-
-
-                <div class="bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-8">
-
-
-                    <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-
-
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-1 bg-gradient-to-tr from-blue-500 to-indigo-600 shadow-xl shrink-0">
-
-                            <img src="{{ url_for('static', filename='satyam-profile.jpg') }}"
-                                 alt="Satyam Kumar — Founder and Developer of CareersAnalysis"
-                                 class="w-full h-full object-cover rounded-xl">
-
-                        </div>
-
-
-                        <div class="space-y-1.5">
-
-                            <span class="inline-flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
-
-                                🟢 Student Founder &amp; Developer
-
-                            </span>
-
-
-                            <h3 class="text-2xl font-extrabold text-white tracking-tight">
-                                Satyam Kumar
-                            </h3>
-
-
-                            <p class="text-xs sm:text-sm text-blue-400 font-semibold">
-                                B.Tech Computer Science &amp; Engineering (AI)
-                            </p>
-
-
-                            <p class="text-xs text-slate-400">
-                                Government Engineering College, Munger (Bihar Engineering University)
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="flex flex-col sm:flex-row md:flex-col gap-3 w-full md:w-auto shrink-0">
-
-
-                        <a href="https://www.linkedin.com/in/satyam-kumar-29b331423"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="px-6 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 whitespace-nowrap">
-
-                            <span>
-                                Connect on LinkedIn
-                            </span>
-
-                            <span>
-                                ➔
-                            </span>
-
-                        </a>
-
-
-                        <a href="/about"
-                           class="px-6 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs sm:text-sm font-semibold border border-slate-700 transition flex items-center justify-center gap-2">
-
-                            <span>
-                                View Full Profile
-                            </span>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ============================================================
-         FOOTER
-    ============================================================ -->
-
-    <footer class="border-t border-slate-900 bg-slate-950 py-12 px-4 text-xs text-slate-400">
-
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left mb-8 pb-8 border-b border-slate-900">
-
-
-            <div>
-
-                <div class="flex items-center justify-center md:justify-start gap-2.5 mb-2">
-
-                    <img src="{{ url_for('static', filename='favicon.png') }}"
-                         alt="CareersAnalysis Logo"
-                         class="w-6 h-6 rounded-lg object-cover">
-
-                    <span class="text-sm font-extrabold text-white">
-                        Careers<span class="text-blue-500">Analysis</span>
-                    </span>
-
-                </div>
-
-
-                <p class="text-slate-500 text-[11px] max-w-xs mx-auto md:mx-0">
-                    An AI-driven career readiness &amp; resume analysis platform designed for modern engineering students.
-                </p>
-
-            </div>
-
-
-            <div class="flex flex-wrap justify-center gap-6 text-slate-300 font-medium">
-
-                <a href="/prep-hub"
-                   class="hover:text-blue-400 transition">
-                    Prep Hub
-                </a>
-
-                <a href="/dashboard"
-                   class="hover:text-blue-400 transition">
-                    Resume Audit
-                </a>
-
-                <a href="#topic-search-card"
-                   class="hover:text-blue-400 transition">
-                    Topic Explorer
-                </a>
-
-                <a href="#architect"
-                   class="hover:text-blue-400 transition">
-                    About Builder
-                </a>
-
-            </div>
-
-
-            <div class="flex items-center justify-center md:justify-end gap-4">
-
-                <a href="https://www.linkedin.com/in/satyam-kumar-29b331423"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-800 transition"
-                   title="LinkedIn Profile">
-
-                    LinkedIn ↗
-
-                </a>
-
-
-                <a href="mailto:satyam62kumar02@gmail.com"
-                   class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition"
-                   title="Contact Email">
-
-                    Contact ✉
-
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
-
-            <span>
-                &copy; 2026 CareersAnalysis.
-                Designed &amp; Developed by Satyam Kumar
-                (B.Tech CSE-AI, GEC Munger).
-            </span>
-
-            <span class="text-slate-600">
-                All rights reserved. Powered by Advanced AI Workflows.
-            </span>
-
-        </div>
-
-    </footer>
-
-
-    <!-- ============================================================
-         JAVASCRIPT
-    ============================================================ -->
-
-    <script>
-
-        /* ========================================================
-           SPLASH SCREEN
-        ======================================================== */
-
-        window.addEventListener('load', function () {
-
-            setTimeout(function () {
-
-                const splash =
-                    document.getElementById('app-splash-screen');
-
-                if (splash) {
-
-                    splash.style.opacity = '0';
-
-                    setTimeout(() => {
-                        splash.remove();
-                    }, 700);
-
-                }
-
-            }, 1400);
-
-        });
-
-
-        /* ========================================================
-           MOBILE DRAWER
-        ======================================================== */
-
-        function toggleDrawer(open) {
-
-            const overlay =
-                document.getElementById('mobileDrawerOverlay');
-
-            const panel =
-                document.getElementById('mobileDrawerPanel');
-
-
-            if (open) {
-
-                overlay.classList.remove(
-                    'pointer-events-none',
-                    'opacity-0'
-                );
-
-                overlay.classList.add(
-                    'pointer-events-auto',
-                    'opacity-100'
-                );
-
-                panel.classList.remove(
-                    'translate-x-full'
-                );
-
-                panel.classList.add(
-                    'translate-x-0'
-                );
-
-                document.body.style.overflow = 'hidden';
-
-            } else {
-
-                overlay.classList.remove(
-                    'pointer-events-auto',
-                    'opacity-100'
-                );
-
-                overlay.classList.add(
-                    'pointer-events-none',
-                    'opacity-0'
-                );
-
-                panel.classList.remove(
-                    'translate-x-0'
-                );
-
-                panel.classList.add(
-                    'translate-x-full'
-                );
-
-                document.body.style.overflow = '';
-
-            }
-
-        }
-
-
-        /* Close drawer when clicking overlay */
-
-        document
-            .getElementById('mobileDrawerOverlay')
-            .addEventListener('click', function (e) {
-
-                if (e.target === this) {
-                    toggleDrawer(false);
-                }
-
-            });
-
-
-        /* ========================================================
-           QUICK TOPIC SEARCH
-        ======================================================== */
-
-        function setFastTopic(topicText) {
-
-            const inputField =
-                document.getElementById('topicSearchInput');
-
-            if (inputField) {
-
-                inputField.value = topicText;
-
-                inputField.focus();
-
-                inputField.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-
-            }
-
-        }
-
-
-        /* ========================================================
-           TOPIC SEARCH FORM
-        ======================================================== */
-
-        document
-            .getElementById('topicSearchForm')
-            .addEventListener('submit', function () {
-
-                const btn =
-                    document.getElementById('exploreBtn');
-
-                const btnText =
-                    document.getElementById('btnText');
-
-                const spinner =
-                    document.getElementById('btnSpinner');
-
-
-                btn.disabled = true;
-
-                btn.classList.add(
-                    'opacity-80',
-                    'cursor-not-allowed'
-                );
-
-                btnText.textContent = 'Generating...';
-
-                spinner.classList.remove('hidden');
-
-            });
-
-
-        /* ========================================================
-           VOICE SEARCH
-        ======================================================== */
-
-        function startVoiceSearch() {
-
-            const inputField =
-                document.getElementById('topicSearchInput');
-
-            const voiceStatus =
-                document.getElementById('voiceStatus');
-
-            const micBtn =
-                document.getElementById('micBtn');
-
-            const SpeechRecognition =
-                window.SpeechRecognition ||
-                window.webkitSpeechRecognition;
-
-
-            if (!SpeechRecognition) {
-
-                alert(
-                    'Speech recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge.'
-                );
-
-                return;
-            }
-
-
-            const recognition =
-                new SpeechRecognition();
-
-
-            recognition.lang = 'en-US';
-
-            recognition.interimResults = false;
-
-            recognition.maxAlternatives = 1;
-
-
-            recognition.onstart = function () {
-
-                voiceStatus.classList.remove(
-                    'hidden'
-                );
-
-                micBtn.classList.add(
-                    'bg-blue-600',
-                    'text-white',
-                    'animate-pulse'
-                );
-
-            };
-
-
-            recognition.onresult = function (event) {
-
-                const speechResult =
-                    event.results[0][0].transcript;
-
-
-                inputField.value =
-                    speechResult;
-
-
-                voiceStatus.classList.add(
-                    'hidden'
-                );
-
-
-                micBtn.classList.remove(
-                    'bg-blue-600',
-                    'text-white',
-                    'animate-pulse'
-                );
-
-
-                document
-                    .getElementById('topicSearchForm')
-                    .submit();
-
-            };
-
-
-            recognition.onerror = function () {
-
-                voiceStatus.classList.add(
-                    'hidden'
-                );
-
-                micBtn.classList.remove(
-                    'bg-blue-600',
-                    'text-white',
-                    'animate-pulse'
-                );
-
-            };
-
-
-            recognition.onend = function () {
-
-                voiceStatus.classList.add(
-                    'hidden'
-                );
-
-                micBtn.classList.remove(
-                    'bg-blue-600',
-                    'text-white',
-                    'animate-pulse'
-                );
-
-            };
-
-
-            recognition.start();
-
-        }
-
-    </script>
-
-</body>
-</html>
