@@ -152,31 +152,28 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> ✦ AI Career Readiness Platform by Satyam Kumar
                         </div>
                         <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
-                            Understand Your <span class="text-blue-400">Career Fit.</span><br>Build Your <span class="text-indigo-400">Next Step.</span>
+                            Smart Resume Auditing &amp; <span class="text-blue-400">Career Path Optimization</span>
                         </h1>
                         <p class="text-sm sm:text-lg text-slate-400 leading-relaxed mb-8">
-                            CareersAnalysis provides AI-powered career analysis for engineering students — analyze your resume, understand ATS alignment, identify skill gaps, and build focused preparation roadmaps.
+                            Bridge the gap between your engineering profile and recruiter filters. Pinpoint missing industry skills, calculate ATS match, and discover role-specific preparation syllabi.
                         </p>
                         
-                        <!-- CTA & Hub Links -->
+                        <!-- PREMIUM ANALYZER & PREP HUB BUTTONS ON TOP -->
                         <div class="flex flex-col gap-4 max-w-xl mx-auto lg:mx-0">
-                            <a href="/dashboard" class="inline-flex items-center justify-center gap-2 font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-6 py-4 rounded-2xl shadow-xl shadow-blue-600/30 transition">
+                            <!-- 1. Analyze Resume Button -->
+                            <a href="/dashboard" class="group inline-flex items-center justify-center gap-2 font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white px-6 py-4 rounded-2xl shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5">
                                 <span>Analyze Resume Now</span> <span>→</span>
                             </a>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <a href="/prep-hub" class="group flex flex-col p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-left transition shadow-md">
-                                    <div class="flex items-center justify-between text-sky-400 font-bold text-sm">
-                                        <span>Prep Hub</span> <span>✦</span>
-                                    </div>
-                                    <span class="text-[11px] text-slate-400 mt-1">Access curated placement test patterns, coding round resources, and technical interview modules.</span>
-                                </a>
-                                <a href="#topic-search-card" class="group flex flex-col p-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/40 text-left transition shadow-md">
-                                    <div class="flex items-center justify-between text-blue-400 font-bold text-sm">
-                                        <span>Exam Explorer</span> <span>⚡</span>
-                                    </div>
-                                    <span class="text-[11px] text-slate-400 mt-1">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly.</span>
-                                </a>
-                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium -mt-2">✨ Free PDF Scan • ATS Score &amp; Skill Gaps</div>
+
+                            <!-- 2. Prep Hub Button (Prominent & Clear) -->
+                            <a href="/prep-hub" class="group flex flex-col p-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-sky-500/50 text-left transition shadow-lg backdrop-blur-md">
+                                <div class="flex items-center justify-between text-sky-400 font-bold text-base">
+                                    <span>Explore Prep Hub ✦</span> 
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/20">Placement Hub</span>
+                                </div>
+                                <span class="text-xs text-slate-300 mt-1 leading-relaxed">Access curated placement test patterns, coding round resources, mock interviews, and technical modules.</span>
+                            </a>
                         </div>
 
                         <!-- Android App Download Banner -->
@@ -219,20 +216,26 @@
                     </div>
                 </div>
 
-                <!-- Topic & Exam Explorer Search Card -->
+                <!-- Topic & Exam Explorer Search Card with Advanced Voice Mic -->
                 <div id="topic-search-card" class="scroll-mt-28 max-w-2xl mx-auto mt-16 p-6 sm:p-8 glass rounded-3xl border border-slate-800 shadow-2xl text-center relative overflow-hidden">
-                    <span class="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">⚡ AI Topic &amp; Exam Explorer</span>
-                    <h3 class="text-white text-xl sm:text-2xl font-extrabold mt-4 mb-2">Turn Any Engineering Subject Or Exam Into a Study Roadmap</h3>
-                    <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly using AI.</p>
-                    
-                    <form action="/topic-drill" method="POST" id="topicSearchForm" class="flex flex-col sm:flex-row gap-3">
-                        <div class="w-full bg-slate-950 border border-slate-800 rounded-2xl flex items-center pr-2">
-                            <input type="text" id="topicSearchInput" name="query" placeholder="e.g. GATE CSE, TCS NQT, DBMS, Operating Systems..." required class="w-full bg-transparent px-4 py-3.5 text-sm text-white outline-none placeholder-slate-500">
-                            <button type="button" id="micBtn" onclick="startVoiceSearch()" class="p-2.5 text-slate-400 hover:text-blue-400 bg-slate-900 border border-slate-800 rounded-xl" title="Voice Search">🎙️</button>
-                        </div>
-                        <button type="submit" id="exploreBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-7 py-3.5 rounded-2xl whitespace-nowrap">Explore ⚡</button>
-                    </form>
-                    <div id="voiceStatus" class="text-xs text-blue-400 mt-2.5 hidden animate-pulse">🎙️ Listening... Speak now</div>
+                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-blue-600/10 blur-3xl rounded-full"></div>
+                    <div class="relative">
+                        <span class="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">⚡ AI Topic &amp; Exam Explorer</span>
+                        <h3 class="text-white text-xl sm:text-2xl font-extrabold mt-4 mb-2">Turn Any Engineering Subject Or Exam Into a Study Roadmap</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">Generates syllabus breakdown, core weightage distribution, and tailored preparation roadmaps instantly using AI.</p>
+                        
+                        <form action="/topic-drill" method="POST" id="topicSearchForm" class="flex flex-col sm:flex-row gap-3">
+                            <div class="w-full bg-slate-950 border border-slate-800 focus-within:border-blue-500 rounded-2xl flex items-center pr-2 shadow-inner">
+                                <input type="text" id="topicSearchInput" name="query" placeholder="e.g. GATE CSE, TCS NQT, DBMS, Operating Systems..." required class="w-full bg-transparent border-none px-4 py-3.5 text-sm text-white outline-none placeholder-slate-500">
+                                <!-- Advanced Voice Search Mic Button -->
+                                <button type="button" id="micBtn" onclick="startVoiceSearch()" class="p-2.5 text-slate-300 hover:text-white bg-slate-900 hover:bg-blue-600 border border-slate-800 rounded-xl transition flex items-center justify-center shrink-0 cursor-pointer shadow-md" title="Search using Advanced Voice">
+                                    <svg id="micIcon" class="w-4 h-4 text-blue-400 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                                </button>
+                            </div>
+                            <button type="submit" id="exploreBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-7 py-3.5 rounded-2xl whitespace-nowrap shadow-lg shadow-blue-600/30">Explore ⚡</button>
+                        </form>
+                        <div id="voiceStatus" class="text-xs text-blue-400 font-semibold mt-2.5 hidden animate-pulse">🎙️ Listening... Speak your search query now</div>
+                    </div>
                 </div>
 
                 <!-- Metrics Bar -->
